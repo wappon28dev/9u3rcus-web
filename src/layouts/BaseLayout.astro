@@ -1,0 +1,35 @@
+---
+import { ViewTransitions } from "astro:transitions";
+import { styled as p } from "panda/jsx";
+---
+
+<html lang="ja">
+  <head>
+    <meta charset="utf-8" />
+    <link href="favicon.svg" rel="icon" type="image/svg+xml" />
+    <meta content="width=device-width" name="viewport" />
+    <meta content="{Astro.generator}" name="generator" />
+    <link href="sitemap-index.xml" />
+    <link href="styles/global.css" rel="stylesheet" />
+    <title>9u3rcus</title>
+  </head>
+
+  <p.body>
+    <ViewTransitions />
+    <p.div
+      display="grid"
+      gridTemplateColumns="100%"
+      gridTemplateRows="auto 1fr auto"
+      minH="100vh"
+      w="100%"
+    >
+      <p.header />
+      <p.main m="0 auto" maxW="1200px" p="20px" w="100%">
+        <slot />
+      </p.main>
+      <p.footer />
+    </p.div>
+  </p.body>
+
+
+</html>

@@ -1,0 +1,56 @@
+name: cloudflare
+
+on:
+  push:
+  pull_request:
+    types: [opened, synchronize, reopened]
+  workflow_dispatch:
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    environment:
+      name: ${{ (github.ref == 'refs/heads/main' && 'production') || 'preview' }}
+    steps:
+      - name: 📥 Checkout repository
+        uses: actions/checkout@v3
+
+      - name: 📸 Calculate commit hash
+        id: sha
+        uses: pr-mpt/actions-commit-hash@v2
+
+      - name: 🔨 Prepare Bun environment
+        uses: oven-sh/setup-bun@v1
+
+      - name: 🎉 Install project dependencies
+        run: bun i
+
+      - name: 🏗️ Generate static files
+        run: bun run build
+
+      - name: 🚀 Deploy to Cloudflare Pages
+        id: cloudflare_pages_deploy
+        uses: cloudflare/pages-action@v1.4.0
+        with:
+          accountId: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
+          apiToken: ${{ secrets.CLOUDFLARE_API_TOKEN }}
+          gitHubToken: ${{ secrets.GITHUB_TOKEN }}
+          projectName: 9u3rcus-web
+          directory: ./dist
+        env:
+          NODE_VERSION: 20
+
+      - name: 🚀 Deploy pages based on commit sha
+        uses: actions/github-script@v6
+        with:
+          script: |
+            const sha = context.payload.pull_request?.head.sha ?? context.sha;
+            await github.rest.repos.createCommitStatus({
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              context: 'cloudflare / build (push)',
+              description: 'Commit based deploy',
+              state: 'success',
+              sha,
+              target_url: "${{ steps.cloudflare_pages_deploy.outputs.url }}",
+            });
