@@ -1,6 +1,12 @@
 ---
 import { ViewTransitions } from "astro:transitions";
 import { styled as p } from "panda/jsx";
+import { SEO } from "astro-seo";
+import { token } from "panda/tokens";
+import { type PageManifest as Props } from "@/types/page";
+import { INFO } from "@/lib/config";
+
+const { seo, style } = Astro.props;
 ---
 
 <html lang="ja">
@@ -11,7 +17,16 @@ import { styled as p } from "panda/jsx";
     <meta content="{Astro.generator}" name="generator" />
     <link href="sitemap-index.xml" />
     <link href="styles/global.css" rel="stylesheet" />
-    <title>9u3rcus</title>
+    <SEO
+      description={seo?.description ?? ""}
+      title={seo?.title ?? ""}
+      titleTemplate={`%s | ${INFO.name.short}`}
+      twitter={{
+        creator: INFO.name.twitter,
+        card: "summary_large_image",
+      }}
+    />
+    <title>{INFO.name.short}</title>
   </head>
 
   <p.body>
@@ -21,6 +36,9 @@ import { styled as p } from "panda/jsx";
       gridTemplateColumns="100%"
       gridTemplateRows="auto 1fr auto"
       minH="100vh"
+      style={{
+        background: token.var(style.background),
+      }}
       w="100%"
     >
       <p.header />

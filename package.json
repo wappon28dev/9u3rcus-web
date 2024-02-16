@@ -20,6 +20,8 @@
     "@iconify/react": "^4.1.1",
     "astro": "^4.4.0",
     "astro-layouts": "^1.0.0",
+    "astro-meta-tags": "^0.2.1",
+    "astro-seo": "^0.8.0",
     "jotai": "^2.6.4",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
