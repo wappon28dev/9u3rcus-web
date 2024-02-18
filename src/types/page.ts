@@ -5,7 +5,7 @@ export type PageManifest = {
     title: string;
     description?: string;
   };
-  style: {
+  style?: {
     background: Token;
   };
 };

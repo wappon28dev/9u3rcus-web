@@ -1,0 +1,20 @@
+---
+import BaseLayout from "@layouts/BaseLayout.astro";
+import { styled as p } from "panda/jsx";
+import { getWorksList } from "@/lib/services/microcms";
+
+const worksList = await getWorksList({ fields: ["id", "title"] });
+console.log(worksList);
+---
+
+<BaseLayout>
+  <p.ul>
+    {
+      worksList.contents.map((works) => (
+        <p.li key={works.id}>
+          <a href={`/works/${works.id}`}>{works.title}</a>
+        </p.li>
+      ))
+    }
+  </p.ul>
+</BaseLayout>

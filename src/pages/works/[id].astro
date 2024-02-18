@@ -1,0 +1,34 @@
+---
+import type { GetStaticPaths } from "astro";
+import BaseLayout from "@layouts/BaseLayout.astro";
+import { styled as p } from "panda/jsx";
+import { load } from "cheerio";
+import { getWorksDetail, getWorksList } from "@/lib/services/microcms";
+
+export const getStaticPaths = (async () => {
+  const worksList = await getWorksList({ fields: "id" });
+
+  return worksList.contents.map((works) => ({
+    params: {
+      id: works.id,
+    },
+  }));
+}) satisfies GetStaticPaths;
+
+const { id } = Astro.params;
+const works = await getWorksDetail(id);
+
+const $ = load(works.content as string);
+$(".video").replaceWith((_, el) => {
+  const src = $(el).text().replace("https://assets.9u3rc.us/web/", "/assets/");
+  return `<img src="${src}" alt="動画" height="70px" />`;
+});
+
+const content = $.html();
+---
+
+<BaseLayout>
+  <p.h1 className="title">{works.title}</p.h1>
+  <p.p className="publishedAt">公開日時：{works.publishedAt}</p.p>
+  <p.div className="post" set:html={content} />
+</BaseLayout>

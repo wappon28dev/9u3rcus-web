@@ -12,11 +12,11 @@ const { seo, style } = Astro.props;
 <html lang="ja">
   <head>
     <meta charset="utf-8" />
-    <link href="favicon.svg" rel="icon" type="image/svg+xml" />
+    <link href="/favicon.svg" rel="icon" type="image/svg+xml" />
     <meta content="width=device-width" name="viewport" />
     <meta content="{Astro.generator}" name="generator" />
-    <link href="sitemap-index.xml" />
-    <link href="styles/global.css" rel="stylesheet" />
+    <link href="/sitemap-index.xml" />
+    <link href="/styles/global.css" rel="stylesheet" />
     <SEO
       description={seo?.description ?? ""}
       title={seo?.title ?? ""}
@@ -37,7 +37,7 @@ const { seo, style } = Astro.props;
       gridTemplateRows="auto 1fr auto"
       minH="100vh"
       style={{
-        background: token.var(style.background),
+        background: token.var(style?.background ?? "colors.9u-white"),
       }}
       w="100%"
     >
