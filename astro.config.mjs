@@ -10,4 +10,12 @@ import metaTags from "astro-meta-tags";
 export default defineConfig({
   integrations: [react(), pandacss(), sitemap(), metaTags()],
   site: "https://9u3r.us",
+  image: {
+    domains: ["images.microcms-assets.io"],
+    remotePatterns: [
+      {
+        protocol: "https",
+      },
+    ],
+  },
 });

@@ -31,7 +31,7 @@ if (!res.ok) {
 const assets: ChildrenFlat = await res.json();
 out.success(`Fetched ${assets.length} assets`);
 assets.forEach(({ filePath, size, lastModifiedDateTime }, i) => {
-  out.debug(`  [#${i + 1}] - ${filePath}`);
+  out.debug(`  [${i + 1}] - ${filePath}`);
   out.debug(
     `   └ size: ${size} bytes\tlastModified: ${new Date(lastModifiedDateTime).toLocaleString()}`
   );

@@ -2,8 +2,8 @@
 import type { GetStaticPaths } from "astro";
 import BaseLayout from "@layouts/BaseLayout.astro";
 import { styled as p } from "panda/jsx";
-import { load } from "cheerio";
 import { getWorksDetail, getWorksList } from "@/lib/services/microcms";
+import { rewrite4ImgOpt } from "@/lib/middlewares/imageOpt";
 
 export const getStaticPaths = (async () => {
   const worksList = await getWorksList({ fields: "id" });
@@ -18,13 +18,7 @@ export const getStaticPaths = (async () => {
 const { id } = Astro.params;
 const works = await getWorksDetail(id);
 
-const $ = load(works.content as string);
-$(".video").replaceWith((_, el) => {
-  const src = $(el).text().replace("https://assets.9u3rc.us/web/", "/assets/");
-  return `<img src="${src}" alt="動画" height="70px" />`;
-});
-
-const content = $.html();
+const content = rewrite4ImgOpt(works.content as string);
 ---
 
 <BaseLayout>
