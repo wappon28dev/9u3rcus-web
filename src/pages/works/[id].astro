@@ -19,7 +19,7 @@ export const getStaticPaths = (async () => {
 const { id } = Astro.params;
 const works = await getWorksDetail(id);
 
-const content = await rewriteHTML(works.content, [imageOpt]);
+const content = await rewriteHTML(works.content as string, [imageOpt]);
 ---
 
 <BaseLayout>

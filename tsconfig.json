@@ -6,6 +6,7 @@
     "baseUrl": ".",
     "paths": {
       "@layouts/*": ["./src/layouts/*"],
+      "@public/*": ["./public/*"],
       "@/*": ["./src/*"],
       "panda/*": ["./panda/*"],
       "package": ["./package.json"]

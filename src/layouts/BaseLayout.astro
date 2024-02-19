@@ -29,24 +29,19 @@ const { seo, style } = Astro.props;
     <title>{INFO.name.short}</title>
   </head>
 
-  <p.body>
+  <p.body
+    h="100%"
+    style={{
+      backgroundColor: token(style?.background ?? "colors.9u-white"),
+    }}
+    w="100%"
+  >
     <ViewTransitions />
-    <p.div
-      display="grid"
-      gridTemplateColumns="100%"
-      gridTemplateRows="auto 1fr auto"
-      minH="100vh"
-      style={{
-        background: token.var(style?.background ?? "colors.9u-white"),
-      }}
-      w="100%"
-    >
-      <p.header />
-      <p.main m="0 auto" maxW="1200px" p="20px" w="100%">
-        <slot />
-      </p.main>
-      <p.footer />
-    </p.div>
+    <p.header />
+    <p.main h="100%" m="0 auto" w="100%">
+      <slot />
+    </p.main>
+    <p.footer />
   </p.body>
 
 
