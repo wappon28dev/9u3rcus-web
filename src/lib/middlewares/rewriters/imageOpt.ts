@@ -9,7 +9,7 @@ async function getOptimalImage(data: ImageData): Promise<GetImageResult> {
   return await getImage({ src, alt, width, height });
 }
 
-export async function rewrite4ImgOpt(html: string): Promise<string> {
+export async function imageOpt(html: string): Promise<string> {
   const $ = load(html);
   const $img = $("img");
 
