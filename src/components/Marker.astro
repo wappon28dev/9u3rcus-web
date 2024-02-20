@@ -1,0 +1,30 @@
+---
+import { token, type Token } from "panda/tokens";
+import { styled as p } from "panda/jsx";
+import { css } from "panda/css";
+
+type Props = {
+  markerColor?: Token | undefined;
+};
+
+const { markerColor } = Astro.props;
+---
+
+<p.span
+  className={css({
+    "& > *": {
+      fontSize: "5xl",
+      fontWeight: "bold",
+      lineHeight: "1.1",
+      textAlign: "center",
+    },
+  })}
+  m="0 auto"
+  px="3"
+  style={{
+    background: `linear-gradient(transparent 50%, ${token(markerColor ?? "colors.9u-red1")} 50%)`,
+  }}
+  w="fit-content"
+>
+  <slot />
+</p.span>

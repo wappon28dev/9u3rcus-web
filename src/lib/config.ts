@@ -6,4 +6,5 @@ export const INFO = {
     full: "Riku Kojima",
     twitter: "@9u3rcus",
   },
+  site: { url: "https://9u3rc.us" },
 };
