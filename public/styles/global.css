@@ -23,7 +23,7 @@
 }
 
 html {
-  font-size: 120%;
+  font-size: var(--font-sizes-lg);
 }
 
 body {
@@ -40,4 +40,11 @@ article {
   max-width: 1600px;
   width: 100%;
   margin: 0 auto;
+  padding-inline: var(--spacing-20);
+}
+
+@media (width < 768px) {
+  article {
+    padding-inline: var(--spacing-10);
+  }
 }

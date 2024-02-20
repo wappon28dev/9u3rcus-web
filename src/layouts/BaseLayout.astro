@@ -5,6 +5,8 @@ import { SEO } from "astro-seo";
 import { token } from "panda/tokens";
 import { type PageManifest as Props } from "@/types/page";
 import { INFO } from "@/lib/config";
+import Footer from "@/components/Footer.astro";
+import { Header } from "@/components/Header";
 
 const { seo, style } = Astro.props;
 ---
@@ -37,11 +39,15 @@ const { seo, style } = Astro.props;
     w="100%"
   >
     <ViewTransitions />
-    <p.header />
+    <p.header>
+      <Header client:load />
+    </p.header>
     <p.main h="100%" m="0 auto" w="100%">
       <slot />
     </p.main>
-    <p.footer />
+    <p.footer>
+      <Footer />
+    </p.footer>
   </p.body>
 
 
