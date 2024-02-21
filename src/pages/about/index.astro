@@ -1,15 +1,75 @@
 ---
 import { styled as p } from "panda/jsx";
+import { Image } from "astro:assets";
+import logoSquare from "@public/assets/img/logo_square.svg";
+import iconX from "@public/assets/img/icon_x.svg";
+import iconInstagram from "@public/assets/img/icon_instagram.svg";
+import iconVimeo from "@public/assets/img/icon_vimeo.svg";
 import BaseLayout from "@/layouts/BaseLayout.astro";
+import Marker from "@/components/Marker.astro";
+import { INFO } from "@/lib/config";
+
+const externalLinks = {
+  x: {
+    icon: iconX,
+    href: `https://x.com/${INFO.addr.x}`,
+    alt: "X",
+  },
+  instagram: {
+    icon: iconInstagram,
+    href: `https://instagram.com/${INFO.addr.instagram}`,
+    alt: "Instagram",
+  },
+  vimeo: {
+    icon: iconVimeo,
+    href: `https://vimeo.com/${INFO.addr.vimeo}`,
+    alt: "Vimeo",
+  },
+} as const satisfies Record<
+  string,
+  {
+    icon: ImageMetadata;
+    href: string;
+    alt: string;
+  }
+>;
 ---
 
 <BaseLayout
   header={{
-    isBrownTheme: true,
+    bgColor: "colors.9u-red3",
+    navAndLogoColor: "colors.9u-white",
   }}
   style={{
-    bgColor: "colors.9u-brown",
+    bgColor: "colors.9u-red3",
   }}
 >
-  <p.section display="flex" flexDir="column" gap="8" py="20" />
+  <p.article color="9u-white" display="flex" flexDir="column" gap="20">
+    <Marker><p.h1 color="9u-white">About</p.h1></Marker>
+    <p.div alignItems="center" display="flex" gap="20" justifyContent="center">
+      <p.section bg="9u-white" rounded="full">
+        <Image alt="9u logo" height="200" src={logoSquare} />
+      </p.section>
+      <p.section display="flex" flexDir="column" gap="5">
+        <p.p fontSize="5xl" fontWeight="bold" lineHeight="1" ml="-4px"
+          >{INFO.name.jp}</p.p
+        >
+        <p.p fontSize="lg">{INFO.addr.email}</p.p>
+        <p.div alignItems="center" display="flex" gap="5">
+          {
+            Object.entries(externalLinks).map(([key, { icon, href, alt }]) => (
+              <p.a
+                key={key}
+                href={href}
+                target="_blank"
+                title={`${INFO.name.short} の ${alt} へジャンプ`}
+              >
+                <Image alt={alt} height={20} src={icon} width="20" />
+              </p.a>
+            ))
+          }
+        </p.div>
+      </p.section>
+    </p.div>
+  </p.article>
 </BaseLayout>
