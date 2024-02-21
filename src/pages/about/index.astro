@@ -44,8 +44,10 @@ const externalLinks = {
     bgColor: "colors.9u-red3",
   }}
 >
-  <p.article color="9u-white" display="flex" flexDir="column" gap="20">
+  <p.div m="0 auto" w="100%">
     <Marker><p.h1 color="9u-white">About</p.h1></Marker>
+  </p.div>
+  <p.article color="9u-white" display="flex" flexDir="column" gap="20" py="20">
     <p.div alignItems="center" display="flex" gap="20" justifyContent="center">
       <p.section bg="9u-white" rounded="full">
         <Image alt="9u logo" height="200" src={logoSquare} />
@@ -72,4 +74,5 @@ const externalLinks = {
       </p.section>
     </p.div>
   </p.article>
+  <p.div h="2000px" />
 </BaseLayout>

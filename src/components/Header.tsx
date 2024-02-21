@@ -43,7 +43,6 @@ export function Header({
       top: 0,
       left: 0,
       background: token(shouldShow ? bgColor : "colors.transparent"),
-      zIndex: 100,
     },
     logo: {
       opacity: shouldShow ? 1 : 0,
@@ -55,20 +54,23 @@ export function Header({
   } as const satisfies Record<string, CSSProperties>;
 
   return (
-    <p.div
+    <p.header
       alignItems="center"
       bg="transparent"
       display="flex"
       h="max-content"
       justifyContent="space-between"
+      position="sticky"
       px="20"
       py="10"
       style={{
         background: token(bgColor),
         ...(hideBeforeHero && fixedStyle.container),
       }}
+      top="0"
       transition="background 0.3s"
       width="100%"
+      zIndex="100"
     >
       <p.a
         alignItems="center"
@@ -128,6 +130,6 @@ export function Header({
         <p.a href="/about">About</p.a>
         <p.a href="/contact">Contact</p.a>
       </p.section>
-    </p.div>
+    </p.header>
   );
 }

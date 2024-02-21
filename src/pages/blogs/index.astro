@@ -1,19 +1,56 @@
 ---
 import BaseLayout from "@layouts/BaseLayout.astro";
 import { styled as p } from "panda/jsx";
-import { getWorksList } from "@/lib/services/microcms";
+import {
+  // getContentList,
+  worksListMock,
+} from "@/lib/services/microcms";
+import Marker from "@/components/Marker.astro";
 
-const worksList = await getWorksList({ fields: ["id", "title"] });
+// const worksList = await getContentList("blogs", { fields: ["id", "title"] });
+const worksList = worksListMock;
 ---
 
-<BaseLayout>
-  <p.ul>
-    {
-      worksList.contents.map((works) => (
-        <p.li key={works.id}>
-          <a href={`/works/${works.id}`}>{works.title}</a>
-        </p.li>
-      ))
-    }
-  </p.ul>
+<BaseLayout
+  header={{
+    bgColor: "colors.9u-brown",
+    navAndLogoColor: "colors.9u-white",
+  }}
+  style={{
+    bgColor: "colors.9u-brown",
+  }}
+>
+  <p.div m="0 auto" w="100%">
+    <Marker>
+      <p.h1 color="9u-white">Blog</p.h1>
+    </Marker>
+  </p.div>
+
+  <p.article py="20">
+    <p.div
+      display="grid"
+      gap="8"
+      gridTemplateColumns="repeat(auto-fill, minmax(300px, 1fr))"
+      textAlign="center"
+    >
+      {
+        worksList.contents.map((works) => (
+          <p.div key={works.id} bg="9u-gray" h="200px" w="300px">
+            <p.h2>{works.title}</p.h2>
+            <p.a href={`/blogs/${works.id}`}>Read more</p.a>
+          </p.div>
+        ))
+      }
+    </p.div>
+  </p.article>
 </BaseLayout>
+<!-- 
+<p.ul>
+  {
+    worksList.contents.map((works) => (
+      <p.li key={works.id}>
+        <a href={`/blogs/${works.id}`}>{works.title}</a>
+      </p.li>
+    ))
+  }
+</p.ul> -->

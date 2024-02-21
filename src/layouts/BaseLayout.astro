@@ -45,9 +45,7 @@ const { seo, style, header } = Astro.props;
     w="100%"
   >
     <ViewTransitions />
-    <p.header>
-      <Header client:load {...header} />
-    </p.header>
+    <Header client:load {...header} />
     <p.main h="100%" m="0 auto" w="100%">
       <slot />
     </p.main>

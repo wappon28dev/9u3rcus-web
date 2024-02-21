@@ -1,19 +1,83 @@
 ---
 import BaseLayout from "@layouts/BaseLayout.astro";
 import { styled as p } from "panda/jsx";
-import { getWorksList } from "@/lib/services/microcms";
+import { Image } from "astro:assets";
+import {
+  // getContentList,
+  worksListMock,
+} from "@/lib/services/microcms";
+import Marker from "@/components/Marker.astro";
+import { formatDate } from "@/lib/constants";
 
-const worksList = await getWorksList({ fields: ["id", "title"] });
+// const worksList = await getContentList("blogs", { fields: ["id", "title"] });
+const worksList = worksListMock;
 ---
 
 <BaseLayout>
-  <p.ul>
-    {
-      worksList.contents.map((works) => (
-        <p.li key={works.id}>
-          <a href={`/works/${works.id}`}>{works.title}</a>
-        </p.li>
-      ))
-    }
-  </p.ul>
+  <p.div m="0 auto" w="100%">
+    <Marker>
+      <p.h1>Works</p.h1>
+    </Marker>
+  </p.div>
+
+  <p.article py="20">
+    <p.div
+      display="grid"
+      gap="8"
+      gridTemplateColumns="repeat(auto-fill, minmax(300px, 1fr))"
+      textAlign="center"
+    >
+      {
+        worksList.contents.map(({ id, title, ogp, releaseDate }) => (
+          <p.a
+            key={id}
+            bg="9u-gray"
+            href={`/works/${id}`}
+            position="relative"
+            style={{
+              viewTransitionName: `works-${id}`,
+            }}
+          >
+            <Image
+              alt={title}
+              height={ogp.height}
+              src={ogp.url}
+              width={ogp.width}
+            />
+            <p.div
+              _hover={{ opacity: "1" }}
+              bg="9u-red1"
+              color="9u-white"
+              display="grid"
+              h="100%"
+              left="50%"
+              opacity="0"
+              placeContent="center"
+              placeItems="center"
+              position="absolute"
+              top="50%"
+              transform="translate(-50%, -50%)"
+              transition="opacity 0.3s"
+              w="100%"
+            >
+              <p.p fontSize="xl" fontWeight="bold">
+                {title}
+              </p.p>
+              <p.p>{formatDate(new Date(releaseDate), "YYYY.MM")}</p.p>
+            </p.div>
+          </p.a>
+        ))
+      }
+    </p.div>
+  </p.article>
 </BaseLayout>
+<!-- 
+<p.ul>
+  {
+    worksList.contents.map((works) => (
+      <p.li key={works.id}>
+        <a href={`/blogs/${works.id}`}>{works.title}</a>
+      </p.li>
+    ))
+  }
+</p.ul> -->

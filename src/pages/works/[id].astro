@@ -2,28 +2,68 @@
 import type { GetStaticPaths } from "astro";
 import BaseLayout from "@layouts/BaseLayout.astro";
 import { styled as p } from "panda/jsx";
-import { getWorksDetail, getWorksList } from "@/lib/services/microcms";
+import { Image } from "astro:assets";
+import {
+  // getContentDetail,
+  getContentList,
+  worksDetailsMock,
+} from "@/lib/services/microcms";
 import { rewriteHTML } from "@/lib/middlewares/rewriteHTML";
 import { imageOpt } from "@/lib/middlewares/rewriters/imageOpt";
+import BackTo from "@/components/BackTo.astro";
+import { formatDate } from "@/lib/constants";
 
 export const getStaticPaths = (async () => {
-  const worksList = await getWorksList({ fields: "id" });
+  const worksList = await getContentList("works", { fields: "id" });
 
-  return worksList.contents.map((works) => ({
-    params: {
-      id: works.id,
-    },
+  return worksList.contents.map(({ id }) => ({
+    params: { id },
   }));
 }) satisfies GetStaticPaths;
 
-const { id } = Astro.params;
-const works = await getWorksDetail(id);
+// const { id } = Astro.params;
+// const works = await getContentDetail("works", id);
+const { id, title, ogp, releaseDate, clientName, description, content } =
+  worksDetailsMock;
 
-const content = await rewriteHTML(works.content as string, [imageOpt]);
+const modifiedContent = await rewriteHTML(content, [imageOpt]);
 ---
 
 <BaseLayout>
-  <p.h1 className="title">{works.title}</p.h1>
-  <p.p className="publishedAt">公開日時：{works.publishedAt}</p.p>
-  <p.div className="post" set:html={content} />
+  <p.article
+    alignItems="center"
+    display="flex"
+    flexDir="column"
+    gap="5"
+    pb="20"
+  >
+    <p.nav w="100%">
+      <BackTo href="/works" txt="Works" />
+    </p.nav>
+    <p.div
+      display="flex"
+      justifyContent="center"
+      style={{
+        viewTransitionName: `works-${id}`,
+      }}
+      w="100%"
+    >
+      <Image alt={title} height={ogp.height} src={ogp.url} width={ogp.width} />
+    </p.div>
+    <p.h1 color="9u-red1" fontSize="4xl" fontWeight="bold">{title}</p.h1>
+    <p.section textAlign="center">
+      <p.p>{formatDate(new Date(releaseDate), "YYYY.MM")}</p.p>
+      {
+        clientName != null && (
+          <p.p fontSize="lg" fontWeight="bold">
+            Client: {clientName}
+          </p.p>
+        )
+      }
+    </p.section>
+    <p.section fontSize="lg" fontWeight="bold" textAlign="center" w="80%">
+      {description}
+    </p.section>
+    <p.div set:html={modifiedContent} w="100%" />
+  </p.article>
 </BaseLayout>

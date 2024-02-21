@@ -10,7 +10,7 @@ type Props = {
 const { markerColor } = Astro.props;
 ---
 
-<p.span
+<p.div
   className={css({
     "& > *": {
       fontSize: "5xl",
@@ -27,4 +27,4 @@ const { markerColor } = Astro.props;
   w="fit-content"
 >
   <slot />
-</p.span>
+</p.div>
