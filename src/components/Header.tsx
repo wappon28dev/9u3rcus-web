@@ -6,6 +6,7 @@ import {
 } from "react";
 import { styled as p } from "panda/jsx";
 import { token, type Token } from "panda/tokens";
+import { Icon } from "@iconify/react";
 import { INFO } from "@/lib/config";
 
 export function Header({
@@ -58,11 +59,16 @@ export function Header({
       alignItems="center"
       bg="transparent"
       display="flex"
-      h="max-content"
       justifyContent="space-between"
       position="sticky"
-      px="20"
-      py="10"
+      px={{
+        base: "20",
+        mdDown: "10",
+      }}
+      py={{
+        base: "10",
+        mdDown: "5",
+      }}
       style={{
         background: token(bgColor),
         ...(hideBeforeHero && fixedStyle.container),
@@ -75,7 +81,10 @@ export function Header({
       <p.a
         alignItems="center"
         display="flex"
-        gap="9"
+        gap={{
+          base: "10",
+          mdDown: "5",
+        }}
         height="max-content"
         href="/"
         style={{ ...(hideBeforeHero && fixedStyle.logo) }}
@@ -83,30 +92,21 @@ export function Header({
       >
         <p.img
           alt={INFO.name.full}
+          decoding="async"
+          h={{
+            base: "50px",
+            mdDown: "40px",
+          }}
+          loading="lazy"
           src="/assets/img/logo_icon.svg"
-          style={{
-            height: "50px",
-          }}
         />
-        {/* <ReactSVG
-          className={css({
-            transform: "translateY(3px)",
-            "& .injected-svg": {
-              fill: "var(--svg-logo-title-fill)",
-              width: "auto",
-              height: "40px",
-            },
-          })}
-          src="/assets/img/logo_title.svg"
-          style={{
-            // @ts-expect-error: CSS 変数を Panda CSS へ渡すための型定義が不足している
-            "--svg-logo-title-fill": token(navAndLogoColor),
-          }}
-        /> */}
         <p.img
           alt="logo"
           decoding="async"
-          height="40px"
+          height={{
+            base: "40px",
+            mdDown: "30px",
+          }}
           loading="lazy"
           src={
             navAndLogoColor === "colors.9u-white"
@@ -116,19 +116,40 @@ export function Header({
         />
       </p.a>
       <p.section
-        display="flex"
         fontSize="lg"
-        gap="5"
         style={{
           color: token(navAndLogoColor),
           ...(hideBeforeHero && fixedStyle.nav),
         }}
         transition="color 0.3s"
       >
-        <p.a href="/works">Works</p.a>
-        <p.a href="/blogs">Blog</p.a>
-        <p.a href="/about">About</p.a>
-        <p.a href="/contact">Contact</p.a>
+        <p.nav
+          display={{
+            base: "flex",
+            lgDown: "none",
+          }}
+          gap="5"
+        >
+          <p.a href="/works">Works</p.a>
+          <p.a href="/blogs">Blog</p.a>
+          <p.a href="/about">About</p.a>
+          <p.a href="/contact">Contact</p.a>
+        </p.nav>
+        <p.nav
+          display={{
+            base: "none",
+            lgDown: "flex",
+          }}
+        >
+          <Icon
+            height={40}
+            icon="mdi:menu"
+            style={{
+              color: token(navAndLogoColor),
+              ...(hideBeforeHero && fixedStyle.nav),
+            }}
+          />
+        </p.nav>
       </p.section>
     </p.header>
   );

@@ -1,5 +1,6 @@
 ---
 import { Icon } from "astro-icon/components";
+import { css } from "panda/css";
 import { styled as p } from "panda/jsx";
 import type { Token } from "panda/tokens";
 
@@ -11,7 +12,34 @@ type Props = {
 const { href, txt, txtColor } = Astro.props;
 ---
 
-<p.a alignItems="center" display="flex" href={href} w="fit-content">
-  <Icon name="mdi:chevron-left" size={60} />
-  <p.p color={txtColor} fontSize="3xl" fontWeight="bold">{txt}</p.p>
+<p.a
+  alignItems="center"
+  display="flex"
+  gap={{
+    base: "3",
+    mdDown: "1",
+  }}
+  href={href}
+  w="fit-content"
+>
+  <p.span
+    className={css({
+      "& svg": {
+        transform: {
+          base: "scale(3)",
+          mdDown: "scale(2)",
+        },
+      },
+    })}
+  >
+    <Icon name="mdi:chevron-left" />
+  </p.span>
+  <p.p
+    color={txtColor}
+    fontSize={{
+      base: "3xl",
+      mdDown: "lg",
+    }}
+    fontWeight="bold">{txt}</p.p
+  >
 </p.a>
