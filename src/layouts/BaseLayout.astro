@@ -24,7 +24,7 @@ const { seo, style, header } = Astro.props;
       title={seo?.title ?? ""}
       titleTemplate={`%s | ${INFO.name.short}`}
       twitter={{
-        creator: INFO.name.twitter,
+        creator: INFO.addr.x,
         card: "summary_large_image",
       }}
     />

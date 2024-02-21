@@ -8,7 +8,7 @@ import Marker from "@/components/Marker.astro";
 
 <BaseLayout
   header={{
-    isFixed: true,
+    hideBeforeHero: true,
   }}
   style={{
     bgColor: "colors.9u-white",
@@ -28,8 +28,8 @@ import Marker from "@/components/Marker.astro";
     w="100%"
   >
     <p.div color="9u-white" id="hero" pl="20" textAlign="left">
-      <p.p fontSize="6xl" fontWeight="bold">{INFO.name.full}</p.p>
-      <p.p fontSize="lg" pl="4px">Motion Graphics Designer</p.p>
+      <p.p fontSize="6xl" fontWeight="bold" ml="-4px">{INFO.name.full}</p.p>
+      <p.p fontSize="lg">Motion Graphics Designer</p.p>
     </p.div>
   </p.div>
   <p.div display="flex" flexDir="column" gap="8">

@@ -5,17 +5,17 @@ import {
   type CSSProperties,
 } from "react";
 import { styled as p } from "panda/jsx";
-import { token } from "panda/tokens";
-import { ReactSVG } from "react-svg";
-import { css } from "panda/css";
+import { token, type Token } from "panda/tokens";
 import { INFO } from "@/lib/config";
 
 export function Header({
-  isFixed = false,
-  isBrownTheme = false,
+  hideBeforeHero = false,
+  bgColor = "colors.9u-white",
+  navAndLogoColor = "colors.9u-brown",
 }: {
-  isFixed?: boolean;
-  isBrownTheme?: boolean;
+  hideBeforeHero?: boolean;
+  bgColor?: Token;
+  navAndLogoColor?: Token;
 }): ReactElement {
   const [shouldShow, setShouldShow] = useState(false);
 
@@ -42,7 +42,7 @@ export function Header({
       position: "fixed",
       top: 0,
       left: 0,
-      background: shouldShow ? token("colors.9u-white") : "transparent",
+      background: token(shouldShow ? bgColor : "colors.transparent"),
       zIndex: 100,
     },
     logo: {
@@ -54,33 +54,18 @@ export function Header({
     },
   } as const satisfies Record<string, CSSProperties>;
 
-  const brownThemeStyle = {
-    container: {
-      background: token("colors.9u-brown"),
-    },
-    title: {
-      // @ts-expect-error: CSS 変数を Panda CSS へ渡すための型定義が不足している
-      "--svg-logo-title-fill": token(
-        isBrownTheme ? "colors.9u-white" : "colors.9u-brown"
-      ),
-    },
-    nav: {
-      color: token("colors.9u-white"),
-    },
-  } as const satisfies Record<string, CSSProperties>;
-
   return (
     <p.div
       alignItems="center"
-      bg="9u-white"
+      bg="transparent"
       display="flex"
       h="max-content"
       justifyContent="space-between"
       px="20"
       py="10"
       style={{
-        ...(isFixed && fixedStyle.container),
-        ...(isBrownTheme && brownThemeStyle.container),
+        background: token(bgColor),
+        ...(hideBeforeHero && fixedStyle.container),
       }}
       transition="background 0.3s"
       width="100%"
@@ -91,7 +76,7 @@ export function Header({
         gap="9"
         height="max-content"
         href="/"
-        style={{ ...(isFixed && fixedStyle.logo) }}
+        style={{ ...(hideBeforeHero && fixedStyle.logo) }}
         transition="opacity 0.3s"
       >
         <p.img
@@ -101,7 +86,7 @@ export function Header({
             height: "50px",
           }}
         />
-        <ReactSVG
+        {/* <ReactSVG
           className={css({
             transform: "translateY(3px)",
             "& .injected-svg": {
@@ -111,8 +96,21 @@ export function Header({
             },
           })}
           src="/assets/img/logo_title.svg"
-          // @ts-expect-error: CSS 変数を Panda CSS へ渡すための型定義が不足している
-          style={{ ...(isBrownTheme && brownThemeStyle.title) }}
+          style={{
+            // @ts-expect-error: CSS 変数を Panda CSS へ渡すための型定義が不足している
+            "--svg-logo-title-fill": token(navAndLogoColor),
+          }}
+        /> */}
+        <p.img
+          alt="logo"
+          decoding="async"
+          height="40px"
+          loading="lazy"
+          src={
+            navAndLogoColor === "colors.9u-white"
+              ? "/assets/img/logo_title_white.svg"
+              : "/assets/img/logo_title_brown.svg"
+          }
         />
       </p.a>
       <p.section
@@ -120,8 +118,8 @@ export function Header({
         fontSize="lg"
         gap="5"
         style={{
-          ...(isFixed && fixedStyle.nav),
-          ...(isBrownTheme && brownThemeStyle.nav),
+          color: token(navAndLogoColor),
+          ...(hideBeforeHero && fixedStyle.nav),
         }}
         transition="color 0.3s"
       >
