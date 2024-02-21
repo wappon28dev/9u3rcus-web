@@ -30,6 +30,7 @@
     "microcms-typescript": "^1.0.14",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
+    "react-svg": "^16.1.33",
     "zod": "^3.22.4"
   },
   "devDependencies": {

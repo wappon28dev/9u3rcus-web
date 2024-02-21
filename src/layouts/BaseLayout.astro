@@ -3,7 +3,7 @@ import { ViewTransitions } from "astro:transitions";
 import { styled as p } from "panda/jsx";
 import { SEO } from "astro-seo";
 import { token } from "panda/tokens";
-import { type PageManifest as Props } from "@/types/page";
+import { type PageManifest as Props } from "@/lib/types/page";
 import { INFO } from "@/lib/config";
 import Footer from "@/components/Footer.astro";
 import { Header } from "@/components/Header";
@@ -38,13 +38,15 @@ const { seo, style, header } = Astro.props;
     h="100%"
     minHeight="100vh"
     style={{
-      backgroundColor: token(style?.background ?? "colors.9u-white"),
+      // ↓ なぜ？
+      // eslint-disable-next-line @typescript-eslint/no-unsafe-argument
+      backgroundColor: token(style?.bgColor ?? "colors.9u-white"),
     }}
     w="100%"
   >
     <ViewTransitions />
     <p.header>
-      <Header client:load isFixed={header?.isFixed ?? false} />
+      <Header client:load {...header} />
     </p.header>
     <p.main h="100%" m="0 auto" w="100%">
       <slot />
@@ -53,5 +55,6 @@ const { seo, style, header } = Astro.props;
       <Footer />
     </p.footer>
   </p.body>
+
 
 </html>

@@ -17,6 +17,13 @@
   font-display: swap;
 }
 
+::view-transition-old(root) {
+  animation: none;
+}
+::view-transition-new(root) {
+  animation: none;
+}
+
 :root {
   --font-line: "LINE Seed JP", sans-serif;
   --font-udev: "UDEV Gothic 35 JPDOC", monospace;
