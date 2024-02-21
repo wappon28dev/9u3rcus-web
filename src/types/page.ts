@@ -8,4 +8,7 @@ export type PageManifest = {
   style?: {
     background: Token;
   };
+  header?: {
+    isFixed: boolean;
+  };
 };

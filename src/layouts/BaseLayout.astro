@@ -8,7 +8,7 @@ import { INFO } from "@/lib/config";
 import Footer from "@/components/Footer.astro";
 import { Header } from "@/components/Header";
 
-const { seo, style } = Astro.props;
+const { seo, style, header } = Astro.props;
 ---
 
 <html lang="ja">
@@ -32,7 +32,11 @@ const { seo, style } = Astro.props;
   </head>
 
   <p.body
+    display="grid"
+    gridTemplateColumns="100%"
+    gridTemplateRows="auto 1fr auto"
     h="100%"
+    minHeight="100vh"
     style={{
       backgroundColor: token(style?.background ?? "colors.9u-white"),
     }}
@@ -40,7 +44,7 @@ const { seo, style } = Astro.props;
   >
     <ViewTransitions />
     <p.header>
-      <Header client:load />
+      <Header client:load isFixed={header?.isFixed ?? false} />
     </p.header>
     <p.main h="100%" m="0 auto" w="100%">
       <slot />
@@ -49,6 +53,5 @@ const { seo, style } = Astro.props;
       <Footer />
     </p.footer>
   </p.body>
-
 
 </html>
