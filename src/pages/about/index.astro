@@ -47,12 +47,41 @@ const externalLinks = {
   <p.div m="0 auto" w="100%">
     <Marker><p.h1 color="9u-white">About</p.h1></Marker>
   </p.div>
-  <p.article color="9u-white" display="flex" flexDir="column" gap="20" py="20">
-    <p.div alignItems="center" display="flex" gap="20" justifyContent="center">
+  <p.article
+    color="9u-white"
+    display="flex"
+    flexDir="column"
+    gap="20"
+    py={{
+      base: "20",
+      mdDown: "10",
+    }}
+  >
+    <p.div
+      alignItems="center"
+      display="flex"
+      flexDir={{
+        base: "row",
+        mdDown: "column",
+      }}
+      gap={{
+        base: "20",
+        mdDown: "5",
+      }}
+      justifyContent="center"
+    >
       <p.section bg="9u-white" rounded="full">
         <Image alt="9u logo" height="200" src={logoSquare} />
       </p.section>
-      <p.section display="flex" flexDir="column" gap="5">
+      <p.section
+        alignItems={{
+          base: "flex-start",
+          mdDown: "center",
+        }}
+        display="flex"
+        flexDir="column"
+        gap="5"
+      >
         <p.p fontSize="5xl" fontWeight="bold" lineHeight="1" ml="-4px"
           >{INFO.name.jp}</p.p
         >
@@ -74,5 +103,4 @@ const externalLinks = {
       </p.section>
     </p.div>
   </p.article>
-  <p.div h="2000px" />
 </BaseLayout>

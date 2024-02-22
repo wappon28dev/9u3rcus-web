@@ -26,7 +26,7 @@ export const getStaticPaths = (async () => {
 const { id, title, ogp, releaseDate, clientName, description, content } =
   worksDetailsMock;
 
-const modifiedContent = await rewriteHTML(content, [imageOpt]);
+const modifiedContent = await rewriteHTML(content as string, [imageOpt]);
 ---
 
 <BaseLayout>
@@ -36,6 +36,7 @@ const modifiedContent = await rewriteHTML(content, [imageOpt]);
     flexDir="column"
     gap="5"
     pb="20"
+    py="0"
   >
     <p.nav w="100%">
       <BackTo href="/works" txt="Works" />
@@ -43,6 +44,7 @@ const modifiedContent = await rewriteHTML(content, [imageOpt]);
     <p.div
       display="flex"
       justifyContent="center"
+      maxHeight="1200px"
       style={{
         viewTransitionName: `works-${id}`,
       }}
@@ -50,7 +52,9 @@ const modifiedContent = await rewriteHTML(content, [imageOpt]);
     >
       <Image alt={title} height={ogp.height} src={ogp.url} width={ogp.width} />
     </p.div>
-    <p.h1 color="9u-red1" fontSize="4xl" fontWeight="bold">{title}</p.h1>
+    <p.h1 color="9u-red1" fontSize="4xl" fontWeight="bold" textAlign="center"
+      >{title}</p.h1
+    >
     <p.section textAlign="center">
       <p.p>{formatDate(new Date(releaseDate), "YYYY.MM")}</p.p>
       {

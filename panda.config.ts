@@ -30,6 +30,9 @@ export default defineConfig({
           udev: { value: "var(--font-udev)" },
         },
       },
+      breakpoints: {
+        se: "400px",
+      },
     },
   },
 

@@ -2,6 +2,7 @@
 import BaseLayout from "@layouts/BaseLayout.astro";
 import { styled as p } from "panda/jsx";
 import logoBg from "@public/assets/img/logo_bg.svg";
+import { css } from "panda/css";
 import { INFO } from "@/lib/config";
 import Marker from "@/components/Marker.astro";
 ---
@@ -19,7 +20,11 @@ import Marker from "@/components/Marker.astro";
     bgRepeat="no-repeat"
     bgSize="cover"
     display="grid"
-    h="100vh"
+    h={{
+      base: "100vh",
+      mdDown: "350px",
+      seDown: "200px",
+    }}
     my="0"
     placeContent="center start"
     style={{
@@ -27,52 +32,61 @@ import Marker from "@/components/Marker.astro";
     }}
     w="100%"
   >
-    <p.div color="9u-white" id="hero" pl="20" textAlign="left">
-      <p.p fontSize="6xl" fontWeight="bold" ml="-4px">{INFO.name.full}</p.p>
-      <p.p fontSize="lg">Motion Graphics Designer</p.p>
+    <p.div
+      color="9u-white"
+      id="hero"
+      pl={{ base: "20", seDown: "10" }}
+      textAlign="left"
+    >
+      <p.p fontSize={{ base: "6xl", seDown: "3xl" }} fontWeight="bold" ml="-4px"
+        >{INFO.name.full}</p.p
+      >
+      <p.p fontSize={{ base: "lg", seDown: "md" }}>Motion Graphics Designer</p.p
+      >
     </p.div>
   </p.div>
-  <p.div display="flex" flexDir="column" gap="8">
-    <p.section display="flex" flexDir="column" gap="8" py="20">
+  <p.div
+    className={css({
+      "& > article": {
+        py: { base: "20", mdDown: "10" },
+      },
+    })}
+  >
+    <p.article display="flex" flexDir="column" gap="8">
       <Marker>
         <p.h2>Works</p.h2>
       </Marker>
-
-      <p.article>
-        <p.div
-          display="grid"
-          gap="8"
-          gridTemplateColumns="repeat(auto-fill, minmax(300px, 1fr))"
-          textAlign="center"
-        >
-          {
-            Array.from({ length: 6 }).map((_, i) => (
-              // eslint-disable-next-line react/no-array-index-key
-              <p.div key={i} bg="9u-gray" h="250px" />
-            ))
-          }
-        </p.div>
-      </p.article>
-    </p.section>
-    <p.section bg="9u-brown" display="flex" flexDir="column" gap="8" py="20">
+      <p.div
+        display="grid"
+        gap="8"
+        gridTemplateColumns="repeat(auto-fill, minmax(300px, 1fr))"
+        textAlign="center"
+      >
+        {
+          Array.from({ length: 6 }).map((_, i) => (
+            // eslint-disable-next-line react/no-array-index-key
+            <p.div key={i} bg="9u-gray" h="250px" />
+          ))
+        }
+      </p.div>
+    </p.article>
+    <p.article bgColor="9u-brown" display="flex" flexDir="column" gap="8">
       <Marker>
         <p.h2 color="9u-white">Blog</p.h2>
       </Marker>
-      <p.article>
-        <p.div
-          display="grid"
-          gap="8"
-          gridTemplateColumns="repeat(auto-fill, minmax(300px, 1fr))"
-          textAlign="center"
-        >
-          {
-            Array.from({ length: 6 }).map((_, i) => (
-              // eslint-disable-next-line react/no-array-index-key
-              <p.div key={i} bg="9u-gray" h="250px" />
-            ))
-          }
-        </p.div>
-      </p.article>
-    </p.section>
+      <p.div
+        display="grid"
+        gap="8"
+        gridTemplateColumns="repeat(auto-fill, minmax(300px, 1fr))"
+        textAlign="center"
+      >
+        {
+          Array.from({ length: 6 }).map((_, i) => (
+            // eslint-disable-next-line react/no-array-index-key
+            <p.div key={i} bg="9u-gray" h="250px" />
+          ))
+        }
+      </p.div>
+    </p.article>
   </p.div>
 </BaseLayout>

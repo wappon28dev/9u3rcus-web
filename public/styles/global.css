@@ -17,13 +17,6 @@
   font-display: swap;
 }
 
-::view-transition-old(root) {
-  animation: none;
-}
-::view-transition-new(root) {
-  animation: none;
-}
-
 :root {
   --font-line: "LINE Seed JP", sans-serif;
   --font-udev: "UDEV Gothic 35 JPDOC", monospace;
@@ -50,7 +43,11 @@ article {
   padding-inline: var(--spacing-20);
 }
 
+/* md */
 @media (width < 768px) {
+  html {
+    font-size: var(--font-sizes-md);
+  }
   article {
     padding-inline: var(--spacing-10);
   }
