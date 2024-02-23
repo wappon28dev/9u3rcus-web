@@ -12,5 +12,8 @@ export const INFO = {
     instagram: "@9u3rcus",
     vimeo: "9u3rcus",
   },
-  site: { url: "https://9u3rc.us" },
+  site: {
+    url: "https://9u3rc.us",
+    assets: "https://assets.9u3rc.us/web",
+  },
 };

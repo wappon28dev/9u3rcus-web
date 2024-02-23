@@ -28,6 +28,7 @@ html {
 
 body {
   font-family: var(--font-line);
+  font-feature-settings: "palt";
   color: var(--colors-9u-brown);
 }
 

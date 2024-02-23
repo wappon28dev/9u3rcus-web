@@ -50,7 +50,7 @@ export type works<T = "get"> = Structure<
     /**
      * OGP 画像
      */
-    ogp?: { url: string; width: number; height: number };
+    ogpImg?: { url: string; width: number; height: number };
     /**
      * ホバー時の動画
      */

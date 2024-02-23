@@ -45,3 +45,19 @@ export const worksDetailsMock: EndPoints["get"]["works"] = (() => {
   }
   return JSON.parse(mock);
 })();
+
+export const blogsListMock: EndPoints["gets"]["blogs"] = (() => {
+  const mock = import.meta.env.MICROCMS_MOCK_BLOGS_LIST;
+  if (mock == null) {
+    throw new Error("MICROCMS_MOCK_BLOGS_LIST is not defined");
+  }
+  return JSON.parse(mock);
+})();
+
+export const blogsDetailsMock: EndPoints["get"]["blogs"] = (() => {
+  const mock = import.meta.env.MICROCMS_MOCK_BLOGS_DETAILS;
+  if (mock == null) {
+    throw new Error("MICROCMS_MOCK_BLOGS_DETAILS is not defined");
+  }
+  return JSON.parse(mock);
+})();

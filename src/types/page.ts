@@ -1,14 +1,14 @@
 import type { Token } from "panda/tokens";
 
-export type PageManifest = {
-  seo?: {
+export type PageManifest = Partial<{
+  seo: {
     title: string;
     description?: string;
   };
-  style?: {
+  style: {
     background: Token;
   };
-  header?: {
+  header: {
     isFixed: boolean;
   };
-};
+}>;

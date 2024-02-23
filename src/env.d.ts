@@ -8,4 +8,6 @@ interface ImportMetaEnv {
   readonly MICROCMS_API_KEY: string;
   readonly MICROCMS_MOCK_WORKS_DETAILS: string;
   readonly MICROCMS_MOCK_WORKS_LIST: string;
+  readonly MICROCMS_MOCK_BLOGS_LIST: string;
+  readonly MICROCMS_MOCK_BLOGS_DETAILS: string;
 }

@@ -2,26 +2,60 @@
 import type { GetStaticPaths } from "astro";
 import BaseLayout from "@layouts/BaseLayout.astro";
 import { styled as p } from "panda/jsx";
-import { getContentDetail, getContentList } from "@/lib/services/microcms";
+import {
+  blogsDetailsMock,
+  blogsListMock,
+  // getContentDetail,
+} from "@/lib/services/microcms";
 import { rewriteHTML } from "@/lib/middlewares/rewriteHTML";
-import { imageOpt } from "@/lib/middlewares/rewriters/imageOpt";
+import BackTo from "@/components/BackTo.astro";
+import { formatDate } from "@/lib/constants";
 
 export const getStaticPaths = (async () => {
-  const worksList = await getContentList("blogs", { fields: "id" });
+  // const blogsList = await getContentList("blogs", { fields: "id" });
+  const blogsList = blogsListMock;
 
-  return worksList.contents.map(({ id }) => ({
+  return blogsList.contents.map(({ id }) => ({
     params: { id },
   }));
 }) satisfies GetStaticPaths;
 
-const { id } = Astro.params;
-const blogs = await getContentDetail("blogs", id);
+// const { id } = Astro.params;
+// const blogs = await getContentDetail("blogs", id);
+const { title, content, revisedAt } = blogsDetailsMock;
 
-const content = await rewriteHTML(blogs.content as string, [imageOpt]);
+const modifiedContent = await rewriteHTML(content as string);
 ---
 
-<BaseLayout>
-  <p.h1 className="title">{blogs.title}</p.h1>
-  <p.p className="publishedAt">公開日時：{blogs.publishedAt}</p.p>
-  <p.div className="post" set:html={content} />
+<BaseLayout
+  header={{
+    bgColor: "colors.9u-brown",
+    navAndLogoColor: "colors.9u-white",
+  }}
+  seo={{
+    title: `${title} | Blogs`,
+  }}
+  style={{
+    bgColor: "colors.9u-brown",
+  }}
+>
+  <p.article
+    color="9u-white"
+    display="flex"
+    flexDir="column"
+    gap="5"
+    pb="20"
+    w="100%"
+  >
+    <p.nav>
+      <BackTo href="/blogs" txt="Blogs" />
+    </p.nav>
+    <p.section textAlign="center">
+      <p.h2 fontSize="4xl" fontWeight="bold">
+        {title}
+      </p.h2>
+      <p.p>{formatDate(new Date(revisedAt), "YYYY.MM")}</p.p>
+    </p.section>
+    <p.div set:html={modifiedContent} w="100%" />
+  </p.article>
 </BaseLayout>

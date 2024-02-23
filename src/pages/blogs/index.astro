@@ -1,20 +1,24 @@
 ---
 import BaseLayout from "@layouts/BaseLayout.astro";
 import { styled as p } from "panda/jsx";
+import { Image } from "astro:assets";
 import {
   // getContentList,
-  worksListMock,
+  blogsListMock,
 } from "@/lib/services/microcms";
 import Marker from "@/components/Marker.astro";
 
-// const worksList = await getContentList("blogs", { fields: ["id", "title"] });
-const worksList = worksListMock;
+// const blogsList = await getContentList("blogs", { fields: ["id", "title"] });
+const blogsList = blogsListMock;
 ---
 
 <BaseLayout
   header={{
     bgColor: "colors.9u-brown",
     navAndLogoColor: "colors.9u-white",
+  }}
+  seo={{
+    title: "Blog",
   }}
   style={{
     bgColor: "colors.9u-brown",
@@ -25,32 +29,28 @@ const worksList = worksListMock;
       <p.h1 color="9u-white">Blog</p.h1>
     </Marker>
   </p.div>
-
-  <p.article py="20">
-    <p.div
-      display="grid"
-      gap="8"
-      gridTemplateColumns="repeat(auto-fill, minmax(300px, 1fr))"
-      textAlign="center"
-    >
+  <p.article color="9u-white" py="10">
+    <p.div display="flex" flexDir="column" gap="8" w="100%">
       {
-        worksList.contents.map((works) => (
-          <p.div key={works.id} bg="9u-gray" h="200px" w="300px">
-            <p.h2>{works.title}</p.h2>
-            <p.a href={`/blogs/${works.id}`}>Read more</p.a>
+        blogsList.contents.map(({ id, title, ogpImg, content }) => (
+          <p.div key={id} alignItems="center" display="flex" gap="10">
+            <p.a href={`/blogs/${id}`} minW="300px" w="300px">
+              <Image
+                alt={title}
+                height={ogpImg.height}
+                src={ogpImg.url}
+                width={ogpImg.width}
+              />
+            </p.a>
+            <p.a href={`/blogs/${id}`}>
+              <p.h2 fontSize="3xl" fontWeight="bold">
+                {title}
+              </p.h2>
+              <p.p>{content}</p.p>
+            </p.a>
           </p.div>
         ))
       }
     </p.div>
   </p.article>
 </BaseLayout>
-<!-- 
-<p.ul>
-  {
-    worksList.contents.map((works) => (
-      <p.li key={works.id}>
-        <a href={`/blogs/${works.id}`}>{works.title}</a>
-      </p.li>
-    ))
-  }
-</p.ul> -->

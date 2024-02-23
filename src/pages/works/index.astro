@@ -20,7 +20,7 @@ const worksList = worksListMock;
     </Marker>
   </p.div>
 
-  <p.article py="20">
+  <p.article py="10">
     <p.div
       display="grid"
       gap="8"
@@ -28,7 +28,7 @@ const worksList = worksListMock;
       textAlign="center"
     >
       {
-        worksList.contents.map(({ id, title, ogp, releaseDate }) => (
+        worksList.contents.map(({ id, title, ogpImg, releaseDate }) => (
           <p.a
             key={id}
             bg="9u-gray"
@@ -40,9 +40,9 @@ const worksList = worksListMock;
           >
             <Image
               alt={title}
-              height={ogp.height}
-              src={ogp.url}
-              width={ogp.width}
+              height={ogpImg.height}
+              src={ogpImg.url}
+              width={ogpImg.width}
             />
             <p.div
               _hover={{ opacity: "1" }}
@@ -71,13 +71,3 @@ const worksList = worksListMock;
     </p.div>
   </p.article>
 </BaseLayout>
-<!-- 
-<p.ul>
-  {
-    worksList.contents.map((works) => (
-      <p.li key={works.id}>
-        <a href={`/blogs/${works.id}`}>{works.title}</a>
-      </p.li>
-    ))
-  }
-</p.ul> -->
