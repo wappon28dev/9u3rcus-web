@@ -2,14 +2,10 @@
 import BaseLayout from "@layouts/BaseLayout.astro";
 import { styled as p } from "panda/jsx";
 import { Image } from "astro:assets";
-import {
-  // getContentList,
-  blogsListMock,
-} from "@/lib/services/microcms";
+import { getContentList } from "@/lib/services/microcms";
 import Marker from "@/components/Marker.astro";
 
-// const blogsList = await getContentList("blogs", { fields: ["id", "title"] });
-const blogsList = blogsListMock;
+const blogsList = await getContentList("blogs", { fields: ["id", "title"] });
 ---
 
 <BaseLayout
@@ -33,7 +29,16 @@ const blogsList = blogsListMock;
     <p.div display="flex" flexDir="column" gap="8" w="100%">
       {
         blogsList.contents.map(({ id, title, ogpImg, content }) => (
-          <p.div key={id} alignItems="center" display="flex" gap="10">
+          <p.div
+            key={id}
+            alignItems="center"
+            display="flex"
+            flexDir={{
+              base: "row",
+              mdDown: "column",
+            }}
+            gap={{ base: "10", mdDown: "3" }}
+          >
             <p.a href={`/blogs/${id}`} minW="300px" w="300px">
               <Image
                 alt={title}
@@ -43,7 +48,18 @@ const blogsList = blogsListMock;
               />
             </p.a>
             <p.a href={`/blogs/${id}`}>
-              <p.h2 fontSize="3xl" fontWeight="bold">
+              <p.h2
+                fontSize="3xl"
+                fontWeight="bold"
+                m={{
+                  base: "0",
+                  mdDown: "0 auto",
+                }}
+                style={{
+                  viewTransitionName: `blogs-${id}`,
+                }}
+                w="fit-content"
+              >
                 {title}
               </p.h2>
               <p.p>{content}</p.p>

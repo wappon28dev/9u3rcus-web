@@ -3,20 +3,27 @@ import { INFO } from "@/lib/config";
 import { getEntries } from "@/lib/constants";
 
 export function replaceAssetsDomain(src: string): string {
-  return src.replace(INFO.site.assets, "http://localhost:4321/assets");
+  return src.replace(
+    INFO.site.assets,
+    "http://localhost:4321/assets" // TODO: workaround
+  );
 }
 
 const media2tag: Record<
   string,
-  { ext: string[]; elem: string; attr?: Record<string, unknown> }
+  {
+    ext: string[];
+    elem: string;
+    attr?: Record<string, string>;
+  }
 > = {
   video: {
     ext: ["mp4"],
     elem: "<video>",
-    attr: ["controls", "autoplay", "loop", "muted"].reduce(
-      (acc, cur) => ({ ...acc, [cur]: "" }),
-      {}
-    ),
+    attr: {
+      controls: "true",
+      loop: "true",
+    },
   },
   img: {
     ext: ["jpg", "jpeg", "png"],
@@ -30,10 +37,8 @@ export function convertMedia(html: string): string {
 
   $media.each(async (_, elem) => {
     const $elem = $(elem);
-    let src = $elem.text();
-
+    let src = $(elem).text();
     if (src == null) throw new Error("src is null");
-
     if (src.startsWith(INFO.site.assets)) {
       src = replaceAssetsDomain(src);
     }
@@ -54,18 +59,18 @@ export function convertMedia(html: string): string {
     const { elem: _elem, attr } = tag;
     const newElem = $(_elem);
     newElem.attr("src", src);
-
     getEntries(attr ?? {}).forEach(([k, v]) => {
-      // muted や loop などの属性が空文字の場合は属性名のみを設定する
-      // ex. { muted: "", loop: "" }
-      if (v === "") {
-        newElem.attr("muted");
-      } else {
-        newElem.attr(k, v as string);
-      }
+      newElem.attr(k, v);
     });
 
-    $elem.replaceWith(newElem);
+    const parentTagName = $elem.parent()?.get(0)?.tagName;
+    if (parentTagName === "p") {
+      $elem.parent()?.replaceWith($("<figure>").append(newElem));
+    } else {
+      // eslint-disable-next-line no-console
+      console.warn(`parentTagName is not p: ${parentTagName}`);
+      $elem.replaceWith(newElem);
+    }
   });
 
   return $.html();

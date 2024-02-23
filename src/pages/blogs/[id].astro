@@ -2,27 +2,22 @@
 import type { GetStaticPaths } from "astro";
 import BaseLayout from "@layouts/BaseLayout.astro";
 import { styled as p } from "panda/jsx";
-import {
-  blogsDetailsMock,
-  blogsListMock,
-  // getContentDetail,
-} from "@/lib/services/microcms";
+import { getContentDetail, getContentList } from "@/lib/services/microcms";
 import { rewriteHTML } from "@/lib/middlewares/rewrite-html";
 import BackTo from "@/components/BackTo.astro";
 import { formatDate } from "@/lib/constants";
+import { contentStyle } from "@/lib/style";
 
 export const getStaticPaths = (async () => {
-  // const blogsList = await getContentList("blogs", { fields: "id" });
-  const blogsList = blogsListMock;
+  const blogsList = await getContentList("blogs", { fields: "id" });
 
   return blogsList.contents.map(({ id }) => ({
     params: { id },
   }));
 }) satisfies GetStaticPaths;
 
-// const { id } = Astro.params;
-// const blogs = await getContentDetail("blogs", id);
-const { title, content, revisedAt } = blogsDetailsMock;
+const { id } = Astro.params;
+const { title, content, revisedAt } = await getContentDetail("blogs", id);
 
 const modifiedContent = await rewriteHTML(content as string);
 ---
@@ -50,12 +45,23 @@ const modifiedContent = await rewriteHTML(content as string);
     <p.nav>
       <BackTo href="/blogs" txt="Blogs" />
     </p.nav>
-    <p.section textAlign="center">
-      <p.h2 fontSize="4xl" fontWeight="bold">
-        {title}
-      </p.h2>
-      <p.p>{formatDate(new Date(revisedAt), "YYYY.MM")}</p.p>
+    <p.section>
+      <p.div w="100%">
+        <p.h2
+          fontSize="4xl"
+          fontWeight="bold"
+          m="0 auto"
+          style={{
+            viewTransitionName: `blogs-${id}`,
+          }}
+          textAlign="center"
+          w="fit-content"
+        >
+          {title}
+        </p.h2>
+      </p.div>
+      <p.p textAlign="center">{formatDate(new Date(revisedAt), "YYYY.MM")}</p.p>
     </p.section>
-    <p.div set:html={modifiedContent} w="100%" />
+    <p.div className={contentStyle} set:html={modifiedContent} w="100%" />
   </p.article>
 </BaseLayout>

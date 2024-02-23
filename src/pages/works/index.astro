@@ -2,15 +2,11 @@
 import BaseLayout from "@layouts/BaseLayout.astro";
 import { styled as p } from "panda/jsx";
 import { Image } from "astro:assets";
-import {
-  // getContentList,
-  worksListMock,
-} from "@/lib/services/microcms";
 import Marker from "@/components/Marker.astro";
 import { formatDate } from "@/lib/constants";
+import { getContentList } from "@/lib/services/microcms";
 
-// const worksList = await getContentList("blogs", { fields: ["id", "title"] });
-const worksList = worksListMock;
+const worksList = await getContentList("works", { fields: ["id", "title"] });
 ---
 
 <BaseLayout>

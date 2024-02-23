@@ -3,29 +3,24 @@ import type { GetStaticPaths } from "astro";
 import BaseLayout from "@layouts/BaseLayout.astro";
 import { styled as p } from "panda/jsx";
 import { Image } from "astro:assets";
-import {
-  // getContentDetail,
-  // getContentList,
-  worksDetailsMock,
-  worksListMock,
-} from "@/lib/services/microcms";
+import { contentStyle } from "@/lib/style";
 import { rewriteHTML } from "@/lib/middlewares/rewrite-html";
 import BackTo from "@/components/BackTo.astro";
 import { formatDate } from "@/lib/constants";
+import { replaceAssetsDomain } from "@/lib/middlewares/rewriters/convert2media";
+import { getContentDetail, getContentList } from "@/lib/services/microcms";
 
 export const getStaticPaths = (async () => {
-  // const worksList = await getContentList("works", { fields: "id" });
-  const worksList = worksListMock;
+  const worksList = await getContentList("works", { fields: "id" });
 
   return worksList.contents.map(({ id }) => ({
     params: { id },
   }));
 }) satisfies GetStaticPaths;
 
-// const { id } = Astro.params;
-// const works = await getContentDetail("works", id);
-const { id, title, ogpImg, releaseDate, clientName, description, content } =
-  worksDetailsMock;
+const { id } = Astro.params;
+const { title, visualMain, releaseDate, clientName, description, content } =
+  await getContentDetail("works", id);
 
 const modifiedContent = await rewriteHTML(content as string);
 ---
@@ -45,22 +40,18 @@ const modifiedContent = await rewriteHTML(content as string);
     <p.div
       display="flex"
       justifyContent="center"
+      m="0 auto"
       maxHeight="1200px"
       style={{
         viewTransitionName: `works-${id}`,
       }}
-      w="100%"
+      w="fit-content"
     >
-      <Image
-        alt={title}
-        height={ogpImg.height}
-        src={ogpImg.url}
-        width={ogpImg.width}
-      />
+      <Image alt={title} inferSize src={replaceAssetsDomain(visualMain)} />
     </p.div>
-    <p.h1 color="9u-red1" fontSize="4xl" fontWeight="bold" textAlign="center"
-      >{title}</p.h1
-    >
+    <p.h1 color="9u-red1" fontSize="4xl" fontWeight="bold" textAlign="center">
+      {title}
+    </p.h1>
     <p.section textAlign="center">
       <p.p>{formatDate(new Date(releaseDate), "YYYY.MM")}</p.p>
       {
@@ -79,6 +70,7 @@ const modifiedContent = await rewriteHTML(content as string);
     >
       {description}
     </p.section>
-    <p.div set:html={modifiedContent} w="100%" />
+    <p.hr w="100%" />
+    <p.div className={contentStyle} set:html={modifiedContent} w="100%" />
   </p.article>
 </BaseLayout>
