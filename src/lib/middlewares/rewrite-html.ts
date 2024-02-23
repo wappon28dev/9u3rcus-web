@@ -16,5 +16,7 @@ export async function rewriteHTML(
     result = await rewriter(result);
   }
 
+  console.log("result", result);
+
   return result;
 }

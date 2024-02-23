@@ -6,6 +6,11 @@ type ImageData = GetImageResult["options"];
 
 async function getOptimalImage(data: ImageData): Promise<GetImageResult> {
   const { src, alt, width, height } = data;
+
+  if (width == null || height == null) {
+    return await getImage({ src, alt, inferSize: true });
+  }
+
   return await getImage({ src, alt, width, height });
 }
 
@@ -24,11 +29,12 @@ export async function imageOpt(html: string): Promise<string> {
       throw new Error("Image element has no src attribute");
     }
 
+    const { src, alt, width, height } = attr;
     imageDataList.push({
-      src: attr.src,
-      alt: attr.alt ?? "",
-      width: Number(attr.width) ?? 0,
-      height: Number(attr.height) ?? 0,
+      src,
+      alt: alt ?? "",
+      width: width != null ? Number(width) : undefined,
+      height: height != null ? Number(height) : undefined,
     });
   });
 

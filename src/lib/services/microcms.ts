@@ -1,6 +1,9 @@
-// SDK利用準備
 import type { MicroCMSQueries } from "microcms-js-sdk";
 import { createClient } from "microcms-js-sdk";
+import blogsDetail from "@public/assets/mock/blogs-detail.json";
+import blogsList from "@public/assets/mock/blogs-list.json";
+import worksDetail from "@public/assets/mock/works-detail.json";
+import worksList from "@public/assets/mock/works-list.json";
 import type { EndPoints } from "@/types/cms-types";
 
 export const client = createClient({
@@ -31,33 +34,29 @@ export async function getContentDetail<T extends keyof EndPoints["get"]>(
 }
 
 export const worksListMock: EndPoints["gets"]["works"] = (() => {
-  const mock = import.meta.env.MICROCMS_MOCK_WORKS_LIST;
-  if (mock == null) {
-    throw new Error("MICROCMS_MOCK_WORKS_LIST is not defined");
+  if (worksList == null) {
+    throw new Error("worksList is not defined");
   }
-  return JSON.parse(mock);
+  return worksList as any;
 })();
 
 export const worksDetailsMock: EndPoints["get"]["works"] = (() => {
-  const mock = import.meta.env.MICROCMS_MOCK_WORKS_DETAILS;
-  if (mock == null) {
-    throw new Error("MICROCMS_MOCK_WORKS_DETAILS is not defined");
+  if (worksDetail == null) {
+    throw new Error("worksDetail is not defined");
   }
-  return JSON.parse(mock);
+  return worksDetail as any;
 })();
 
 export const blogsListMock: EndPoints["gets"]["blogs"] = (() => {
-  const mock = import.meta.env.MICROCMS_MOCK_BLOGS_LIST;
-  if (mock == null) {
-    throw new Error("MICROCMS_MOCK_BLOGS_LIST is not defined");
+  if (blogsList == null) {
+    throw new Error("blogsList is not defined");
   }
-  return JSON.parse(mock);
+  return blogsList as any;
 })();
 
 export const blogsDetailsMock: EndPoints["get"]["blogs"] = (() => {
-  const mock = import.meta.env.MICROCMS_MOCK_BLOGS_DETAILS;
-  if (mock == null) {
-    throw new Error("MICROCMS_MOCK_BLOGS_DETAILS is not defined");
+  if (blogsDetail == null) {
+    throw new Error("blogsDetail is not defined");
   }
-  return JSON.parse(mock);
+  return blogsDetail as any;
 })();

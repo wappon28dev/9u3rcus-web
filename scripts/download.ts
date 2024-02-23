@@ -2,7 +2,13 @@
 
 import path from "path";
 import { rmdir } from "node:fs/promises";
-import { PUBLIC_PATH, type ChildrenFlat, LOGO, out } from "./constants";
+import {
+  PUBLIC_PATH,
+  type ChildrenFlat,
+  LOGO,
+  out,
+  ASSETS_PATH,
+} from "./constants";
 
 const {
   ASSETS_API_ENDPOINT: endpoint,
@@ -57,11 +63,18 @@ await Promise.all(
       throw new Error("Failed to fetch asset");
     }
 
-    const fullPath = path.join(PUBLIC_PATH, filePath);
-    await Bun.write(fullPath, data).catch((err) => {
-      out.fail(`Failed to save asset "${filePath}": ${err}`);
-      throw err;
-    });
+    const fullPathPublic = path.join(PUBLIC_PATH, filePath);
+    const fullPathAssets = path.join(ASSETS_PATH, filePath);
+    await Promise.all([
+      Bun.write(fullPathPublic, data).catch((err) => {
+        out.fail(`Failed to save asset "${filePath}": ${err}`);
+        throw err;
+      }),
+      Bun.write(fullPathAssets, data).catch((err) => {
+        out.fail(`Failed to save asset "${filePath}": ${err}`);
+        throw err;
+      }),
+    ]);
 
     out.success(`Saved: ${name}`);
   })
