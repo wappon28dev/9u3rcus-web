@@ -1,50 +1,28 @@
 import { load } from "cheerio";
-import { getConfiguredImageService, imageConfig } from "astro:assets";
-import { isLocalService } from "astro/assets";
 import { INFO } from "@/lib/config";
-import { getKeys } from "@/lib/constants";
+import { getEntries } from "@/lib/constants";
 
 export function replaceAssetsDomain(src: string): string {
-  return src.replace(INFO.site.assets, "");
+  return src.replace(INFO.site.assets, "http://localhost:4321/assets");
 }
 
-const media2tag = {
+const media2tag: Record<
+  string,
+  { ext: string[]; elem: string; attr?: Record<string, unknown> }
+> = {
   video: {
     ext: ["mp4"],
     elem: "<video>",
+    attr: ["controls", "autoplay", "loop", "muted"].reduce(
+      (acc, cur) => ({ ...acc, [cur]: "" }),
+      {}
+    ),
   },
   img: {
     ext: ["jpg", "jpeg", "png"],
     elem: "<img>",
   },
-} as const satisfies Record<string, { ext: string[]; elem: string }>;
-
-async function inferImageSize(
-  src: string
-): Promise<{ width: number; height: number }> {
-  const imageService = await getConfiguredImageService();
-  if (!isLocalService(imageService))
-    throw new Error("imageService is not local");
-
-  const url = `http://localhost:4321${src}`;
-  const response = await fetch(url);
-  const blob = await response.blob();
-  const fileReader = new FileReader();
-
-  return await new Promise((resolve) => {
-    fileReader.onload = () => {
-      const image = new Image();
-      image.onload = () => {
-        resolve({
-          width: image.width,
-          height: image.height,
-        });
-      };
-      image.src = fileReader.result;
-    };
-    fileReader.readAsDataURL(blob);
-  });
-}
+};
 
 export function convertMedia(html: string): string {
   const $ = load(html);
@@ -63,20 +41,29 @@ export function convertMedia(html: string): string {
     const ext = src.split(".").at(-1);
     if (ext == null) throw new Error(`_ext is null: ${src}`);
 
-    const key = getKeys(media2tag).find((k) =>
-      media2tag[k].ext.includes(ext as never)
-    );
+    const key = Object.keys(media2tag).find((k) => {
+      const t = media2tag[k];
+      if (t == null) throw new Error("t.ext is null");
+      return t.ext.includes(ext as never);
+    });
     if (key == null) throw new Error(`key is null: ${src}`);
 
-    const { elem: _elem } = media2tag[key];
+    const tag = media2tag[key];
+    if (tag == null) throw new Error("tag is null");
+
+    const { elem: _elem, attr } = tag;
     const newElem = $(_elem);
     newElem.attr("src", src);
 
-    if (key === "img") {
-      const { height, width } = await inferImageSize(src);
-      newElem.attr("height", height.toString());
-      newElem.attr("width", width.toString());
-    }
+    getEntries(attr ?? {}).forEach(([k, v]) => {
+      // muted や loop などの属性が空文字の場合は属性名のみを設定する
+      // ex. { muted: "", loop: "" }
+      if (v === "") {
+        newElem.attr("muted");
+      } else {
+        newElem.attr(k, v as string);
+      }
+    });
 
     $elem.replaceWith(newElem);
   });

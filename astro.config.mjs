@@ -21,10 +21,12 @@ export default defineConfig({
   ],
   site: "https://9u3rc.us",
   image: {
-    domains: ["images.microcms-assets.io"],
     remotePatterns: [
       {
         protocol: "https",
+      },
+      {
+        protocol: "http",
       },
     ],
   },

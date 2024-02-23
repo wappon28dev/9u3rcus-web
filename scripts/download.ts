@@ -2,6 +2,7 @@
 
 import path from "path";
 import { rmdir } from "node:fs/promises";
+import { write } from "bun";
 import {
   PUBLIC_PATH,
   type ChildrenFlat,
@@ -45,12 +46,16 @@ assets.forEach(({ filePath, size, lastModifiedDateTime }, i) => {
 
 // remove old assets
 out.info("Removing old assets...");
-await rmdir(path.join(PUBLIC_PATH, "assets"), { recursive: true }).catch(
-  (err) => {
+await Promise.all([
+  rmdir(path.join(PUBLIC_PATH, "assets"), { recursive: true }).catch((err) => {
     out.fail(`Failed to remove old assets: ${err}`);
     throw err;
-  }
-);
+  }),
+  rmdir(path.join(ASSETS_PATH, "assets"), { recursive: true }).catch((err) => {
+    out.fail(`Failed to remove old assets: ${err}`);
+    throw err;
+  }),
+]);
 
 // download assets
 out.info("Downloading assets...");
@@ -64,18 +69,9 @@ await Promise.all(
     }
 
     const fullPathPublic = path.join(PUBLIC_PATH, filePath);
-    const fullPathAssets = path.join(ASSETS_PATH, filePath);
-    await Promise.all([
-      Bun.write(fullPathPublic, data).catch((err) => {
-        out.fail(`Failed to save asset "${filePath}": ${err}`);
-        throw err;
-      }),
-      Bun.write(fullPathAssets, data).catch((err) => {
-        out.fail(`Failed to save asset "${filePath}": ${err}`);
-        throw err;
-      }),
-    ]);
-
+    await write(fullPathPublic, data, {
+      createPath: true,
+    });
     out.success(`Saved: ${name}`);
   })
 );

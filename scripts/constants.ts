@@ -3,7 +3,7 @@ import path from "path";
 import { AA } from "./aa";
 
 export const PUBLIC_PATH = path.join(import.meta.dir, "..", "public");
-export const ASSETS_PATH = path.join(PUBLIC_PATH, "..", "src", "assets");
+export const ASSETS_PATH = path.join(PUBLIC_PATH, "..", "src");
 export type ChildrenFlat = Array<{
   downloadUrl: string;
   name: string;
