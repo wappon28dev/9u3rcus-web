@@ -2,9 +2,12 @@
 import BaseLayout from "@layouts/BaseLayout.astro";
 import { styled as p } from "panda/jsx";
 import { Image } from "astro:assets";
+import { css } from "panda/css";
 import Marker from "@/components/Marker.astro";
 import { formatDate } from "@/lib/constants";
 import { getContentList } from "@/lib/services/microcms";
+import { VideoPlayer } from "@/components/VideoPlayer.tsx";
+import { modifySrc } from "@/lib/middlewares/rewriters/convert2media";
 
 const worksList = await getContentList("works", { fields: ["id", "title"] });
 ---
@@ -24,45 +27,91 @@ const worksList = await getContentList("works", { fields: ["id", "title"] });
       textAlign="center"
     >
       {
-        worksList.contents.map(({ id, title, ogpImg, releaseDate }) => (
-          <p.a
-            key={id}
-            bg="9u-gray"
-            href={`/works/${id}`}
-            position="relative"
-            style={{
-              viewTransitionName: `works-${id}`,
-            }}
-          >
-            <Image
-              alt={title}
-              height={ogpImg.height}
-              src={ogpImg.url}
-              width={ogpImg.width}
-            />
-            <p.div
-              _hover={{ opacity: "1" }}
-              bg="9u-red1"
-              color="9u-white"
-              display="grid"
-              h="100%"
-              left="50%"
-              opacity="0"
-              placeContent="center"
-              placeItems="center"
-              position="absolute"
-              top="50%"
-              transform="translate(-50%, -50%)"
-              transition="opacity 0.3s"
+        worksList.contents.map(
+          ({ id, title, ogpImg, releaseDate, videoOnHover }) => (
+            <p.a
+              key={id}
+              bg="9u-gray"
+              className={css({
+                "& > *": {
+                  pointerEvents: "none",
+                  overflow: "hidden",
+                },
+                "& video": {
+                  pointerEvents: "auto",
+                },
+              })}
+              href={`/works/${id}`}
+              position="relative"
+              style={{
+                viewTransitionName: `works-${id}`,
+                overflow: "hidden",
+              }}
               w="100%"
             >
-              <p.p fontSize="xl" fontWeight="bold">
-                {title}
-              </p.p>
-              <p.p>{formatDate(new Date(releaseDate), "YYYY.MM")}</p.p>
-            </p.div>
-          </p.a>
-        ))
+              <Image
+                alt={title}
+                height={ogpImg.height}
+                src={ogpImg.url}
+                width={ogpImg.width}
+              />
+              <p.div
+                h="100%"
+                left="50%"
+                opacity={{
+                  base: "0",
+                  _hover: "1",
+                }}
+                position="absolute"
+                style={{
+                  pointerEvents: videoOnHover != null ? "none" : "auto",
+                }}
+                top="50%"
+                transform="translate(-50%, -50%)"
+                transition="opacity 0.3s"
+                w="100%"
+              >
+                <p.div h="100%" overflow="hidden" position="relative">
+                  {videoOnHover != null && (
+                    <VideoPlayer
+                      client:visible
+                      muted
+                      playOnHover
+                      src={modifySrc(videoOnHover, "video")}
+                      style={{
+                        minWidth: "100%",
+                        minHeight: "100%",
+                      }}
+                    />
+                  )}
+                  <p.div
+                    bg="9u-red1"
+                    h="100%"
+                    left="50%"
+                    opacity="0.5"
+                    position="absolute"
+                    top="50%"
+                    transform="translate(-50%, -50%)"
+                    w="100%"
+                  />
+                  <p.div
+                    color="9u-white"
+                    left="50%"
+                    position="absolute"
+                    top="50%"
+                    transform="translate(-50%, -50%)"
+                    w="100%"
+                  >
+                    <p.p fontSize="xl" fontWeight="bold">
+                      {title}
+                    </p.p>
+                    <p.p>{formatDate(new Date(releaseDate), "YYYY.MM")}</p.p>
+                  </p.div>
+                </p.div>
+              </p.div>
+            </p.a>
+          )
+        )
       }
     </p.div>
   </p.article>

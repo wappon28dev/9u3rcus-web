@@ -8,8 +8,8 @@ export const INFO = {
   },
   addr: {
     email: "contact@9u3rc.us",
-    x: "@9u3rcus",
-    instagram: "@9u3rcus",
+    x: "9u3rcus",
+    instagram: "9u3rcus",
     vimeo: "9u3rcus",
   },
   site: {
