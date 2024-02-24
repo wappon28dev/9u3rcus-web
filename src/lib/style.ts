@@ -50,7 +50,13 @@ export const contentStyle = css({
       py: "3",
     },
     "& > *": {
+      w: "fit-content",
       margin: "0 auto",
+    },
+    "& figcaption": {
+      pt: "1",
+      fontSize: "sm",
+      opacity: "0.8",
     },
   },
   "& blockquote": {

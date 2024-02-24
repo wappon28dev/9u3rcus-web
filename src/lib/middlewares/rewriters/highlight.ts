@@ -15,22 +15,23 @@ export function highlight(html: string): string {
 
     let result;
     if (langName !== "") {
-      result = hljs.highlight(langName, $code.text());
+      result = hljs.highlight($code.text(), {
+        language: langName,
+      });
     } else {
       result = hljs.highlightAuto($code.text());
     }
 
     const fileName = $container.attr("data-filename");
-    if (fileName != null) {
+    const fullLangName = hljs.getLanguage(langName)?.name;
+
+    if (fileName != null && fullLangName != null) {
       $code
         .parent()
-        .before(`<div><pre>${fileName}</pre><p>${langName}</p></div>`);
-    } else {
-      $code.parent().before(`<div><pre></pre><p>${langName}</p></div>`);
+        .before(`<div><pre>${fileName}</pre><p>${fullLangName}</p></div>`);
     }
 
     $code.html(result.value);
-    // $code.addClass("hljs");
     $container.addClass("code-block");
   });
 

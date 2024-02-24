@@ -1,3 +1,4 @@
+import { addFigcaption } from "./rewriters/addFigcaption";
 import { convertMedia } from "./rewriters/convert2media";
 import { highlight } from "./rewriters/highlight";
 import { imageOpt } from "./rewriters/image-opt";
@@ -14,6 +15,7 @@ export async function rewriteHTML(
     convertMedia,
     imageOpt,
     highlight,
+    addFigcaption,
     ...additionalRewriter,
   ];
 

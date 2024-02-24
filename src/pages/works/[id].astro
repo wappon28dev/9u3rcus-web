@@ -7,7 +7,7 @@ import { contentStyle } from "@/lib/style";
 import { rewriteHTML } from "@/lib/middlewares/rewrite-html";
 import BackTo from "@/components/BackTo.astro";
 import { formatDate } from "@/lib/constants";
-import { replaceAssetsDomain } from "@/lib/middlewares/rewriters/convert2media";
+import { modifySrc } from "@/lib/middlewares/rewriters/convert2media";
 import { getContentDetail, getContentList } from "@/lib/services/microcms";
 
 export const getStaticPaths = (async () => {
@@ -47,7 +47,7 @@ const modifiedContent = await rewriteHTML(content as string);
       }}
       w="fit-content"
     >
-      <Image alt={title} inferSize src={replaceAssetsDomain(visualMain)} />
+      <Image alt={title} inferSize src={modifySrc(visualMain, "img")} />
     </p.div>
     <p.h1 color="9u-red1" fontSize="4xl" fontWeight="bold" textAlign="center">
       {title}
