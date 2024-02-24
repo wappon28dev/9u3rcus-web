@@ -3,13 +3,8 @@
 import path from "path";
 import { rmdir } from "node:fs/promises";
 import { write } from "bun";
-import {
-  PUBLIC_PATH,
-  type ChildrenFlat,
-  LOGO,
-  out,
-  ASSETS_PATH,
-} from "./constants";
+import { out } from "scripts/shared/out";
+import { LOGO, type ChildrenFlat, PUBLIC_PATH } from "./constants";
 
 const {
   ASSETS_API_ENDPOINT: endpoint,
@@ -48,10 +43,6 @@ assets.forEach(({ filePath, size, lastModifiedDateTime }, i) => {
 out.info("Removing old assets...");
 await Promise.all([
   rmdir(path.join(PUBLIC_PATH, "assets"), { recursive: true }).catch((err) => {
-    out.fail(`Failed to remove old assets: ${err}`);
-    throw err;
-  }),
-  rmdir(path.join(ASSETS_PATH, "assets"), { recursive: true }).catch((err) => {
     out.fail(`Failed to remove old assets: ${err}`);
     throw err;
   }),

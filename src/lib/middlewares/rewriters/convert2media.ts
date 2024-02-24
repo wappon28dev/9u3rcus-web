@@ -1,16 +1,11 @@
 import { load } from "cheerio";
 import { INFO } from "@/lib/config";
-import { getEntries } from "@/lib/constants";
+import { getEntries, getPublicFilePath } from "@/lib/constants";
 
-export function replaceAssetsDomain(src: string): string {
-  return src.replace(
-    INFO.site.assets,
-    "http://localhost:4321/assets" // TODO: workaround
-  );
-}
+type Key = "video" | "img";
 
 const media2tag: Record<
-  string,
+  Key,
   {
     ext: string[];
     elem: string;
@@ -31,26 +26,37 @@ const media2tag: Record<
   },
 };
 
+export function modifySrc(src: string, key: Key): string {
+  let newSrc = src;
+
+  if (src.startsWith(INFO.site.assets)) {
+    newSrc = src.replace(INFO.site.assets, "/assets");
+
+    if (key === "img") {
+      newSrc = src.replace(INFO.site.assets, getPublicFilePath("assets"));
+    }
+  }
+
+  return newSrc;
+}
+
 export function convertMedia(html: string): string {
   const $ = load(html);
   const $media = $(".media");
 
   $media.each(async (_, elem) => {
     const $elem = $(elem);
-    let src = $(elem).text();
+    const src = $elem.text();
     if (src == null) throw new Error("src is null");
-    if (src.startsWith(INFO.site.assets)) {
-      src = replaceAssetsDomain(src);
-    }
 
     const ext = src.split(".").at(-1);
-    if (ext == null) throw new Error(`_ext is null: ${src}`);
+    if (ext == null) throw new Error(`ext is null: ${src}`);
 
     const key = Object.keys(media2tag).find((k) => {
-      const t = media2tag[k];
+      const t = media2tag[k as Key];
       if (t == null) throw new Error("t.ext is null");
       return t.ext.includes(ext as never);
-    });
+    }) as Key | undefined;
     if (key == null) throw new Error(`key is null: ${src}`);
 
     const tag = media2tag[key];
@@ -58,7 +64,8 @@ export function convertMedia(html: string): string {
 
     const { elem: _elem, attr } = tag;
     const newElem = $(_elem);
-    newElem.attr("src", src);
+
+    newElem.attr("src", modifySrc(src, key));
     getEntries(attr ?? {}).forEach(([k, v]) => {
       newElem.attr(k, v);
     });

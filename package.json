@@ -5,10 +5,10 @@
   "version": "0.0.0",
   "scripts": {
     "prepare": "panda codegen && bun run dl-assets",
-    "dev": "astro dev",
+    "dev": "bun run ./scripts/devAndBuild/index.ts dev",
     "start": "astro dev",
-    "build": "astro check && astro build",
-    "dl-assets": "bun run ./scripts/download.ts",
+    "build": "bun run ./scripts/devAndBuild/index.ts build",
+    "dl-assets": "bun run ./scripts/dl-assets/index.ts",
     "generate:cms": "bunx microcms-typescript schemas src/types/cms-types.ts",
     "preview": "astro preview",
     "astro": "astro",

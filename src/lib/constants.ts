@@ -36,3 +36,12 @@ export function formatDate(
       throw new Error("Invalid format");
   }
 }
+
+/**
+ * NOTE: This fn is only used in server-side code (in `dev`/`build`);
+ *       Do not use this in client-side code.
+ * @param path path WITHOUT leading slash
+ * @returns URL to the `/public` path
+ */
+export const getPublicFilePath = (path: string): string =>
+  `http://localhost:${import.meta.env.ASSETS_LOCAL_SERVER_PORT}/${path}`;

@@ -1,6 +1,7 @@
 import type { MicroCMSQueries } from "microcms-js-sdk";
 import { createClient } from "microcms-js-sdk";
 import type { EndPoints } from "@/types/cms-types";
+import { getPublicFilePath } from "../constants";
 
 export const client = createClient({
   serviceDomain: import.meta.env.MICROCMS_SERVICE_DOMAIN,
@@ -14,11 +15,11 @@ export async function getContentList<T extends keyof EndPoints["gets"]>(
   switch (key) {
     case "blogs":
       return await (
-        await fetch("http://localhost:4321/assets/mock/blogs-list.json")
+        await fetch(getPublicFilePath("/assets/mock/blogs-list.json"))
       ).json();
     case "works":
       return await (
-        await fetch("http://localhost:4321/assets/mock/works-list.json")
+        await fetch(getPublicFilePath("/assets/mock/works-list.json"))
       ).json();
     default:
       throw new Error("Invalid key");
@@ -38,11 +39,11 @@ export async function getContentDetail<T extends keyof EndPoints["get"]>(
   switch (key) {
     case "blogs":
       return await (
-        await fetch("http://localhost:4321/assets/mock/blogs-detail.json")
+        await fetch(getPublicFilePath("/assets/mock/blogs-detail.json"))
       ).json();
     case "works":
       return await (
-        await fetch("http://localhost:4321/assets/mock/works-detail.json")
+        await fetch(getPublicFilePath("/assets/mock/works-detail.json"))
       ).json();
     default:
       throw new Error("Invalid key");

@@ -1,4 +1,11 @@
 {
-  "cSpell.words": ["9u3rcus", "astro", "microcms", "MICROCMS", "nanostores"],
+  "cSpell.words": [
+    "9u3rcus",
+    "astro",
+    "bunx",
+    "microcms",
+    "MICROCMS",
+    "nanostores"
+  ],
   "eslint.validate": ["astro"]
 }
