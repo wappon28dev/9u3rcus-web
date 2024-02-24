@@ -25,7 +25,12 @@ const { title, visualMain, releaseDate, clientName, description, content } =
 const modifiedContent = await rewriteHTML(content as string);
 ---
 
-<BaseLayout>
+<BaseLayout
+  seo={{
+    title: `${title} | Works`,
+    description,
+  }}
+>
   <p.article
     alignItems="center"
     display="flex"

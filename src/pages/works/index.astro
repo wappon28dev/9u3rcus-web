@@ -12,7 +12,11 @@ import { modifySrc } from "@/lib/middlewares/rewriters/convert2media";
 const worksList = await getContentList("works", { fields: ["id", "title"] });
 ---
 
-<BaseLayout>
+<BaseLayout
+  seo={{
+    title: "Works",
+  }}
+>
   <p.div m="0 auto" w="100%">
     <Marker>
       <p.h1>Works</p.h1>

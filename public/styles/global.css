@@ -25,6 +25,7 @@
 /* font */
 html {
   font-size: var(--font-sizes-lg);
+  scroll-padding-top: 130px; /* header height */
 }
 
 body {
@@ -84,12 +85,37 @@ article {
   padding-inline: var(--spacing-20);
 }
 
+h2,
+h3 {
+  position: relative;
+
+  &:hover {
+    a {
+      opacity: 0.6;
+    }
+  }
+
+  > a {
+    opacity: 0;
+    cursor: pointer;
+    position: absolute;
+    left: calc(-1 * var(--spacing-6));
+    padding-right: var(--spacing-6);
+    transition: opacity 0.1s;
+  }
+}
+
 /* 768px = md */
 @media (width < 768px) {
   html {
     font-size: var(--font-sizes-md);
+    scroll-padding-top: 60px; /* header height */
   }
   article {
     padding-inline: var(--spacing-5);
+  }
+  h2 > a,
+  h3 > a {
+    display: none;
   }
 }
