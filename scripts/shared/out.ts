@@ -43,5 +43,6 @@ export const out = {
     console.log(
       `${ASCII.GREEN}✓ Done! ${ASCII.GRAY}${ASCII.END}\t${aa}${ASCII.END}`
     );
+    console.log(`${ASCII.GRAY}--------------------${ASCII.END}`);
   },
 };

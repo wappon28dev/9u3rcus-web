@@ -5,6 +5,7 @@ import pandacss from "@pandacss/astro";
 import sitemap from "@astrojs/sitemap";
 import metaTags from "astro-meta-tags";
 import icon from "astro-icon";
+import compress from "astro-compress";
 
 // https://astro.build/config
 export default defineConfig({
@@ -18,6 +19,7 @@ export default defineConfig({
         mdi: ["*"],
       },
     }),
+    compress(),
   ],
   site: "https://9u3rc.us",
   image: {
