@@ -20,6 +20,7 @@
     "@astrojs/check": "^0.5.5",
     "@astrojs/react": "^3.0.10",
     "@astrojs/sitemap": "^3.1.1",
+    "@hookform/resolvers": "^3.3.4",
     "@iconify-json/mdi": "^1.1.64",
     "@iconify/react": "^4.1.1",
     "@nanostores/react": "^0.7.2",
@@ -37,6 +38,7 @@
     "nanostores": "^0.10.0",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
+    "react-hook-form": "^7.50.1",
     "react-svg": "^16.1.33",
     "zod": "^3.22.4"
   },

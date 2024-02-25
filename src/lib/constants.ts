@@ -22,6 +22,11 @@ export function getEntries<T extends Record<string, unknown>>(
 ): Entries<T> {
   return Object.entries(obj) as Entries<T>;
 }
+export function fromEntries<T extends Record<string, unknown>>(
+  entries: Entries<T>
+): T {
+  return Object.fromEntries(entries) as T;
+}
 
 export function formatDate(
   date: Date,
