@@ -25,8 +25,8 @@ const blogsList = await getContentList("blogs", { fields: ["id", "title"] });
       <p.h1 color="9u-white">Blog</p.h1>
     </Marker>
   </p.div>
-  <p.article color="9u-white" py="10">
-    <p.div display="flex" flexDir="column" gap="8" w="100%">
+  <p.div className="content" color="9u-white" py="10">
+    <p.div display="flex" flexDir="column" gap="10" w="100%">
       {
         blogsList.contents.map(({ id, title, ogpImg, content }) => (
           <p.div
@@ -68,5 +68,5 @@ const blogsList = await getContentList("blogs", { fields: ["id", "title"] });
         ))
       }
     </p.div>
-  </p.article>
+  </p.div>
 </BaseLayout>

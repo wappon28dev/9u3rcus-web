@@ -2,10 +2,10 @@ import { load } from "cheerio";
 import { INFO } from "@/lib/config";
 import { getEntries, getPublicFilePath } from "@/lib/constants";
 
-type Key = "video" | "img";
+export type MediaKey = "video" | "img";
 
-const media2tag: Record<
-  Key,
+export const media2tag: Record<
+  MediaKey,
   {
     ext: string[];
     elem: string;
@@ -26,7 +26,7 @@ const media2tag: Record<
   },
 };
 
-export function modifySrc(src: string, key: Key): string {
+export function modifySrc(src: string, key: MediaKey): string {
   let newSrc = src;
 
   if (src.startsWith(INFO.site.assets)) {
@@ -38,6 +38,17 @@ export function modifySrc(src: string, key: Key): string {
   }
 
   return newSrc;
+}
+
+export function detectMediaKey(ext: string): MediaKey {
+  const key = Object.keys(media2tag).find((k) => {
+    const t = media2tag[k as MediaKey];
+    if (t == null) throw new Error("t.ext is null");
+    return t.ext.includes(ext as never);
+  }) as MediaKey | undefined;
+
+  if (key == null) throw new Error(`result is null: ${ext}`);
+  return key;
 }
 
 export function convertMedia(html: string): string {
@@ -52,15 +63,8 @@ export function convertMedia(html: string): string {
     const ext = src.split(".").at(-1);
     if (ext == null) throw new Error(`ext is null: ${src}`);
 
-    const key = Object.keys(media2tag).find((k) => {
-      const t = media2tag[k as Key];
-      if (t == null) throw new Error("t.ext is null");
-      return t.ext.includes(ext as never);
-    }) as Key | undefined;
-    if (key == null) throw new Error(`key is null: ${src}`);
-
+    const key = detectMediaKey(ext);
     const tag = media2tag[key];
-    if (tag == null) throw new Error("tag is null");
 
     const { elem: _elem, attr } = tag;
     const newElem = $(_elem);

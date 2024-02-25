@@ -47,18 +47,18 @@ import Marker from "@/components/Marker.astro";
   </p.div>
   <p.div
     className={css({
-      "& > article": {
+      "& > div": {
         py: { base: "20", mdDown: "10" },
       },
     })}
   >
-    <p.article display="flex" flexDir="column" gap="8">
+    <p.div className="content" display="flex" flexDir="column" gap="10">
       <Marker>
         <p.h2>Works</p.h2>
       </Marker>
       <p.div
         display="grid"
-        gap="8"
+        gap="10"
         gridTemplateColumns="repeat(auto-fill, minmax(300px, 1fr))"
         textAlign="center"
       >
@@ -69,14 +69,20 @@ import Marker from "@/components/Marker.astro";
           ))
         }
       </p.div>
-    </p.article>
-    <p.article bgColor="9u-brown" display="flex" flexDir="column" gap="8">
+    </p.div>
+    <p.div
+      bgColor="9u-brown"
+      className="content"
+      display="flex"
+      flexDir="column"
+      gap="10"
+    >
       <Marker>
         <p.h2 color="9u-white">Blog</p.h2>
       </Marker>
       <p.div
         display="grid"
-        gap="8"
+        gap="10"
         gridTemplateColumns="repeat(auto-fill, minmax(300px, 1fr))"
         textAlign="center"
       >
@@ -87,6 +93,6 @@ import Marker from "@/components/Marker.astro";
           ))
         }
       </p.div>
-    </p.article>
+    </p.div>
   </p.div>
 </BaseLayout>

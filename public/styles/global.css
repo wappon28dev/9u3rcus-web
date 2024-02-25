@@ -78,11 +78,17 @@ table {
   }
 }
 
-article {
-  max-width: 1600px;
-  width: 100%;
+article,
+.content {
   margin: 0 auto;
   padding-inline: var(--spacing-20);
+}
+
+.content {
+  max-width: 1600px;
+}
+article {
+  max-width: 1200px;
 }
 
 h2,
@@ -114,8 +120,18 @@ h3 {
   article {
     padding-inline: var(--spacing-5);
   }
+  .content {
+    padding-inline: var(--spacing-10);
+  }
   h2 > a,
   h3 > a {
     display: none;
   }
+}
+
+lite-youtube,
+lite-vimeo {
+  min-width: 300px;
+  width: 50vw;
+  max-width: none !important;
 }

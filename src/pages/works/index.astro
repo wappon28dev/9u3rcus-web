@@ -23,10 +23,10 @@ const worksList = await getContentList("works", { fields: ["id", "title"] });
     </Marker>
   </p.div>
 
-  <p.article py="10">
+  <p.div className="content" py="10">
     <p.div
       display="grid"
-      gap="8"
+      gap="10"
       gridTemplateColumns="repeat(auto-fill, minmax(300px, 1fr))"
       textAlign="center"
     >
@@ -118,5 +118,5 @@ const worksList = await getContentList("works", { fields: ["id", "title"] });
         )
       }
     </p.div>
-  </p.article>
+  </p.div>
 </BaseLayout>

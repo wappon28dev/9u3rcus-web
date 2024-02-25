@@ -21,7 +21,7 @@ export const contentStyle = css({
     border: "1px solid",
     borderColor: "9u-white",
     bg: "9u-brown",
-
+    fontSize: "sm",
     "& > div": {
       bg: "9u-brown",
       display: "flex",
@@ -41,6 +41,19 @@ export const contentStyle = css({
         bg: "9u-white",
       },
     },
+  },
+  "& p > code": {
+    bgColor: "9u-brown",
+    border: "1px solid",
+    borderColor: "9u-white",
+    color: "9u-white",
+    p: "1",
+    px: "2",
+    fontSize: "sm",
+    rounded: "sm",
+  },
+  "& iframe": {
+    height: "100px",
   },
   "& figure": {
     width: "100%",

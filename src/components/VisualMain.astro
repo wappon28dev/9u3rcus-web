@@ -1,0 +1,92 @@
+---
+import { YouTube, Vimeo } from "astro-embed";
+import matcherYoutube from "@astro-community/astro-embed-youtube/matcher";
+import matcherVimeo from "@astro-community/astro-embed-vimeo/matcher";
+import { Image, getImage } from "astro:assets";
+import {
+  detectMediaKey,
+  modifySrc,
+  type MediaKey,
+} from "@/lib/middlewares/rewriters/convert2media";
+import { INFO } from "@/lib/config";
+import { VideoPlayer } from "./VideoPlayer";
+
+type Props = {
+  url: string;
+  alt: string;
+};
+
+const { url, alt } = Astro.props;
+let key: MediaKey | "youtube" | "vimeo" | undefined;
+let tmbUrl: string | undefined;
+
+const media = (): void => {
+  const ext = url.split(".").at(-1);
+  if (ext == null) throw new Error(`ext is null: ${url}`);
+  key = detectMediaKey(ext);
+};
+
+const youtube = async (): Promise<void> => {
+  const id = matcherYoutube(url);
+  if (id == null) throw new Error(`youtube match is null: ${url}`);
+  const src = `https://i.ytimg.com/vi/${id}/maxresdefault.jpg`;
+  tmbUrl = (await getImage({ src, alt, inferSize: true })).src;
+  key = "youtube";
+};
+
+const vimeo = async (): Promise<void> => {
+  const id = matcherVimeo(url);
+  if (id == null) throw new Error(`vimeo match is null: ${url}`);
+  const res = await fetch(`https://vimeo.com/api/v2/video/${id}.json`);
+  const json: Array<{
+    thumbnail_large: string;
+  }> = await res.json();
+  const src = json[0]?.thumbnail_large;
+  if (src == null) throw new Error(`vimeo thumbnail is null: ${url}`);
+  tmbUrl = (await getImage({ src, alt, inferSize: true })).src;
+  key = "vimeo";
+};
+
+if (url.startsWith(INFO.site.assets)) {
+  media();
+} else if (matcherYoutube(url) != null) {
+  await youtube();
+} else if (matcherVimeo(url) != null) {
+  await vimeo();
+} else {
+  throw new Error(`unknown url: ${url}`);
+}
+---
+
+{
+  (() => {
+    switch (key) {
+      case "img":
+        return <Image alt={alt} inferSize src={modifySrc(url, "img")} />;
+      case "video":
+        return (
+          <VideoPlayer autoPlay controls muted src={modifySrc(url, "video")} />
+        );
+      case "youtube":
+        return (
+          <YouTube
+            id={url}
+            params="widget_referrer"
+            playlabel="作品を再生する"
+            poster={tmbUrl ?? ""}
+          />
+        );
+      case "vimeo":
+        return (
+          <Vimeo
+            id={url}
+            params="portrait&title"
+            playlabel="作品を再生する"
+            poster={tmbUrl ?? ""}
+          />
+        );
+      default:
+        throw new Error(`unknown key`);
+    }
+  })()
+}
