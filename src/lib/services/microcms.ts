@@ -15,11 +15,11 @@ export async function getContentList<T extends keyof EndPoints["gets"]>(
   switch (key) {
     case "blogs":
       return await (
-        await fetch(getPublicFilePath("/assets/mock/blogs-list.json"))
+        await fetch(getPublicFilePath("assets/mock/blogs-list.json"))
       ).json();
     case "works":
       return await (
-        await fetch(getPublicFilePath("/assets/mock/works-list.json"))
+        await fetch(getPublicFilePath("assets/mock/works-list.json"))
       ).json();
     default:
       throw new Error("Invalid key");

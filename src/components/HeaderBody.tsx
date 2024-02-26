@@ -35,14 +35,14 @@ export function HeaderBody({
       top="0"
       transition="background 0.3s"
       width="100%"
-      zIndex="100"
+      zIndex="header"
     >
       <p.a
         alignItems="center"
         display="flex"
         gap={{
           base: "10",
-          mdDown: "5",
+          mdDown: "4",
         }}
         height="max-content"
         href="/"
@@ -55,8 +55,7 @@ export function HeaderBody({
           decoding="async"
           h={{
             base: "50px",
-            mdDown: "40px",
-            seDown: "30px",
+            mdDown: "30px",
           }}
           loading="eager"
           src="/assets/img/logo_icon.svg"
@@ -66,8 +65,7 @@ export function HeaderBody({
           decoding="async"
           h={{
             base: "40px",
-            mdDown: "30px",
-            seDown: "20px",
+            mdDown: "25px",
           }}
           loading="eager"
           src={

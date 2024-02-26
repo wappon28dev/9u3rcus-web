@@ -6,6 +6,7 @@ import { styled as p } from "panda/jsx";
 import { css } from "panda/css";
 import { token } from "panda/tokens";
 import { getEntries } from "@/lib/constants";
+import { ContactDialog } from "./ContactDialog";
 
 const form = ["name", "company", "email", "subject", "message"] as const;
 
@@ -99,7 +100,8 @@ export function ContactForm(): ReactElement {
     register,
     formState: { errors, isValid, isSubmitting },
   } = useForm<FormData>({
-    mode: "onChange",
+    mode: "onBlur",
+    reValidateMode: "onChange",
     resolver: zodResolver(zFormData),
   });
 
@@ -159,28 +161,31 @@ export function ContactForm(): ReactElement {
           </p.div>
         )
       )}
-      <p.input
-        className={css({
-          bg: "9u-red1",
-          rounded: "md",
-          m: "0 auto",
-          py: "1",
-          px: "20",
-          color: "white",
-          fontSize: "2xl",
-          fontWeight: "bold",
-          cursor: "pointer",
-          transition: "all 0.3s",
-          _disabled: {
-            bg: "9u-gray",
-            opacity: "0.5",
-            cursor: "not-allowed",
-          },
-        })}
-        disabled={!isValid || isSubmitting}
-        type="submit"
-        value="確認"
-      />
+      <ContactDialog>
+        <p.input
+          className={css({
+            bg: "9u-red1",
+            rounded: "md",
+            w: "fit-content",
+            m: "0 auto",
+            py: "1",
+            px: "20",
+            color: "white",
+            fontSize: "2xl",
+            fontWeight: "bold",
+            cursor: "pointer",
+            transition: "all 0.3s",
+            _disabled: {
+              bg: "9u-gray",
+              opacity: "0.5",
+              cursor: "not-allowed",
+            },
+          })}
+          disabled={!isValid || isSubmitting}
+          type="submit"
+          value="確認"
+        />
+      </ContactDialog>
     </p.form>
   );
 }
