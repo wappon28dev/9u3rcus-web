@@ -1,10 +1,16 @@
-import type { HTMLInputTypeAttribute, ReactElement } from "react";
+import {
+  useState,
+  type HTMLInputTypeAttribute,
+  type ReactElement,
+  type FormEvent,
+} from "react";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { type ZodType, z } from "zod";
 import { useForm, type SubmitHandler } from "react-hook-form";
 import { styled as p } from "panda/jsx";
 import { css } from "panda/css";
 import { token } from "panda/tokens";
+import { Turnstile } from "@marsidev/react-turnstile";
 import { getEntries } from "@/lib/constants";
 import { ContactDialog } from "./ContactDialog";
 
@@ -78,13 +84,15 @@ const formStyle = css({
       outline: "1.5px solid",
       rounded: "md",
       p: "2",
-
+      mb: "1",
       "&:focus": {
         outlineWidth: "2px",
       },
     },
     "& > textarea": {
       minH: "40",
+      maxH: "70vh",
+      mb: "0",
     },
     "& > p": {
       fontSize: "sm",
@@ -98,12 +106,22 @@ export function ContactForm(): ReactElement {
   const {
     handleSubmit,
     register,
+    trigger,
     formState: { errors, isValid, isSubmitting },
   } = useForm<FormData>({
     mode: "onBlur",
     reValidateMode: "onChange",
     resolver: zodResolver(zFormData),
   });
+
+  const [hasTurnstilePassed, setTurnstilePassed] = useState(false);
+  const [turnstileError, setTurnstileError] = useState(false);
+
+  const resizeTextarea = (e: FormEvent<HTMLTextAreaElement>): void => {
+    const target = e.target as HTMLTextAreaElement;
+    target.style.height = "auto";
+    target.style.height = `${target.scrollHeight}px`;
+  };
 
   const onSubmit: SubmitHandler<FormData> = (data) => {
     console.log(data);
@@ -145,6 +163,7 @@ export function ContactForm(): ReactElement {
               <p.textarea
                 id={key}
                 {...register(key)}
+                onInput={resizeTextarea}
                 style={{
                   background: token(
                     errors[key] != null
@@ -161,6 +180,29 @@ export function ContactForm(): ReactElement {
           </p.div>
         )
       )}
+      <p.div>
+        <p.div m="0 auto" mb="1" w="fit-content">
+          <Turnstile
+            onError={() => {
+              setTurnstileError(true);
+            }}
+            onExpire={() => {
+              setTurnstileError(true);
+            }}
+            onSuccess={() => {
+              setTurnstilePassed(true);
+            }}
+            options={{
+              theme: "light",
+            }}
+            siteKey={import.meta.env.PUBLIC_CF_TURNSTILE_SITE_KEY}
+          />
+        </p.div>
+        <p.p color="9u-red1" fontSize="sm" minH="5" textAlign="center">
+          {turnstileError &&
+            "CAPTCHA 認証に失敗したようです。ページを再読み込みをしてください。"}
+        </p.p>
+      </p.div>
       <ContactDialog>
         <p.input
           className={css({
@@ -174,14 +216,17 @@ export function ContactForm(): ReactElement {
             fontSize: "2xl",
             fontWeight: "bold",
             cursor: "pointer",
-            transition: "all 0.3s",
+            transition: "background 0.3s, opacity 0.3s",
             _disabled: {
               bg: "9u-gray",
               opacity: "0.5",
               cursor: "not-allowed",
             },
           })}
-          disabled={!isValid || isSubmitting}
+          disabled={!isValid || !hasTurnstilePassed || isSubmitting}
+          onPointerDown={() => {
+            void trigger();
+          }}
           type="submit"
           value="確認"
         />

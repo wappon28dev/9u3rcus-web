@@ -11,4 +11,5 @@ interface ImportMetaEnv {
   readonly MICROCMS_MOCK_WORKS_LIST: string;
   readonly MICROCMS_MOCK_BLOGS_LIST: string;
   readonly MICROCMS_MOCK_BLOGS_DETAILS: string;
+  readonly PUBLIC_CF_TURNSTILE_SITE_KEY: string;
 }
