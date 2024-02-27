@@ -50,8 +50,15 @@ export function formatDate(
  * @param path path WITHOUT leading slash
  * @returns URL to the `/public` path
  */
-export const getPublicFilePath = (path: string): string =>
-  `http://localhost:${import.meta.env.ASSETS_LOCAL_SERVER_PORT}/${path}`;
+export async function inferImageSize(
+  path: string
+): Promise<{ width: number; height: number }> {
+  const data = (await import(`../../../../../../public/${path}`)).default;
+  if (data.width == null || data.height == null) {
+    throw new Error("Width and height cloud not be inferred");
+  }
+  return { width: data.width, height: data.height };
+}
 
 export const LOCAL_STORAGE_VERSION = "1";
 export function getLocalStorageKey(key: string, trailingColon = false): string {

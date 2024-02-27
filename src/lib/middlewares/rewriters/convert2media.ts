@@ -1,6 +1,6 @@
 import { load } from "cheerio";
 import { INFO } from "@/lib/config";
-import { getEntries, getPublicFilePath } from "@/lib/constants";
+import { getEntries, inferImageSize } from "@/lib/constants";
 
 export type MediaKey = "video" | "img";
 
@@ -26,15 +26,11 @@ export const media2tag: Record<
   },
 };
 
-export function modifySrc(src: string, key: MediaKey): string {
+export function modifySrc(src: string): string {
   let newSrc = src;
 
   if (src.startsWith(INFO.site.assets)) {
     newSrc = src.replace(INFO.site.assets, "/assets");
-
-    if (key === "img") {
-      newSrc = src.replace(INFO.site.assets, getPublicFilePath("assets"));
-    }
   }
 
   return newSrc;
@@ -51,10 +47,11 @@ export function detectMediaKey(ext: string): MediaKey {
   return key;
 }
 
-export function convertMedia(html: string): string {
+export async function convertMedia(html: string): Promise<string> {
   const $ = load(html);
   const $media = $(".media");
 
+  const $imgElemList: cheerio.Cheerio[] = [];
   $media.each(async (_, elem) => {
     const $elem = $(elem);
     const src = $elem.text();
@@ -68,12 +65,16 @@ export function convertMedia(html: string): string {
 
     const { elem: _elem, attr } = tag;
     const newElem = $(_elem);
+    const newSrc = modifySrc(src);
 
-    newElem.attr("src", modifySrc(src, key));
+    if (key === "img") {
+      $imgElemList.push(newElem);
+    }
+
+    newElem.attr("src", newSrc);
     getEntries(attr ?? {}).forEach(([k, v]) => {
       newElem.attr(k, v);
     });
-
     const parentTagName = $elem.parent()?.get(0)?.tagName;
     if (parentTagName === "p") {
       $elem.parent()?.replaceWith($("<figure>").append(newElem));
@@ -82,6 +83,25 @@ export function convertMedia(html: string): string {
       console.warn(`parentTagName is not p: ${parentTagName}`);
       $elem.replaceWith(newElem);
     }
+  });
+
+  const imgSizeList: Array<{ width: number; height: number }> = [];
+  // eslint-disable-next-line no-restricted-syntax
+  for await (const $img of $imgElemList) {
+    const src = $img.attr("src");
+    if (src == null) throw new Error("src is null");
+    const { width, height } = await inferImageSize(src);
+    imgSizeList.push({ width, height });
+  }
+
+  $imgElemList.forEach(($img, i) => {
+    const imgSize = imgSizeList.at(i);
+    if (imgSize == null) {
+      throw new Error(`imgSize not found:${$img.attr("src")}`);
+    }
+    const { width, height } = imgSize;
+    $img.attr("width", width.toString());
+    $img.attr("height", height.toString());
   });
 
   return $.html();

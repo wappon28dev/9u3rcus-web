@@ -8,7 +8,7 @@ async function getOptimalImage(data: ImageData): Promise<GetImageResult> {
   const { src, alt, width, height } = data;
 
   if (width == null || height == null) {
-    return await getImage({ src, alt, inferSize: true });
+    throw new Error("Width and height are required");
   }
 
   return await getImage({ src, alt, width, height });
@@ -28,13 +28,17 @@ export async function imageOpt(html: string): Promise<string> {
     if (attr.src == null) {
       throw new Error("Image element has no src attribute");
     }
-
     const { src, alt, width, height } = attr;
+
+    if (width == null && height == null) {
+      throw new Error("Image element has no width and height attribute");
+    }
+
     imageDataList.push({
       src,
       alt: alt ?? "",
-      width: width != null ? Number(width) : undefined,
-      height: height != null ? Number(height) : undefined,
+      width: Number(width),
+      height: Number(height),
     });
   });
 

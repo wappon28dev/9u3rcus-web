@@ -32,4 +32,9 @@ export default defineConfig({
       },
     ],
   },
+  vite: {
+    optimizeDeps: {
+      exclude: "mock/*.json",
+    },
+  },
 });

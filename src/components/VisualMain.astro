@@ -10,6 +10,7 @@ import {
 } from "@/lib/middlewares/rewriters/convert2media";
 import { INFO } from "@/lib/config";
 import { VideoPlayer } from "./VideoPlayer";
+import { inferImageSize } from "@/lib/constants";
 
 type Props = {
   url: string;
@@ -20,9 +21,12 @@ const { url, alt } = Astro.props;
 let key: MediaKey | "youtube" | "vimeo" | undefined;
 let tmbUrl: string | undefined;
 
-const media = (): void => {
+let imgSize: { width: number; height: number } = { height: 0, width: 0 };
+
+const media = async (): Promise<void> => {
   const ext = url.split(".").at(-1);
   if (ext == null) throw new Error(`ext is null: ${url}`);
+  imgSize = await inferImageSize(modifySrc(url));
   key = detectMediaKey(ext);
 };
 
@@ -48,7 +52,7 @@ const vimeo = async (): Promise<void> => {
 };
 
 if (url.startsWith(INFO.site.assets)) {
-  media();
+  await media();
 } else if (matcherYoutube(url) != null) {
   await youtube();
 } else if (matcherVimeo(url) != null) {
@@ -62,11 +66,16 @@ if (url.startsWith(INFO.site.assets)) {
   (() => {
     switch (key) {
       case "img":
-        return <Image alt={alt} inferSize src={modifySrc(url, "img")} />;
-      case "video":
         return (
-          <VideoPlayer autoPlay controls muted src={modifySrc(url, "video")} />
+          <Image
+            alt={alt}
+            height={imgSize.height}
+            src={modifySrc(url)}
+            width={imgSize.width}
+          />
         );
+      case "video":
+        return <VideoPlayer autoPlay controls muted src={modifySrc(url)} />;
       case "youtube":
         return (
           <YouTube
