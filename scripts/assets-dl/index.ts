@@ -59,7 +59,8 @@ await Promise.all(
       throw new Error("Failed to fetch asset");
     }
 
-    const fullPathPublic = path.join(PUBLIC_PATH, filePath);
+    const decodedFilePath = decodeURIComponent(filePath);
+    const fullPathPublic = path.join(PUBLIC_PATH, decodedFilePath);
     await write(fullPathPublic, data, {
       createPath: true,
     });
