@@ -1,3 +1,5 @@
+import { INFO } from "./config";
+
 export async function waitMs(ms: number): Promise<void> {
   await new Promise((resolve) => {
     setTimeout(resolve, ms);
@@ -50,3 +52,8 @@ export function formatDate(
  */
 export const getPublicFilePath = (path: string): string =>
   `http://localhost:${import.meta.env.ASSETS_LOCAL_SERVER_PORT}/${path}`;
+
+export const LOCAL_STORAGE_VERSION = "1";
+export function getLocalStorageKey(key: string, trailingColon = false): string {
+  return `${INFO.id}.v${LOCAL_STORAGE_VERSION}.${key}${trailingColon ? ":" : ""}`;
+}

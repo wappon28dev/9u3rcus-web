@@ -1,72 +1,20 @@
-import {
-  useState,
-  type HTMLInputTypeAttribute,
-  type ReactElement,
-  type FormEvent,
-} from "react";
+import { useState, type ReactElement, type FormEvent } from "react";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { type ZodType, z } from "zod";
 import { useForm, type SubmitHandler } from "react-hook-form";
 import { styled as p } from "panda/jsx";
 import { css } from "panda/css";
 import { token } from "panda/tokens";
 import { Turnstile } from "@marsidev/react-turnstile";
+import { useStore } from "@nanostores/react";
 import { getEntries } from "@/lib/constants";
 import { ContactDialog } from "./ContactDialog";
-
-const form = ["name", "company", "email", "subject", "message"] as const;
-
-const formSchema = {
-  name: {
-    description: "お名前",
-    formType: "input",
-    inputType: "text",
-    zSchema: z.string().min(1, { message: "お名前を入力してください" }),
-  },
-  company: {
-    description: "企業名",
-    formType: "input",
-    inputType: "text",
-    zSchema: z.string().optional(),
-  },
-  email: {
-    description: "ご連絡先（メールアドレス）",
-    formType: "input",
-    inputType: "email",
-    zSchema: z
-      .string()
-      .min(1, { message: "メールアドレスを入力してください" })
-      .email({ message: "正しいメールアドレスの形式ではありません" }),
-  },
-  subject: {
-    description: "件名",
-    formType: "input",
-    inputType: "text",
-    zSchema: z.string().min(1, { message: "件名を入力してください" }),
-  },
-  message: {
-    description: "ご用件",
-    formType: "textarea",
-    inputType: "text",
-    zSchema: z
-      .string()
-      .min(1, { message: "お問い合わせ内容を入力してください" }),
-  },
-} as const satisfies Record<
-  (typeof form)[number],
-  {
-    description: string;
-    formType: "input" | "textarea";
-    inputType: HTMLInputTypeAttribute;
-    zSchema: ZodType;
-  }
->;
-
-const _obj = getEntries(formSchema).map(([k, v]) => [k, v.zSchema]);
-const zFormData = z.object(
-  Object.fromEntries(_obj) as Record<(typeof form)[number], ZodType>
-);
-type FormData = z.infer<typeof zFormData>;
+import { $contactFormData } from "@/lib/store/ui";
+import {
+  zContactFormData,
+  type ContactFormDataKey,
+  type ContactFormData,
+  formSchema,
+} from "@/lib/services/contact";
 
 const formStyle = css({
   display: "flex",
@@ -103,27 +51,36 @@ const formStyle = css({
 });
 
 export function ContactForm(): ReactElement {
+  const [turnstileState, setTurnstileState] = useState<"passed" | "error">();
+  const formData = useStore($contactFormData);
   const {
     handleSubmit,
     register,
     trigger,
+
     formState: { errors, isValid, isSubmitting },
-  } = useForm<FormData>({
+  } = useForm<ContactFormData>({
     mode: "onBlur",
     reValidateMode: "onChange",
-    resolver: zodResolver(zFormData),
+    defaultValues: formData,
+    resolver: zodResolver(zContactFormData),
   });
 
-  const [hasTurnstilePassed, setTurnstilePassed] = useState(false);
-  const [turnstileError, setTurnstileError] = useState(false);
-
   const resizeTextarea = (e: FormEvent<HTMLTextAreaElement>): void => {
-    const target = e.target as HTMLTextAreaElement;
+    const target = e.target as HTMLInputElement;
     target.style.height = "auto";
     target.style.height = `${target.scrollHeight}px`;
   };
 
-  const onSubmit: SubmitHandler<FormData> = (data) => {
+  const saveFormData = (
+    e: FormEvent<HTMLInputElement | HTMLTextAreaElement>,
+    key: ContactFormDataKey
+  ): void => {
+    const data = e.target as HTMLInputElement;
+    $contactFormData.set({ ...formData, [key]: data.value });
+  };
+
+  const onSubmit: SubmitHandler<ContactFormData> = (data) => {
     console.log(data);
   };
 
@@ -137,17 +94,18 @@ export function ContactForm(): ReactElement {
       w="100%"
     >
       {getEntries(formSchema).map(
-        ([key, { description, formType, inputType, zSchema }]) => (
+        ([key, { description, formType, inputType }]) => (
           <p.div key={key}>
             <p.label htmlFor={key}>
               {description}
-              {!zSchema.isOptional() && "*"}
+              {!zContactFormData.shape[key].isOptional() && "*"}
             </p.label>
             {formType === "input" ? (
               <p.input
                 id={key}
-                type={inputType}
-                {...register(key)}
+                onInput={(e) => {
+                  saveFormData(e, key);
+                }}
                 style={{
                   background: token(
                     errors[key] != null
@@ -158,12 +116,16 @@ export function ContactForm(): ReactElement {
                     errors[key] != null ? "colors.9u-red1" : "colors.9u-brown"
                   ),
                 }}
+                type={inputType}
+                {...register(key)}
               />
             ) : (
               <p.textarea
                 id={key}
-                {...register(key)}
-                onInput={resizeTextarea}
+                onInput={(e) => {
+                  saveFormData(e, key);
+                  resizeTextarea(e);
+                }}
                 style={{
                   background: token(
                     errors[key] != null
@@ -174,9 +136,10 @@ export function ContactForm(): ReactElement {
                     errors[key] != null ? "colors.9u-red1" : "colors.9u-brown"
                   ),
                 }}
+                {...register(key)}
               />
             )}
-            <p.p>{errors[key]?.message as string}</p.p>
+            <p.p>{errors[key]?.message}</p.p>
           </p.div>
         )
       )}
@@ -184,13 +147,13 @@ export function ContactForm(): ReactElement {
         <p.div m="0 auto" mb="1" w="fit-content">
           <Turnstile
             onError={() => {
-              setTurnstileError(true);
+              setTurnstileState("error");
             }}
             onExpire={() => {
-              setTurnstileError(true);
+              setTurnstileState("error");
             }}
             onSuccess={() => {
-              setTurnstilePassed(true);
+              setTurnstileState("passed");
             }}
             options={{
               theme: "light",
@@ -199,7 +162,7 @@ export function ContactForm(): ReactElement {
           />
         </p.div>
         <p.p color="9u-red1" fontSize="sm" minH="5" textAlign="center">
-          {turnstileError &&
+          {turnstileState === "error" &&
             "CAPTCHA 認証に失敗したようです。ページを再読み込みをしてください。"}
         </p.p>
       </p.div>
@@ -223,7 +186,7 @@ export function ContactForm(): ReactElement {
               cursor: "not-allowed",
             },
           })}
-          disabled={!isValid || !hasTurnstilePassed || isSubmitting}
+          disabled={!isValid || turnstileState !== "passed" || isSubmitting}
           onPointerDown={() => {
             void trigger();
           }}

@@ -3,6 +3,7 @@ import { styled as p } from "panda/jsx";
 import BaseLayout from "@/layouts/BaseLayout.astro";
 import Marker from "@/components/Marker.astro";
 import { ContactForm } from "@/components/ContactForm.tsx";
+import { INFO } from "@/lib/config";
 ---
 
 <BaseLayout
@@ -26,9 +27,7 @@ import { ContactForm } from "@/components/ContactForm.tsx";
   <p.article py="10" w="100%">
     <p.p textAlign="center">
       お問い合わせ内容をこちらからお送りください。<br />
-      後日、私からご連絡さしあげますので、
-      <p.span userSelect="all">contact@9u3rc.us</p.span>
-      からのメールを受信できるように設定をお願いいたします。
+      後日、私からご連絡さしあげますので、{INFO.addr.email} からのメールを受信できるように設定をお願いいたします。
     </p.p><br />
     <ContactForm client:load />
   </p.article>

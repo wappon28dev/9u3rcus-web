@@ -1,6 +1,7 @@
 /* cSpell:disable */
 
 export const INFO = {
+  id: "9u3rcus-web",
   name: {
     short: "9u3rcus",
     full: "Riku Kojima",

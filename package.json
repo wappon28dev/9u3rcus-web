@@ -24,6 +24,7 @@
     "@iconify-json/mdi": "^1.1.64",
     "@iconify/react": "^4.1.1",
     "@marsidev/react-turnstile": "^0.5.3",
+    "@nanostores/persistent": "^0.10.1",
     "@nanostores/react": "^0.7.2",
     "@radix-ui/react-alert-dialog": "^1.0.5",
     "astro": "^4.4.4",
