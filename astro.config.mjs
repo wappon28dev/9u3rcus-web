@@ -14,23 +14,12 @@ export default defineConfig({
     pandacss(),
     sitemap(),
     metaTags(),
-    icon({
-      include: {
-        mdi: ["*"],
-      },
-    }),
-    compress(),
+    icon({ include: { mdi: ["*"] } }),
+    compress({ CSS: false, Image: false }),
   ],
   site: "https://9u3rc.us",
   image: {
-    remotePatterns: [
-      {
-        protocol: "https",
-      },
-      {
-        protocol: "http",
-      },
-    ],
+    remotePatterns: [{ protocol: "https" }, { protocol: "http" }],
   },
   vite: {
     optimizeDeps: {
