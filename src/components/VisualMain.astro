@@ -5,12 +5,11 @@ import matcherVimeo from "@astro-community/astro-embed-vimeo/matcher";
 import { Image, getImage } from "astro:assets";
 import {
   detectMediaKey,
-  modifySrc,
   type MediaKey,
 } from "@/lib/middlewares/rewriters/convert2media";
 import { INFO } from "@/lib/config";
 import { VideoPlayer } from "./VideoPlayer";
-import { inferImageSize } from "@/lib/constants";
+import { inferImageSize, modifySrc } from "@/lib/services/media";
 
 type Props = {
   url: string;
@@ -26,7 +25,7 @@ let imgSize: { width: number; height: number } = { height: 0, width: 0 };
 const media = async (): Promise<void> => {
   const ext = url.split(".").at(-1);
   if (ext == null) throw new Error(`ext is null: ${url}`);
-  imgSize = await inferImageSize(modifySrc(url));
+  imgSize = inferImageSize(modifySrc(url));
   key = detectMediaKey(ext);
 };
 

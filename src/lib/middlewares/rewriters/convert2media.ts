@@ -1,6 +1,6 @@
 import { load } from "cheerio";
-import { INFO } from "@/lib/config";
-import { getEntries, inferImageSize } from "@/lib/constants";
+import { getEntries } from "@/lib/constants";
+import { inferImageSize, modifySrc } from "@/lib/services/media";
 
 export type MediaKey = "video" | "img";
 
@@ -25,16 +25,6 @@ export const media2tag: Record<
     elem: "<img>",
   },
 };
-
-export function modifySrc(src: string): string {
-  let newSrc = src;
-
-  if (src.startsWith(INFO.site.assets)) {
-    newSrc = src.replace(INFO.site.assets, "/assets");
-  }
-
-  return newSrc;
-}
 
 export function detectMediaKey(ext: string): MediaKey {
   const key = Object.keys(media2tag).find((k) => {
@@ -90,7 +80,7 @@ export async function convertMedia(html: string): Promise<string> {
   for await (const $img of $imgElemList) {
     const src = $img.attr("src");
     if (src == null) throw new Error("src is null");
-    const { width, height } = await inferImageSize(src);
+    const { width, height } = inferImageSize(src);
     imgSizeList.push({ width, height });
   }
 

@@ -7,7 +7,7 @@ import Marker from "@/components/Marker.astro";
 import { formatDate } from "@/lib/constants";
 import { getContentList } from "@/lib/services/microcms";
 import { VideoPlayer } from "@/components/VideoPlayer.tsx";
-import { modifySrc } from "@/lib/middlewares/rewriters/convert2media";
+import { modifySrc } from "@/lib/services/media";
 
 const worksList = await getContentList("works", { fields: ["id", "title"] });
 ---

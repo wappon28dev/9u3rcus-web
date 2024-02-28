@@ -44,22 +44,6 @@ export function formatDate(
   }
 }
 
-/**
- * NOTE: This fn is only used in server-side code (in `dev`/`build`);
- *       Do not use this in client-side code.
- * @param path path WITHOUT leading slash
- * @returns URL to the `/public` path
- */
-export async function inferImageSize(
-  path: string
-): Promise<{ width: number; height: number }> {
-  const data = (await import(`../../../../../../public/${path}`)).default;
-  if (data.width == null || data.height == null) {
-    throw new Error("Width and height cloud not be inferred");
-  }
-  return { width: data.width, height: data.height };
-}
-
 export const LOCAL_STORAGE_VERSION = "1";
 export function getLocalStorageKey(key: string, trailingColon = false): string {
   return `${INFO.id}.v${LOCAL_STORAGE_VERSION}.${key}${trailingColon ? ":" : ""}`;
