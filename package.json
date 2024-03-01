@@ -2,7 +2,7 @@
   "name": "tpl-astro",
   "type": "module",
   "private": true,
-  "version": "0.0.0",
+  "version": "0.0.1",
   "scripts": {
     "prepare": "panda codegen && bun run assets:dl",
     "dev": "wrangler pages dev -- bunx astro dev",
