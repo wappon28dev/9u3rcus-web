@@ -38,7 +38,7 @@ jobs:
 
       - name: 🚀 Deploy to Cloudflare Pages
         id: cloudflare_pages_deploy
-        uses: cloudflare/pages-action@v1.4.0
+        uses: cloudflare/pages-action@v1
         with:
           accountId: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
           apiToken: ${{ secrets.CLOUDFLARE_API_TOKEN_PAGES }}
@@ -48,9 +48,10 @@ jobs:
         env:
           NODE_VERSION: 20
 
-      - name: 🚀 Deploy workers
+      - name: 🚀 Deploy to Cloudflare Workers
         uses: cloudflare/wrangler-action@2.0.0
         with:
           accountId: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
           apiToken: ${{ secrets.CLOUDFLARE_API_TOKEN_WORKERS }}
+          command: "deploy --minify src/index.ts"
           workingDirectory: ./api
