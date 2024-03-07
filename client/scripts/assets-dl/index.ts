@@ -35,7 +35,7 @@ out.success(`Fetched ${assets.length} assets`);
 assets.forEach(({ filePath, size, lastModifiedDateTime }, i) => {
   out.debug(`  [${i + 1}] - ${filePath}`);
   out.debug(
-    `   └ size: ${size} bytes\tlastModified: ${new Date(lastModifiedDateTime).toLocaleString()}`
+    `   └ size: ${size} bytes\tlastModified: ${new Date(lastModifiedDateTime).toLocaleString()}`,
   );
 });
 
@@ -65,7 +65,7 @@ await Promise.all(
       createPath: true,
     });
     out.success(`Saved: ${name}`);
-  })
+  }),
 );
 
 out.done();

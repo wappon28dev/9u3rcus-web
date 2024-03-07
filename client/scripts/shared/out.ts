@@ -29,7 +29,7 @@ export const out = {
 
   info: (message: string) => {
     console.log(
-      `\n${ASCII.WHITE}${ASCII.BLUE}i${ASCII.END} ${message} ${ASCII.END}`
+      `\n${ASCII.WHITE}${ASCII.BLUE}i${ASCII.END} ${message} ${ASCII.END}`,
     );
   },
 
@@ -41,7 +41,7 @@ export const out = {
     const aa = AA[Math.floor(Math.random() * AA.length)];
     console.log(`\n${ASCII.GRAY}--------------------${ASCII.END}`);
     console.log(
-      `${ASCII.GREEN}✓ Done! ${ASCII.GRAY}${ASCII.END}\t${aa}${ASCII.END}`
+      `${ASCII.GREEN}✓ Done! ${ASCII.GRAY}${ASCII.END}\t${aa}${ASCII.END}`,
     );
     console.log(`${ASCII.GRAY}--------------------${ASCII.END}`);
   },

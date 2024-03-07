@@ -74,7 +74,7 @@ export function ContactForm(): ReactElement {
 
   const saveFormData = (
     e: FormEvent<HTMLInputElement | HTMLTextAreaElement>,
-    key: ContactFormDataKey
+    key: ContactFormDataKey,
   ): void => {
     const data = e.target as HTMLInputElement;
     $contactFormData.set({ ...formData, [key]: data.value });
@@ -110,10 +110,10 @@ export function ContactForm(): ReactElement {
                   background: token(
                     errors[key] != null
                       ? "colors.red.100"
-                      : "colors.transparent"
+                      : "colors.transparent",
                   ),
                   outlineColor: token(
-                    errors[key] != null ? "colors.9u-red1" : "colors.9u-brown"
+                    errors[key] != null ? "colors.9u-red1" : "colors.9u-brown",
                   ),
                 }}
                 type={inputType}
@@ -130,10 +130,10 @@ export function ContactForm(): ReactElement {
                   background: token(
                     errors[key] != null
                       ? "colors.red.100"
-                      : "colors.transparent"
+                      : "colors.transparent",
                   ),
                   outlineColor: token(
-                    errors[key] != null ? "colors.9u-red1" : "colors.9u-brown"
+                    errors[key] != null ? "colors.9u-red1" : "colors.9u-brown",
                   ),
                 }}
                 {...register(key)}
@@ -141,7 +141,7 @@ export function ContactForm(): ReactElement {
             )}
             <p.p>{errors[key]?.message}</p.p>
           </p.div>
-        )
+        ),
       )}
       <p.div>
         <p.div m="0 auto" mb="1" w="fit-content">

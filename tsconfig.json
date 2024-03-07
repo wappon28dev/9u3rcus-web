@@ -1,17 +1,5 @@
 {
-  "extends": "astro/tsconfigs/strictest",
-  "include": ["src/**/*"],
-  "exclude": ["functions/**/*"],
   "compilerOptions": {
-    "jsx": "react-jsx",
-    "jsxImportSource": "react",
-    "baseUrl": ".",
-    "paths": {
-      "@layouts/*": ["./src/layouts/*"],
-      "@public/*": ["./public/*"],
-      "@/*": ["./src/*"],
-      "panda/*": ["./panda/*"],
-      "package": ["./package.json"]
-    }
+    "strictNullChecks": true
   }
 }

@@ -41,9 +41,16 @@ jobs:
         uses: cloudflare/pages-action@v1.4.0
         with:
           accountId: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
-          apiToken: ${{ secrets.CLOUDFLARE_API_TOKEN }}
+          apiToken: ${{ secrets.CLOUDFLARE_API_TOKEN_PAGES }}
           gitHubToken: ${{ secrets.GITHUB_TOKEN }}
-          projectName: 9u3rcus-web
-          directory: ./dist
+          projectName: 9u3rcus-web-client
+          directory: ./client/dist
         env:
           NODE_VERSION: 20
+
+      - name: 🚀 Deploy workers
+        uses: cloudflare/wrangler-action@2.0.0
+        with:
+          accountId: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
+          apiToken: ${{ secrets.CLOUDFLARE_API_TOKEN_WORKERS }}
+          workingDirectory: ./api

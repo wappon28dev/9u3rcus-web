@@ -12,5 +12,5 @@ export const $contactFormData = persistentMap<ContactFormData>(
     email: "",
     subject: "",
     message: "",
-  }
+  },
 );

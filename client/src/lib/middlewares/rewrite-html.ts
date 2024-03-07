@@ -8,7 +8,7 @@ export type Rewriter = (html: string) => Promise<string> | string;
 
 export async function rewriteHTML(
   html: string,
-  additionalRewriter: Rewriter[] = []
+  additionalRewriter: Rewriter[] = [],
 ): Promise<string> {
   let result = html;
 

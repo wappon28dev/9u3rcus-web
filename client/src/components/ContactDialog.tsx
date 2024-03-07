@@ -121,7 +121,7 @@ export function ContactDialog({
                       <p.textarea disabled id={key} value={formData[key]} />
                     )}
                   </p.div>
-                )
+                ),
               )}
             </VStack>
           </AlertDialog.Description>
