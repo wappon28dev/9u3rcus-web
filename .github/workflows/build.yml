@@ -53,5 +53,6 @@ jobs:
         with:
           accountId: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
           apiToken: ${{ secrets.CLOUDFLARE_API_TOKEN_WORKERS }}
-          command: "deploy --minify src/index.ts"
+          # TODO: environment name がコピペ状態なので修正する
+          command: "deploy --minify src/index.ts --env ${{(github.ref == 'refs/heads/prod' && 'production') || 'preview'}}"
           workingDirectory: ./api

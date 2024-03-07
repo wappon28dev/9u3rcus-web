@@ -1,2 +1,8 @@
 name = "9u3rcus-web-api"
 compatibility_date = "2023-12-01"
+
+[env.production]
+route = "api.9u3rc.us"
+
+[env.preview]
+route = "beta.api.9u3rc.us"
