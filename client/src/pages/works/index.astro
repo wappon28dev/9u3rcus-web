@@ -4,7 +4,7 @@ import { styled as p } from "panda/jsx";
 import { Image } from "astro:assets";
 import { css } from "panda/css";
 import Marker from "@/components/Marker.astro";
-import { formatDate } from "@/lib/constants";
+import { formatDate } from "@/lib/consts";
 import { getContentList } from "@/lib/services/microcms";
 import { VideoPlayer } from "@/components/VideoPlayer.tsx";
 import { modifySrc } from "@/lib/services/media";
@@ -14,7 +14,7 @@ const worksList = await getContentList("works", { fields: ["id", "title"] });
 
 <BaseLayout
   seo={{
-    title: "Works",
+    title: "Works"
   }}
 >
   <p.div>
@@ -39,17 +39,17 @@ const worksList = await getContentList("works", { fields: ["id", "title"] });
               className={css({
                 "& > *": {
                   pointerEvents: "none",
-                  overflow: "hidden",
+                  overflow: "hidden"
                 },
                 "& video": {
-                  pointerEvents: "auto",
-                },
+                  pointerEvents: "auto"
+                }
               })}
               href={`/works/${id}`}
               position="relative"
               style={{
                 viewTransitionName: `works-${id}`,
-                overflow: "hidden",
+                overflow: "hidden"
               }}
               w="100%"
             >
@@ -64,11 +64,11 @@ const worksList = await getContentList("works", { fields: ["id", "title"] });
                 left="50%"
                 opacity={{
                   base: "0",
-                  _hover: "1",
+                  _hover: "1"
                 }}
                 position="absolute"
                 style={{
-                  pointerEvents: videoOnHover != null ? "none" : "auto",
+                  pointerEvents: videoOnHover != null ? "none" : "auto"
                 }}
                 top="50%"
                 transform="translate(-50%, -50%)"
@@ -84,7 +84,7 @@ const worksList = await getContentList("works", { fields: ["id", "title"] });
                       src={modifySrc(videoOnHover)}
                       style={{
                         minWidth: "100%",
-                        minHeight: "100%",
+                        minHeight: "100%"
                       }}
                     />
                   )}
@@ -114,7 +114,7 @@ const worksList = await getContentList("works", { fields: ["id", "title"] });
                 </p.div>
               </p.div>
             </p.a>
-          ),
+          )
         )
       }
     </p.div>

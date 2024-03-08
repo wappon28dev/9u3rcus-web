@@ -6,7 +6,7 @@ import { css } from "panda/css";
 import { token } from "panda/tokens";
 import { Turnstile } from "@marsidev/react-turnstile";
 import { useStore } from "@nanostores/react";
-import { getEntries } from "@/lib/constants";
+import { getEntries } from "@/lib/consts";
 import { ContactDialog } from "./ContactDialog";
 import { $contactFormData } from "@/lib/store/ui";
 import {

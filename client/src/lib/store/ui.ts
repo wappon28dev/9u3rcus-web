@@ -1,6 +1,6 @@
 import { atom } from "nanostores";
 import { persistentMap } from "@nanostores/persistent";
-import { getLocalStorageKey } from "../constants";
+import { getLocalStorageKey } from "../consts";
 import type { ContactFormData } from "../services/contact";
 
 export const $hamburgerMenuOpened = atom<boolean>(false);

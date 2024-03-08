@@ -4,7 +4,7 @@ import { css } from "panda/css";
 import { VStack, styled as p } from "panda/jsx";
 import { useStore } from "@nanostores/react";
 import { $contactFormData } from "@/lib/store/ui";
-import { getEntries } from "@/lib/constants";
+import { getEntries } from "@/lib/consts";
 import { formSchema } from "@/lib/services/contact";
 
 const formStyle = css({

@@ -1,5 +1,5 @@
 import { type Personalization } from "@cloudflare/pages-plugin-mailchannels/api";
-import { type ENV } from "./constance";
+import { type ENV } from "./consts";
 
 export type EmailAddress = {
   email: string;

@@ -1,5 +1,5 @@
 import { Hono } from "hono";
-import { type HonoType } from "lib/constance";
+import { type HonoType } from "lib/consts";
 import { contact } from "./contact";
 
 export const v1 = new Hono<HonoType>()

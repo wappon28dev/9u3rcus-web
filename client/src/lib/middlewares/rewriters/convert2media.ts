@@ -1,5 +1,5 @@
 import { load } from "cheerio";
-import { getEntries } from "@/lib/constants";
+import { getEntries } from "@/lib/consts";
 import { inferImageSize, modifySrc } from "@/lib/services/media";
 
 export type MediaKey = "video" | "img";
