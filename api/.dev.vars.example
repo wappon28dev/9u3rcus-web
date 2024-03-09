@@ -2,3 +2,9 @@ MODE = "xxxxxxxxxxxxxxxxx"
 MAIL_DKIM_PRIVATE_KEY = "xxxxxxxxxxxxxxxxx"
 DISCORD_WEBHOOK_URL_CONTACT = "xxxxxxxxxxxxxxxxx"
 DISCORD_WEBHOOK_MENTION_ID = "xxxxxxxxxxxxxxxxx"
+CONTACT_MANIFEST = `
+{
+  "accessKey": "xxxxxxxxxxxxxxxxx",
+  "allowedHosts": ["xxxxxxxxxxxxxxxxx"]
+}
+`

@@ -12,6 +12,8 @@ import {
 import { INFO } from "@client/lib/config";
 import { zValidator } from "@hono/zod-validator";
 import { formatDate, getEntries } from "@client/lib/consts";
+import { cors } from "hono/cors";
+import { authGuard } from "lib/middlewares/contact";
 
 async function sendAdminMail(
   data: ContactFormData,
@@ -163,27 +165,29 @@ async function sendDiscordWebhook(
   });
 }
 
-export const contact = new Hono<HonoType>().post(
-  "/",
-  zValidator("json", zContactFormData),
-  async (ctx) => {
+export const contact = new Hono<HonoType>()
+  .options("*", cors())
+  .use("/*", authGuard)
+  .post("/", zValidator("json", zContactFormData), async (ctx) => {
     const data = ctx.req.valid("json");
     const acceptDate = new Date();
 
-    const adminMailResult = await sendAdminMail(data, ctx.env, acceptDate);
-    if (!adminMailResult.success) {
-      console.warn("Failed to send admin mail", adminMailResult.errors);
-      throw new HTTPException(500, {
-        message: "Failed to send admin mail",
-      });
-    }
+    if (ctx.env.MODE !== "local") {
+      const adminMailResult = await sendAdminMail(data, ctx.env, acceptDate);
+      if (!adminMailResult.success) {
+        console.warn("Failed to send admin mail", adminMailResult.errors);
+        throw new HTTPException(500, {
+          message: "Failed to send admin mail",
+        });
+      }
 
-    const autoReplyResult = await sendThanksMail(data, ctx.env, acceptDate);
-    if (!autoReplyResult.success) {
-      console.warn("Failed to send auto thanks mail", autoReplyResult.errors);
-      throw new HTTPException(500, {
-        message: "Failed to send thanks mail",
-      });
+      const autoReplyResult = await sendThanksMail(data, ctx.env, acceptDate);
+      if (!autoReplyResult.success) {
+        console.warn("Failed to send auto thanks mail", autoReplyResult.errors);
+        throw new HTTPException(500, {
+          message: "Failed to send thanks mail",
+        });
+      }
     }
 
     const res = await sendDiscordWebhook(data, ctx.env, acceptDate);
@@ -195,5 +199,4 @@ export const contact = new Hono<HonoType>().post(
     }
 
     return ctx.text("", 204);
-  }
-);
+  });

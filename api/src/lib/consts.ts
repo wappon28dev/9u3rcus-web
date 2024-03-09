@@ -1,8 +1,11 @@
+import { type ContactManifest, zContactManifest } from "./types/contact";
+
 export type ENV = {
   MODE: "local" | "preview" | "production";
   MAIL_DKIM_PRIVATE_KEY: string;
   DISCORD_WEBHOOK_URL_CONTACT: string;
   DISCORD_WEBHOOK_MENTION_ID: string;
+  CONTACT_MANIFEST: string;
 };
 // eslint-disable-next-line @typescript-eslint/ban-types
 export type Variables = {};
@@ -17,3 +20,6 @@ export const getModeName = (mode: ENV["MODE"]): string => {
 
   return name[mode];
 };
+
+export const getContactManifests = (env: ENV): ContactManifest =>
+  zContactManifest.parse(JSON.parse(env.CONTACT_MANIFEST));
