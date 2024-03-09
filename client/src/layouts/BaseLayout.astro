@@ -24,7 +24,7 @@ const { seo, style, header } = Astro.props;
       title={seo?.title ?? ""}
       titleTemplate={`%s | ${INFO.name.short}`}
       twitter={{
-        creator: INFO.addr.x,
+        creator: INFO.addr.sns.x,
         card: "summary_large_image",
       }}
     />
@@ -57,7 +57,7 @@ const { seo, style, header } = Astro.props;
       elem.addEventListener("click", () => {
         const id = elem.getAttribute("href").replace("#", "");
         void navigator.clipboard.writeText(
-          document.location.origin + document.location.pathname + "#" + id,
+          document.location.origin + document.location.pathname + "#" + id
         );
       });
     });
