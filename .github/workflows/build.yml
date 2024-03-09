@@ -13,12 +13,8 @@ jobs:
       name: ${{ (github.ref == 'refs/heads/prod' && 'production') || 'preview' }}
     if: contains(github.event.head_commit.message, '[skip ci]') == false
     env:
-      ASSETS_API_ENDPOINT: ${{ secrets.ASSETS_API_ENDPOINT }}
-      ASSETS_API_ACCESS_TOKEN: ${{ secrets.ASSETS_API_ACCESS_TOKEN }}
-      ASSETS_API_REFERER: ${{ secrets.ASSETS_API_REFERER }}
-      MICROCMS_SERVICE_DOMAIN: ${{ secrets.MICROCMS_SERVICE_DOMAIN }}
-      MICROCMS_API_KEY: ${{ secrets.MICROCMS_API_KEY }}
-      PUBLIC_CF_TURNSTILE_SITE_KEY: ${{ secrets.PUBLIC_CF_TURNSTILE_SITE_KEY }}
+      MODE: ${{ (github.ref == 'refs/heads/prod' && 'production') || 'preview' }}
+
     steps:
       - name: 📥 Checkout repository
         uses: actions/checkout@v3
@@ -32,9 +28,17 @@ jobs:
 
       - name: 🎉 Install project dependencies
         run: bun i
+        env:
+          ASSETS_API_ENDPOINT: ${{ secrets.ASSETS_API_ENDPOINT }}
+          ASSETS_API_ACCESS_TOKEN: ${{ secrets.ASSETS_API_ACCESS_TOKEN }}
+          ASSETS_API_REFERER: ${{ secrets.ASSETS_API_REFERER }}
 
       - name: 🏗️ Generate static files
         run: bun run build
+        env:
+          MICROCMS_SERVICE_DOMAIN: ${{ secrets.MICROCMS_SERVICE_DOMAIN }}
+          MICROCMS_API_KEY: ${{ secrets.MICROCMS_API_KEY }}
+          PUBLIC_CF_TURNSTILE_SITE_KEY: ${{ secrets.PUBLIC_CF_TURNSTILE_SITE_KEY }}
 
       - name: 🚀 Deploy to Cloudflare Pages
         id: cloudflare_pages_deploy
@@ -53,6 +57,10 @@ jobs:
         with:
           accountId: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
           apiToken: ${{ secrets.CLOUDFLARE_API_TOKEN_WORKERS }}
-          # TODO: environment name がコピペ状態なので修正する
-          command: "deploy --minify src/index.ts --env ${{(github.ref == 'refs/heads/prod' && 'production') || 'preview'}}"
+          command: "deploy --minify src/index.ts --env ${{ env.MODE }}"
           workingDirectory: ./api
+        env:
+          MODE: ${{ env.MODE }}
+          MAIL_DKIM_PRIVATE_KEY: ${{ secrets.MAIL_DKIM_PRIVATE_KEY }}
+          DISCORD_WEBHOOK_URL_CONTACT: ${{ secrets.DISCORD_WEBHOOK_URL_CONTACT }}
+          DISCORD_WEBHOOK_MENTION_ID: ${{ secrets.DISCORD_WEBHOOK_MENTION_ID }}

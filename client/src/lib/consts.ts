@@ -10,35 +10,44 @@ type Entries<T> = Array<
   keyof T extends infer U ? (U extends keyof T ? [U, T[U]] : never) : never
 >;
 export function getKeys<T extends Record<string, unknown>>(
-  obj: T,
+  obj: T
 ): Array<keyof T> {
   return Object.keys(obj);
 }
 export function getValues<T extends Record<string, any>>(
-  obj: T,
+  obj: T
 ): Array<T[keyof T]> {
   return Object.values(obj);
 }
 export function getEntries<T extends Record<string, unknown>>(
-  obj: T,
+  obj: T
 ): Entries<T> {
   return Object.entries(obj) as Entries<T>;
 }
 export function fromEntries<T extends Record<string, unknown>>(
-  entries: Entries<T>,
+  entries: Entries<T>
 ): T {
   return Object.fromEntries(entries) as T;
 }
 
 export function formatDate(
   date: Date,
-  format: "YYYY.MM" | "YYYY.MM.DD",
+  format: "YYYY.MM" | "YYYY.MM.DD" | "YYYY-MM-DD HH:mm:ss"
 ): string {
+  const year = date.getFullYear();
+  const month = date.getMonth() + 1;
+  const day = date.getDate();
+  const hour = date.getHours();
+  const minute = date.getMinutes();
+  const second = date.getSeconds();
+
   switch (format) {
     case "YYYY.MM":
-      return `${date.getFullYear()}.${date.getMonth() + 1}`;
+      return `${year}.${month}`;
     case "YYYY.MM.DD":
-      return `${date.getFullYear()}.${date.getMonth() + 1}.${date.getDate()}`;
+      return `${year}.${month}.${day}`;
+    case "YYYY-MM-DD HH:mm:ss":
+      return `${year}-${month}-${day} ${hour}:${minute}:${second}`;
     default:
       throw new Error("Invalid format");
   }
