@@ -1,4 +1,4 @@
-import { load } from "cheerio";
+import { load, type AnyNode, type Cheerio } from "cheerio";
 import { getEntries } from "@/lib/consts";
 import { inferImageSize, modifySrc } from "@/lib/services/media";
 
@@ -41,8 +41,8 @@ export async function convertMedia(html: string): Promise<string> {
   const $ = load(html);
   const $media = $(".media");
 
-  const $imgElemList: cheerio.Cheerio[] = [];
-  $media.each(async (_, elem) => {
+  const $imgElemList: Array<Cheerio<AnyNode>> = [];
+  $media.each((_, elem) => {
     const $elem = $(elem);
     const src = $elem.text();
     if (src == null) throw new Error("src is null");

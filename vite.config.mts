@@ -1,7 +1,10 @@
 import { defineConfig, configDefaults } from "vitest/config";
 
+import tsconfigPaths from "vite-tsconfig-paths";
+
 export default defineConfig(({ command, mode }) => {
   return {
+    plugins: [tsconfigPaths()],
     define: {
       "import.meta.vitest": mode !== "production",
     },
@@ -13,6 +16,5 @@ export default defineConfig(({ command, mode }) => {
         reporter: ["text", "json", "html"],
       },
     },
-    plugins: [],
   };
 });
