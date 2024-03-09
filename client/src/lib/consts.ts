@@ -35,11 +35,11 @@ export function formatDate(
   format: "YYYY.MM" | "YYYY.MM.DD" | "YYYY-MM-DD HH:mm:ss"
 ): string {
   const year = date.getFullYear();
-  const month = date.getMonth() + 1;
-  const day = date.getDate();
-  const hour = date.getHours();
-  const minute = date.getMinutes();
-  const second = date.getSeconds();
+  const month = String(date.getMonth() + 1).padStart(2, "0");
+  const day = String(date.getDate()).padStart(2, "0");
+  const hour = String(date.getHours()).padStart(2, "0");
+  const minute = String(date.getMinutes()).padStart(2, "0");
+  const second = String(date.getSeconds()).padStart(2, "0");
 
   switch (format) {
     case "YYYY.MM":
