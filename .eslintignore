@@ -1,3 +1,4 @@
 api/node_modules/
 client/node_modules/
+client/postcss.config.cjs
 vite.config.mts

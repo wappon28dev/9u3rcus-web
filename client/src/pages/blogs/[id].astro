@@ -40,6 +40,7 @@ const modifiedContent = await rewriteHTML(content as string);
     flexDir="column"
     gap="5"
     pb="20"
+    viewTransitionName="slide-in"
     w="100%"
   >
     <p.nav w="fit-content">
@@ -51,9 +52,6 @@ const modifiedContent = await rewriteHTML(content as string);
           fontSize="4xl"
           fontWeight="bold"
           m="0 auto"
-          style={{
-            viewTransitionName: `blogs-${id}`,
-          }}
           textAlign="center"
           w="fit-content"
         >

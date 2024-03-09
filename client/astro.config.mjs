@@ -15,7 +15,7 @@ export default defineConfig({
     sitemap(),
     metaTags(),
     icon({ include: { mdi: ["*"] } }),
-    compress({ CSS: false, Image: false }),
+    compress({ CSS: false }),
   ],
   site: "https://9u3rc.us",
   image: {

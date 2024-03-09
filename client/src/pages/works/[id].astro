@@ -30,57 +30,52 @@ const modifiedContent = await rewriteHTML(content as string);
     description,
   }}
 >
-  <p.div
-    className="content"
-    display="flex"
-    flexDir="column"
-    gap="5"
-    pb="20"
-    py="0"
-  >
-    <p.nav mdDown={{ ml: "calc(-1 * var(--spacing-5))" }} w="fit-content">
-      <BackTo href="/works" txt="Works" />
-    </p.nav>
+  <p.div bg="9u-white" viewTransitionName="slide-in">
     <p.div
-      m="0 auto"
-      maxH="60vh"
-      style={{
-        viewTransitionName: `works-${id}`,
-      }}
-      w="fit-content"
+      className="content"
+      display="flex"
+      flexDir="column"
+      gap="5"
+      pb="20"
+      py="0"
     >
-      <VisualMain alt={title} url={visualMain} />
+      <p.nav mdDown={{ ml: "calc(-1 * var(--spacing-5))" }} w="fit-content">
+        <BackTo href="/works" txt="Works" />
+      </p.nav>
+      <p.div m="0 auto" maxH="60vh" w="fit-content">
+        <VisualMain alt={title} url={visualMain} />
+      </p.div>
+      <p.h1
+        color="9u-red1"
+        fontSize={{ base: "4xl", mdDown: "3xl" }}
+        fontWeight="bold"
+        m="0 auto"
+        textAlign="center"
+        transform="translateY(5px)"
+      >
+        {title}
+      </p.h1>
+      <p.section m="0 auto" textAlign="center">
+        <p.p>{formatDate(new Date(releaseDate), "YYYY.MM")}</p.p>
+        {
+          clientName != null && (
+            <p.p fontSize="lg" fontWeight="bold">
+              Client: {clientName}
+            </p.p>
+          )
+        }
+      </p.section>
+      <p.section
+        fontSize="lg"
+        fontWeight="bold"
+        m="0 auto"
+        textAlign="center"
+        w={{ base: "80%", mdDown: "100%" }}
+      >
+        {description}
+      </p.section>
+      <p.hr w="100%" />
     </p.div>
-    <p.h1
-      color="9u-red1"
-      fontSize={{ base: "4xl", mdDown: "3xl" }}
-      fontWeight="bold"
-      m="0 auto"
-      textAlign="center"
-      transform="translateY(5px)"
-    >
-      {title}
-    </p.h1>
-    <p.section m="0 auto" textAlign="center">
-      <p.p>{formatDate(new Date(releaseDate), "YYYY.MM")}</p.p>
-      {
-        clientName != null && (
-          <p.p fontSize="lg" fontWeight="bold">
-            Client: {clientName}
-          </p.p>
-        )
-      }
-    </p.section>
-    <p.section
-      fontSize="lg"
-      fontWeight="bold"
-      m="0 auto"
-      textAlign="center"
-      w={{ base: "80%", mdDown: "100%" }}
-    >
-      {description}
-    </p.section>
-    <p.hr w="100%" />
+    <p.article className={contentStyle} set:html={modifiedContent} w="100%" />
   </p.div>
-  <p.article className={contentStyle} set:html={modifiedContent} w="100%" />
 </BaseLayout>
