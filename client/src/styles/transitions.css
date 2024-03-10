@@ -9,13 +9,28 @@
   }
 }
 
+@keyframes k-slide-out {
+  from {
+    opacity: 1;
+    transform: translateY(0);
+  }
+  to {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+}
+
 ::view-transition-new(slide-in) {
   animation: none;
+}
+
+::view-transition-old(slide-in) {
+  animation: k-slide-out 0.2s ease forwards;
 }
 
 .slide-in {
   opacity: 0;
   animation: k-slide-in 0.2s ease forwards;
-  animation-delay: 0.2s;
+  animation-delay: 0.12s;
   will-change: transform, opacity;
 }
