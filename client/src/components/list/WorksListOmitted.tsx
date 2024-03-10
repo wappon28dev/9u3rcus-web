@@ -29,7 +29,7 @@ function Works({
           pointerEvents: "auto",
         },
       })}
-      href={`/works/${id}`}
+      href={`/works/${id}?returnToHome`}
       overflow="hidden"
       position="relative"
       w="100%"

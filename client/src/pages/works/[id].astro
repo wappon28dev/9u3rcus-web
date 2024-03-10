@@ -4,7 +4,7 @@ import BaseLayout from "@layouts/BaseLayout.astro";
 import { styled as p } from "panda/jsx";
 import { contentStyle } from "@/lib/style";
 import { rewriteHTML } from "@/lib/middlewares/rewrite-html";
-import BackTo from "@/components/BackTo.astro";
+import { BackTo } from "@/components/BackTo";
 import { formatDate } from "@/lib/consts";
 import { getContentDetail, getContentList } from "@/lib/services/microcms";
 import VisualMain from "@/components/VisualMain.astro";
@@ -40,7 +40,7 @@ const modifiedContent = await rewriteHTML(content as string);
       py="0"
     >
       <p.nav mdDown={{ ml: "calc(-1 * var(--spacing-5))" }} w="fit-content">
-        <BackTo href="/works" txt="Works" />
+        <BackTo client:load href="/works" txt="Works" />
       </p.nav>
       <p.div m="0 auto" maxH="60vh" w="fit-content">
         <VisualMain alt={title} url={visualMain} />

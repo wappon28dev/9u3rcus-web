@@ -4,7 +4,7 @@ import BaseLayout from "@layouts/BaseLayout.astro";
 import { styled as p } from "panda/jsx";
 import { getContentDetail, getContentList } from "@/lib/services/microcms";
 import { rewriteHTML } from "@/lib/middlewares/rewrite-html";
-import BackTo from "@/components/BackTo.astro";
+import { BackTo } from "@/components/BackTo";
 import { formatDate } from "@/lib/consts";
 import { contentStyle } from "@/lib/style";
 
@@ -45,7 +45,7 @@ const modifiedContent = await rewriteHTML(content as string);
     w="100%"
   >
     <p.nav w="fit-content">
-      <BackTo href="/blogs" txt="Blog" />
+      <BackTo client:load href="/blogs" txt="Blog" />
     </p.nav>
     <p.section>
       <p.div w="100%">

@@ -55,13 +55,14 @@ const { seo, style, header } = Astro.props;
     <Footer />
   </p.body>
 
-  <script is:inline>
-    const elems = document.querySelectorAll("h2 > a, h3 > a");
+  <script>
+    const elems =
+      document.querySelectorAll<HTMLAnchorElement>("h2 > a, h3 > a");
     elems.forEach((elem) => {
       elem.addEventListener("click", () => {
-        const id = elem.getAttribute("href").replace("#", "");
+        const id = elem.getAttribute("href")?.replace("#", "");
         void navigator.clipboard.writeText(
-          document.location.origin + document.location.pathname + "#" + id,
+          document.location.origin + document.location.pathname + "#" + id
         );
       });
     });

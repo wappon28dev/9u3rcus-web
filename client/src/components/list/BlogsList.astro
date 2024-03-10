@@ -17,6 +17,8 @@ const contents =
   omittable && needOmit
     ? blogsList.contents.slice(0, ommitLength)
     : blogsList.contents;
+
+const returnToHome = needOmit ? "?returnToHome" : "";
 ---
 
 <VStack gap="10" w="100%">
@@ -32,7 +34,7 @@ const contents =
         }}
         gap={{ base: "10", mdDown: "3" }}
       >
-        <p.a href={`/blogs/${id}`} minW="300px" w="300px">
+        <p.a href={`/blogs/${id}${returnToHome}`} minW="300px" w="300px">
           <Image
             alt={title}
             height={ogpImg.height}
@@ -40,7 +42,7 @@ const contents =
             width={ogpImg.width}
           />
         </p.a>
-        <p.a href={`/blogs/${id}`}>
+        <p.a href={`/blogs/${id}${returnToHome}`}>
           <p.h2
             fontSize="3xl"
             fontWeight="bold"
