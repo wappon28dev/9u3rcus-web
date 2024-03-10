@@ -50,7 +50,7 @@ export type works<T = "get"> = Structure<
     /**
      * OGP 画像
      */
-    ogp?: { url: string; width: number; height: number };
+    ogpImg?: { url: string; width: number; height: number };
     /**
      * ホバー時の動画
      */
@@ -69,6 +69,20 @@ type works_imgList = {
    */
   imgList: any;
 };
+export type info<T = "get"> = Structure<
+  T,
+  {
+    /**
+     * ファイルアップロード
+     */
+    uploadedFileListMap?: any;
+    /**
+     * ファイルアップロード (テスト)
+     */
+    uploadedFileListMapT?: any;
+  }
+>;
+
 export type blogs<T = "get"> = Structure<
   T,
   {
@@ -94,22 +108,27 @@ export type blogs<T = "get"> = Structure<
 export type EndPoints = {
   get: {
     works: works<"get">;
+    info: info<"get">;
     blogs: blogs<"get">;
   };
   gets: {
     works: works<"gets">;
+    info: info<"gets">;
     blogs: blogs<"gets">;
   };
   post: {
     works: works<"post">;
+    info: info<"post">;
     blogs: blogs<"post">;
   };
   put: {
     works: works<"put">;
+    info: info<"put">;
     blogs: blogs<"put">;
   };
   patch: {
     works: works<"patch">;
+    info: info<"patch">;
     blogs: blogs<"patch">;
   };
 };

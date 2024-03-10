@@ -8,7 +8,7 @@
     "dev": "astro dev",
     "build": "astro check && astro build",
     "assets:dl": "bun run ./scripts/assets-dl/index.ts",
-    "generate:cms": "bunx microcms-typescript schemas src/types/cms-types.ts",
+    "generate:cms": "bunx microcms-typescript schemas src/lib/types/cms-types.ts",
     "preview": "astro preview",
     "astro": "astro"
   },
