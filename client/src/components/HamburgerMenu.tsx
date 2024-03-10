@@ -1,4 +1,4 @@
-import { type ReactElement, type ComponentProps } from "react";
+import { type ReactElement, type ComponentProps, useEffect } from "react";
 import { styled as p } from "panda/jsx";
 import { token } from "panda/tokens";
 import { useStore } from "@nanostores/react";
@@ -30,6 +30,14 @@ export function HamburgerMenu({
       document.removeEventListener("wheel", noScroll);
     }
   });
+
+  useEffect(() => {
+    window.onpopstate = closeMenu;
+
+    return () => {
+      window.onpopstate = null;
+    };
+  }, []);
 
   return (
     <p.div

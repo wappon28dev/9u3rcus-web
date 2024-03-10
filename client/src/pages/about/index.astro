@@ -8,6 +8,7 @@ import iconVimeo from "@public/assets/img/icon_vimeo.svg";
 import BaseLayout from "@/layouts/BaseLayout.astro";
 import Marker from "@/components/Marker.astro";
 import { INFO } from "@/lib/config";
+import { CopyWrapper } from "@/components/CopyWrapper";
 
 const externalLinks = {
   x: {
@@ -88,7 +89,13 @@ const externalLinks = {
         <p.p fontSize="5xl" fontWeight="bold" lineHeight="1" ml="-4px"
           >{INFO.name.jp}</p.p
         >
-        <p.p fontSize="lg" userSelect="all">{INFO.addr.email.contact}</p.p>
+        <CopyWrapper
+          client:visible
+          copyText={INFO.addr.email.contact}
+          titleText="メールアドレスをコピー"
+        >
+          <p.p fontSize="lg">{INFO.addr.email.contact}</p.p>
+        </CopyWrapper>
         <p.div alignItems="center" display="flex" gap="5">
           {
             Object.entries(externalLinks).map(([key, { icon, href, alt }]) => (

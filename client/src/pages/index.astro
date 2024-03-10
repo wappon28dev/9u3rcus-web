@@ -1,10 +1,12 @@
 ---
 import BaseLayout from "@layouts/BaseLayout.astro";
-import { styled as p } from "panda/jsx";
+import { VStack, styled as p } from "panda/jsx";
 import logoBg from "@public/assets/img/logo_bg.svg";
 import { css } from "panda/css";
 import { INFO } from "@/lib/config";
 import Marker from "@/components/Marker.astro";
+import BlogsList from "@/components/list/BlogsList.astro";
+import WorksList from "@/components/list/WorksList.astro";
 ---
 
 <BaseLayout
@@ -54,47 +56,20 @@ import Marker from "@/components/Marker.astro";
       },
     })}
   >
-    <p.div className="content" display="flex" flexDir="column" gap="10">
+    <VStack className="content" gap="10">
       <Marker>
         <p.h2>Works</p.h2>
       </Marker>
-      <p.div
-        display="grid"
-        gap="10"
-        gridTemplateColumns="repeat(auto-fill, minmax(300px, 1fr))"
-        textAlign="center"
-      >
-        {
-          Array.from({ length: 6 }).map((_, i) => (
-            // eslint-disable-next-line react/no-array-index-key
-            <p.div key={i} bg="9u-gray" h="250px" />
-          ))
-        }
-      </p.div>
-    </p.div>
-    <p.div
-      bgColor="9u-brown"
-      className="content"
-      display="flex"
-      flexDir="column"
-      gap="10"
-    >
-      <Marker>
-        <p.h2 color="9u-white">Blog</p.h2>
-      </Marker>
-      <p.div
-        display="grid"
-        gap="10"
-        gridTemplateColumns="repeat(auto-fill, minmax(300px, 1fr))"
-        textAlign="center"
-      >
-        {
-          Array.from({ length: 6 }).map((_, i) => (
-            // eslint-disable-next-line react/no-array-index-key
-            <p.div key={i} bg="9u-gray" h="250px" />
-          ))
-        }
-      </p.div>
+      <!-- <WorksListOmitted client:load worksList={worksList} /> -->
+      <WorksList needOmit />
+    </VStack>
+    <p.div bgColor="9u-brown" color="9u-white" w="100%">
+      <VStack className="content" gap="10">
+        <Marker>
+          <p.h2 color="9u-white">Blog</p.h2>
+        </Marker>
+        <BlogsList needOmit />
+      </VStack>
     </p.div>
   </p.div>
 </BaseLayout>

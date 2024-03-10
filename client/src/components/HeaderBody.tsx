@@ -17,7 +17,7 @@ export function HeaderBody({
   onNavIconClick?: () => void;
 }): ReactElement {
   return (
-    <p.div
+    <p.header
       alignItems="center"
       bg="transparent"
       display="flex"
@@ -121,6 +121,6 @@ export function HeaderBody({
           <Icon icon={navIconClosed ? "mdi:close" : "mdi:menu"} />
         </p.nav>
       </p.section>
-    </p.div>
+    </p.header>
   );
 }

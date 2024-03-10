@@ -18,7 +18,7 @@ import { authGuard } from "lib/middlewares/contact";
 async function sendAdminMail(
   data: ContactFormData,
   env: ENV,
-  acceptDate: Date
+  acceptDate: Date,
 ): ReturnType<typeof sendEmail> {
   const to: EmailAddress = {
     email: INFO.addr.email.contact,
@@ -35,7 +35,7 @@ async function sendAdminMail(
       `
 ${description}:
   ${data[key]}
-`.trim()
+`.trim(),
     )
     .join("\n");
   const content = `
@@ -70,7 +70,7 @@ ${_data}
 async function sendThanksMail(
   data: ContactFormData,
   env: ENV,
-  acceptDate: Date
+  acceptDate: Date,
 ): ReturnType<typeof sendEmail> {
   const to: EmailAddress = {
     email: data.email,
@@ -87,7 +87,7 @@ async function sendThanksMail(
       `
   ${description}:
     ${data[key]}
-  `.trim()
+  `.trim(),
     )
     .join("\n");
 
@@ -124,7 +124,7 @@ ${_data}
 async function sendDiscordWebhook(
   data: ContactFormData,
   env: ENV,
-  acceptDate: Date
+  acceptDate: Date,
 ): Promise<Response> {
   const unixTime = Math.floor(acceptDate.getTime() / 1000);
   const content = `

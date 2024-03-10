@@ -1,0 +1,70 @@
+---
+import { HStack, VStack, styled as p } from "panda/jsx";
+import { Image } from "astro:assets";
+import { Icon } from "astro-icon/components";
+import { getContentList } from "@/lib/services/microcms";
+
+type Props = {
+  needOmit?: boolean;
+  ommitLength?: number;
+};
+
+const { needOmit = false, ommitLength = 3 } = Astro.props;
+const blogsList = await getContentList("blogs", { fields: ["id", "title"] });
+
+const omittable = blogsList.contents.length > ommitLength;
+const contents =
+  omittable && needOmit
+    ? blogsList.contents.slice(0, ommitLength)
+    : blogsList.contents;
+---
+
+<VStack gap="10" w="100%">
+  {
+    contents.map(({ id, title, ogpImg, content }) => (
+      <p.div
+        key={id}
+        alignItems="center"
+        display="flex"
+        flexDir={{
+          base: "row",
+          mdDown: "column",
+        }}
+        gap={{ base: "10", mdDown: "3" }}
+      >
+        <p.a href={`/blogs/${id}`} minW="300px" w="300px">
+          <Image
+            alt={title}
+            height={ogpImg.height}
+            src={ogpImg.url}
+            width={ogpImg.width}
+          />
+        </p.a>
+        <p.a href={`/blogs/${id}`}>
+          <p.h2
+            fontSize="3xl"
+            fontWeight="bold"
+            m={{
+              base: "0",
+              mdDown: "0 auto",
+            }}
+            w="fit-content"
+          >
+            {title}
+          </p.h2>
+          <p.p>{content}</p.p>
+        </p.a>
+      </p.div>
+    ))
+  }
+  {
+    needOmit && (
+      <p.a href="/blogs">
+        <HStack fontSize="xl" fontWeight="bold" gap="2">
+          View More
+          <Icon name="mdi:arrow-right" />
+        </HStack>
+      </p.a>
+    )
+  }
+</VStack>

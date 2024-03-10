@@ -1,11 +1,8 @@
 ---
 import BaseLayout from "@layouts/BaseLayout.astro";
 import { styled as p } from "panda/jsx";
-import { Image } from "astro:assets";
-import { getContentList } from "@/lib/services/microcms";
 import Marker from "@/components/Marker.astro";
-
-const blogsList = await getContentList("blogs", { fields: ["id", "title"] });
+import BlogsList from "@/components/list/BlogsList.astro";
 ---
 
 <BaseLayout
@@ -26,44 +23,6 @@ const blogsList = await getContentList("blogs", { fields: ["id", "title"] });
     </Marker>
   </p.div>
   <p.div className="content" color="9u-white" py="10">
-    <p.div display="flex" flexDir="column" gap="10" w="100%">
-      {
-        blogsList.contents.map(({ id, title, ogpImg, content }) => (
-          <p.div
-            key={id}
-            alignItems="center"
-            display="flex"
-            flexDir={{
-              base: "row",
-              mdDown: "column",
-            }}
-            gap={{ base: "10", mdDown: "3" }}
-          >
-            <p.a href={`/blogs/${id}`} minW="300px" w="300px">
-              <Image
-                alt={title}
-                height={ogpImg.height}
-                src={ogpImg.url}
-                width={ogpImg.width}
-              />
-            </p.a>
-            <p.a href={`/blogs/${id}`}>
-              <p.h2
-                fontSize="3xl"
-                fontWeight="bold"
-                m={{
-                  base: "0",
-                  mdDown: "0 auto",
-                }}
-                w="fit-content"
-              >
-                {title}
-              </p.h2>
-              <p.p>{content}</p.p>
-            </p.a>
-          </p.div>
-        ))
-      }
-    </p.div>
+    <BlogsList />
   </p.div>
 </BaseLayout>

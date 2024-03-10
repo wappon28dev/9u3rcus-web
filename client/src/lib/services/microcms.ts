@@ -4,7 +4,7 @@ import blogsList from "@public/assets/mock/blogs-list.json";
 import worksList from "@public/assets/mock/works-list.json";
 import blogsDetail from "@public/assets/mock/blogs-detail.json";
 import worksDetail from "@public/assets/mock/works-detail.json";
-import type { EndPoints } from "@/types/cms-types";
+import type { EndPoints } from "../types/cms-types";
 
 export const client = createClient({
   serviceDomain: import.meta.env.MICROCMS_SERVICE_DOMAIN,
@@ -13,7 +13,7 @@ export const client = createClient({
 
 export async function getContentList<T extends keyof EndPoints["gets"]>(
   key: T,
-  _queries: MicroCMSQueries = {},
+  _queries: MicroCMSQueries = {}
 ): Promise<EndPoints["gets"][T]> {
   switch (key) {
     case "blogs":
@@ -33,7 +33,7 @@ export async function getContentList<T extends keyof EndPoints["gets"]>(
 export async function getContentDetail<T extends keyof EndPoints["get"]>(
   key: T,
   _id: string,
-  _queries: MicroCMSQueries = {},
+  _queries: MicroCMSQueries = {}
 ): Promise<EndPoints["get"][T]> {
   switch (key) {
     case "blogs":
