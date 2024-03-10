@@ -25,12 +25,13 @@
 }
 
 ::view-transition-old(slide-in) {
+  animation: none;
   animation: k-slide-out 0.2s ease forwards;
 }
 
 .slide-in {
   opacity: 0;
   animation: k-slide-in 0.2s ease forwards;
-  animation-delay: 0.12s;
+  animation-delay: 0.15s;
   will-change: transform, opacity;
 }

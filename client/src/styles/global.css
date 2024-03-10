@@ -20,6 +20,10 @@ code {
   font-family: var(--font-udev);
 }
 
+button {
+  cursor: pointer;
+}
+
 /* list */
 ul,
 menu,
