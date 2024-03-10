@@ -12,5 +12,7 @@
     "MICROCMS",
     "nanostores"
   ],
-  "eslint.validate": ["astro"]
+  "eslint.validate": ["astro"],
+  "vitest.enable": true,
+  "vitest.commandLine": "bunx vitest"
 }

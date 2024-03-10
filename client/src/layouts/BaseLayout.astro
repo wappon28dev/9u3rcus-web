@@ -33,6 +33,7 @@ const { seo, style, header } = Astro.props;
       }}
     />
     <title>{INFO.name.short}</title>
+    <ViewTransitions />
   </head>
 
   <p.body
@@ -46,7 +47,6 @@ const { seo, style, header } = Astro.props;
     }}
     w="100%"
   >
-    <ViewTransitions />
     <Header client:load {...header} />
     <HamburgerMenu client:load {...header} />
     <p.main h="100%" m="0 auto" w="100%">

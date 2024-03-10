@@ -8,9 +8,14 @@
     transform: translateY(0);
   }
 }
-::view-transition-old(slide-in) {
-  animation: k-slide-in 0.3s ease-out reverse;
-}
+
 ::view-transition-new(slide-in) {
-  animation: k-slide-in 0.3s ease;
+  animation: none;
+}
+
+.slide-in {
+  opacity: 0;
+  animation: k-slide-in 0.2s ease forwards;
+  animation-delay: 0.2s;
+  will-change: transform, opacity;
 }
