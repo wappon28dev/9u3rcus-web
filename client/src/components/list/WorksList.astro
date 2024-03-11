@@ -19,7 +19,7 @@ const worksList = await getContentList("works", { fields: ["id", "title"] });
 
 {
   needOmit ? (
-    <WorksListOmitted worksList={worksList} omitRowLength={omitRowLength} client:idle  />
+    <WorksListOmitted worksList={worksList} omitRowLength={omitRowLength} client:idle />
   ) : (
   <p.div
     className="works-list"

@@ -1,12 +1,18 @@
 :root {
   --font-line: "LINE Seed JP", sans-serif;
   --font-udev: "UDEV Gothic 35 JPDOC", monospace;
+  --scrollbar-width: 17px;
 }
 
 /* font */
 html {
   font-size: var(--font-sizes-lg);
   scroll-padding-top: 130px; /* header height */
+}
+
+/* fix scroll bar */
+html:has(div[role="alertdialog"]) {
+  padding-right: var(--scrollbar-width);
 }
 
 body {

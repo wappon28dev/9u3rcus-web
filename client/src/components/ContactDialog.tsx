@@ -70,15 +70,12 @@ export function ContactDialog({
             overflowY: "auto",
             left: "50%",
             transform: "translate(-50%, -50%)",
-            width: "90vw",
+            w: "90vw",
             maxW: {
               base: "60vw",
               mdDown: "100%",
             },
-            maxH: {
-              base: "85vh",
-              mdDown: "90vh",
-            },
+            maxH: "90vh",
             p: "5",
             bgColor: "9u-white",
             animation: "fadeIn 0.2s",
@@ -118,7 +115,14 @@ export function ContactDialog({
                         value={formData[key]}
                       />
                     ) : (
-                      <p.textarea disabled id={key} value={formData[key]} />
+                      <p.textarea
+                        disabled
+                        id={key}
+                        style={{
+                          resize: "none",
+                        }}
+                        value={formData[key]}
+                      />
                     )}
                   </p.div>
                 ),
