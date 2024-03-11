@@ -13,7 +13,7 @@ export const client = createClient({
 
 export async function getContentList<T extends keyof EndPoints["gets"]>(
   key: T,
-  _queries: MicroCMSQueries = {}
+  _queries: MicroCMSQueries = {},
 ): Promise<EndPoints["gets"][T]> {
   switch (key) {
     case "blogs":
@@ -33,7 +33,7 @@ export async function getContentList<T extends keyof EndPoints["gets"]>(
 export async function getContentDetail<T extends keyof EndPoints["get"]>(
   key: T,
   _id: string,
-  _queries: MicroCMSQueries = {}
+  _queries: MicroCMSQueries = {},
 ): Promise<EndPoints["get"][T]> {
   switch (key) {
     case "blogs":

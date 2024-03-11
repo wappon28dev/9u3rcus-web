@@ -108,7 +108,7 @@ export function WorksListOmitted({
   const ref = useRef<HTMLDivElement>(null);
   const contents = useMemo(
     () => worksList.contents.slice(0, rowLength * omitRowLength),
-    [rowLength]
+    [rowLength],
   );
 
   const computeRowLength = (): void => {

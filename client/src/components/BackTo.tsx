@@ -26,6 +26,7 @@ export function BackTo({
     <p.nav className="back-to">
       <p.a
         alignItems="center"
+        cursor="pointer"
         display="flex"
         gap={{
           base: "3",

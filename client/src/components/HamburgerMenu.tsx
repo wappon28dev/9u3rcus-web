@@ -45,7 +45,6 @@ export function HamburgerMenu({
       aria-hidden={!isOpened}
       height="100%"
       left="0"
-      overflow="auto"
       position="fixed"
       style={{
         clipPath: isOpened ? "inset(0 0 0 0)" : "inset(0 0 100% 0)",
@@ -53,7 +52,7 @@ export function HamburgerMenu({
       }}
       transition="clip-path .3s ease-in-out"
       width="100%"
-      zIndex="100"
+      zIndex="header"
     >
       <HeaderBody
         externalStyle={{
