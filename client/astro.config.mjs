@@ -15,7 +15,14 @@ export default defineConfig({
     sitemap(),
     metaTags(),
     icon({ include: { mdi: ["*"] } }),
-    compress({ CSS: false }),
+    compress({
+      HTML: {
+        "html-minifier-terser": {
+          removeAttributeQuotes: false,
+        },
+      },
+      CSS: false,
+    }),
   ],
   site: "https://9u3rc.us",
   image: {
