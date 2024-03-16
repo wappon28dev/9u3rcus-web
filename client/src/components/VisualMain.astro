@@ -3,6 +3,8 @@ import { YouTube, Vimeo } from "astro-embed";
 import matcherYoutube from "@astro-community/astro-embed-youtube/matcher";
 import matcherVimeo from "@astro-community/astro-embed-vimeo/matcher";
 import { Image, getImage } from "astro:assets";
+import { styled as p } from "panda/jsx";
+import { css } from "panda/css";
 import {
   detectMediaKey,
   type MediaKey,
@@ -61,40 +63,53 @@ if (url.startsWith(INFO.site.assets)) {
 }
 ---
 
-{
-  (() => {
-    switch (key) {
-      case "img":
-        return (
-          <Image
-            alt={alt}
-            height={imgSize.height}
-            src={modifySrc(url)}
-            width={imgSize.width}
-          />
-        );
-      case "video":
-        return <VideoPlayer autoPlay controls muted src={modifySrc(url)} />;
-      case "youtube":
-        return (
-          <YouTube
-            id={url}
-            params="widget_referrer"
-            playlabel="作品を再生する"
-            poster={tmbUrl ?? ""}
-          />
-        );
-      case "vimeo":
-        return (
-          <Vimeo
-            id={url}
-            params="portrait&title"
-            playlabel="作品を再生する"
-            poster={tmbUrl ?? ""}
-          />
-        );
-      default:
-        throw new Error(`unknown key`);
-    }
-  })()
-}
+<p.div
+  className={css({
+    "& > *": {
+      maxH: "67.5vh", // タイトルが見える高さ
+      aspectRatio: "16 / 9",
+      margin: "0 auto",
+    },
+  })}
+>
+  {
+    (() => {
+      switch (key) {
+        case "img":
+          return (
+            <Image
+              alt={alt}
+              height={imgSize.height}
+              src={modifySrc(url)}
+              style={{
+                width: "auto",
+              }}
+              width={imgSize.width}
+            />
+          );
+        case "video":
+          return <VideoPlayer autoPlay controls muted src={modifySrc(url)} />;
+        case "youtube":
+          return (
+            <YouTube
+              id={url}
+              params="widget_referrer"
+              playlabel="作品を再生する"
+              poster={tmbUrl ?? ""}
+            />
+          );
+        case "vimeo":
+          return (
+            <Vimeo
+              id={url}
+              params="portrait&title"
+              playlabel="作品を再生する"
+              poster={tmbUrl ?? ""}
+            />
+          );
+        default:
+          throw new Error(`unknown key`);
+      }
+    })()
+  }
+</p.div>

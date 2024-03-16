@@ -1,0 +1,36 @@
+---
+import { Image } from "astro:assets";
+import { HStack, VStack, styled as p } from "panda/jsx";
+import type { EndPoints } from "@/lib/types/cms-types";
+
+type Props = {
+  data: EndPoints["get"]["works"]["visualSub"];
+};
+type Img = { url: string; width: number; height: number };
+const { data } = Astro.props;
+---
+
+<VStack gap="5">
+  {
+    data.map((row, rowIdx) => {
+      const imgList = row.imgList as Img[];
+
+      return (
+        // eslint-disable-next-line react/no-array-index-key
+        <HStack key={rowIdx} gap="5">
+          {imgList.map((img, columnIdx) => (
+            // eslint-disable-next-line react/no-array-index-key
+            <p.div key={columnIdx}>
+              <Image
+                alt=""
+                height={img.height}
+                src={img.url}
+                width={img.width}
+              />
+            </p.div>
+          ))}
+        </HStack>
+      );
+    })
+  }
+</VStack>

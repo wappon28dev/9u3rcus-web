@@ -122,7 +122,5 @@ h3 {
 
 lite-youtube,
 lite-vimeo {
-  min-width: 300px;
-  width: 50vw;
-  max-width: none !important;
+  max-width: unset !important;
 }

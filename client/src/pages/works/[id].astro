@@ -8,6 +8,7 @@ import { BackTo } from "@/components/BackTo";
 import { formatDate } from "@/lib/consts";
 import { getContentDetail, getContentList } from "@/lib/services/microcms";
 import VisualMain from "@/components/VisualMain.astro";
+import VisualSub from "@/components/VisualSub.astro";
 
 export const getStaticPaths = (async () => {
   const worksList = await getContentList("works", { fields: "id" });
@@ -18,8 +19,15 @@ export const getStaticPaths = (async () => {
 }) satisfies GetStaticPaths;
 
 const { id } = Astro.params;
-const { title, visualMain, releaseDate, clientName, description, content } =
-  await getContentDetail("works", id);
+const {
+  title,
+  visualMain,
+  releaseDate,
+  clientName,
+  description,
+  content,
+  visualSub,
+} = await getContentDetail("works", id);
 
 const modifiedContent = await rewriteHTML(content as string);
 ---
@@ -42,7 +50,7 @@ const modifiedContent = await rewriteHTML(content as string);
       <p.nav mdDown={{ ml: "calc(-1 * var(--spacing-5))" }} w="fit-content">
         <BackTo client:load href="/works" txt="Works" />
       </p.nav>
-      <p.div m="0 auto" maxH="60vh" w="fit-content">
+      <p.div>
         <VisualMain alt={title} url={visualMain} />
       </p.div>
       <p.h1
@@ -74,6 +82,8 @@ const modifiedContent = await rewriteHTML(content as string);
       >
         {description}
       </p.section>
+      <p.hr w="100%" />
+      <VisualSub data={visualSub} />
       <p.hr w="100%" />
     </p.div>
     <p.article className={contentStyle} set:html={modifiedContent} w="100%" />
