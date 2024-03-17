@@ -7,9 +7,9 @@ import { out } from "scripts/shared/out";
 import { LOGO, type ChildrenFlat, PUBLIC_PATH } from "./constants";
 
 const {
-  ASSETS_API_ENDPOINT: endpoint,
-  ASSETS_API_REFERER: referer,
-  ASSETS_API_ACCESS_TOKEN: accessToken,
+  CLIENT_SCRIPT_ASSETS_API_ENDPOINT: endpoint,
+  CLIENT_SCRIPT_ASSETS_API_REFERER: referer,
+  CLIENT_SCRIPT_ASSETS_API_ACCESS_TOKEN: accessToken,
 } = Bun.env;
 const childrenUrl = `${endpoint}?dirPath=/`;
 

@@ -128,10 +128,10 @@ async function sendDiscordWebhook(
 ): Promise<Response> {
   const unixTime = Math.floor(acceptDate.getTime() / 1000);
   const content = `
-  <:9u3rcusdark:1204434658792837160> <@${env.DISCORD_WEBHOOK_MENTION_ID}>
-  ポートフォリオのお問い合わせフォームからお問い合わせが送信されました.
-  送信者へのサンクスメールと管理者 (\`${INFO.addr.email.contact}\`) への通知メールが送信されました.
-  お問い合わせ内容を [Gmail ↗](https://gmail.com) で確認し, 返信をお願いします.
+<:9u3rcusdark:1204434658792837160> <@${env.API_DISCORD_WEBHOOK_MENTION_ID}>
+ポートフォリオのお問い合わせフォームからお問い合わせが送信されました.
+送信者へのサンクスメールと管理者 (\`${INFO.addr.email.contact}\`) への通知メールが送信されました.
+お問い合わせ内容を [Gmail ↗](https://gmail.com) で確認し, 返信をお願いします.
   `.trim();
 
   const body = {
@@ -156,7 +156,7 @@ async function sendDiscordWebhook(
     attachments: [],
   };
 
-  return await fetch(env.DISCORD_WEBHOOK_URL_CONTACT, {
+  return await fetch(env.API_DISCORD_WEBHOOK_URL_CONTACT, {
     method: "POST",
     headers: {
       "Content-Type": "application/json",

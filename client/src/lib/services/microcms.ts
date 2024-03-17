@@ -7,8 +7,8 @@ import worksDetail from "@public/assets/mock/works-detail.json";
 import type { EndPoints } from "../types/cms-types";
 
 export const client = createClient({
-  serviceDomain: import.meta.env.MICROCMS_SERVICE_DOMAIN,
-  apiKey: import.meta.env.MICROCMS_API_KEY,
+  serviceDomain: import.meta.env.CLIENT_MICROCMS_SERVICE_DOMAIN,
+  apiKey: import.meta.env.CLIENT_MICROCMS_API_KEY,
 });
 
 export async function getContentList<T extends keyof EndPoints["gets"]>(

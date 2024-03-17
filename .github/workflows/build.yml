@@ -29,16 +29,16 @@ jobs:
       - name: 🎉 Install project dependencies
         run: bun i
         env:
-          ASSETS_API_ENDPOINT: ${{ secrets.ASSETS_API_ENDPOINT }}
-          ASSETS_API_ACCESS_TOKEN: ${{ secrets.ASSETS_API_ACCESS_TOKEN }}
-          ASSETS_API_REFERER: ${{ secrets.ASSETS_API_REFERER }}
+          CLIENT_SCRIPT_ASSETS_API_ENDPOINT: ${{ secrets.CLIENT_SCRIPT_ASSETS_API_ENDPOINT }}
+          CLIENT_SCRIPT_ASSETS_API_ACCESS_TOKEN: ${{ secrets.CLIENT_SCRIPT_ASSETS_API_ACCESS_TOKEN }}
+          CLIENT_SCRIPT_ASSETS_API_REFERER: ${{ secrets.CLIENT_SCRIPT_ASSETS_API_REFERER }}
 
       - name: 🏗️ Generate static files
         run: bun run build
         env:
-          MICROCMS_SERVICE_DOMAIN: ${{ secrets.MICROCMS_SERVICE_DOMAIN }}
-          MICROCMS_API_KEY: ${{ secrets.MICROCMS_API_KEY }}
-          PUBLIC_CF_TURNSTILE_SITE_KEY: ${{ secrets.PUBLIC_CF_TURNSTILE_SITE_KEY }}
+          CLIENT_MICROCMS_SERVICE_DOMAIN: ${{ secrets.CLIENT_MICROCMS_SERVICE_DOMAIN }}
+          CLIENT_MICROCMS_API_KEY: ${{ secrets.CLIENT_MICROCMS_API_KEY }}
+          PUBLIC_CLIENT_CF_TURNSTILE_SITE_KEY: ${{ secrets.PUBLIC_CLIENT_CF_TURNSTILE_SITE_KEY }}
 
       - name: 🚀 Deploy to Cloudflare Pages
         id: cloudflare_pages_deploy
@@ -61,7 +61,9 @@ jobs:
           workingDirectory: ./api
         env:
           MODE: ${{ env.MODE }}
-          MAIL_DKIM_PRIVATE_KEY: ${{ secrets.MAIL_DKIM_PRIVATE_KEY }}
-          DISCORD_WEBHOOK_URL_CONTACT: ${{ secrets.DISCORD_WEBHOOK_URL_CONTACT }}
-          DISCORD_WEBHOOK_MENTION_ID: ${{ secrets.DISCORD_WEBHOOK_MENTION_ID }}
-          CONTACT_MANIFEST: ${{ secrets.CONTACT_MANIFEST }}
+          API_MAIL_DKIM_PRIVATE_KEY: ${{ secrets.API_MAIL_DKIM_PRIVATE_KEY }}
+          API_DISCORD_WEBHOOK_URL_CONTACT: ${{ secrets.API_DISCORD_WEBHOOK_URL_CONTACT }}
+          API_DISCORD_WEBHOOK_MENTION_ID: ${{ secrets.API_DISCORD_WEBHOOK_MENTION_ID }}
+          API_CONTACT_MANIFEST: ${{ secrets.API_CONTACT_MANIFEST }}
+          API_ASSETS_ENDPOINT: ${{ secrets.API_ASSETS_ENDPOINT }}
+          API_ASSETS_ACCESS_KEY: ${{ secrets.API_ASSETS_ACCESS_KEY }}

@@ -13,8 +13,8 @@ export function getPersonalizationInfo({
   env: ENV;
   info: Personalization;
 }): Personalization {
-  const { MAIL_DKIM_PRIVATE_KEY } = env;
-  if (MAIL_DKIM_PRIVATE_KEY == null) {
+  const { API_MAIL_DKIM_PRIVATE_KEY } = env;
+  if (API_MAIL_DKIM_PRIVATE_KEY == null) {
     throw new Error("MAIL_DKIM_PRIVATE_KEY is not set");
   }
 
@@ -22,6 +22,6 @@ export function getPersonalizationInfo({
     ...info,
     dkim_domain: "9u3rc.us",
     dkim_selector: "mailchannels",
-    dkim_private_key: MAIL_DKIM_PRIVATE_KEY,
+    dkim_private_key: API_MAIL_DKIM_PRIVATE_KEY,
   };
 }

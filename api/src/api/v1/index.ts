@@ -1,6 +1,7 @@
 import { Hono } from "hono";
 import { type HonoType } from "lib/consts";
 import { contact } from "./contact";
+import { assets } from "./assets";
 
 export const v1 = new Hono<HonoType>()
   .use("/*", async (ctx, next) => {
@@ -9,4 +10,5 @@ export const v1 = new Hono<HonoType>()
     });
     await next();
   })
-  .route("/contact", contact);
+  .route("/contact", contact)
+  .route("/assets", assets);

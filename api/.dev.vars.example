@@ -1,10 +1,12 @@
 MODE = "xxxxxxxxxxxxxxxxx"
-MAIL_DKIM_PRIVATE_KEY = "xxxxxxxxxxxxxxxxx"
-DISCORD_WEBHOOK_URL_CONTACT = "xxxxxxxxxxxxxxxxx"
-DISCORD_WEBHOOK_MENTION_ID = "xxxxxxxxxxxxxxxxx"
-CONTACT_MANIFEST = `
+API_MAIL_DKIM_PRIVATE_KEY = "xxxxxxxxxxxxxxxxx"
+API_DISCORD_WEBHOOK_URL_CONTACT = "xxxxxxxxxxxxxxxxx"
+API_DISCORD_WEBHOOK_MENTION_ID = "xxxxxxxxxxxxxxxxx"
+API_CONTACT_MANIFEST = `
 {
   "accessKey": "xxxxxxxxxxxxxxxxx",
   "allowedHosts": ["xxxxxxxxxxxxxxxxx"]
 }
 `
+API_ASSETS_ENDPOINT = "xxxxxxxxxxxxxxxxx"
+API_ASSETS_ACCESS_KEY = "xxxxxxxxxxxxxxxxx"
