@@ -2,5 +2,6 @@
   "compilerOptions": {
     "strictNullChecks": true,
     "types": ["vitest/globals"]
-  }
+  },
+  "exclude": ["node_modules"]
 }

@@ -77,3 +77,34 @@ export const contentStyle = css({
     borderLeft: "5px solid",
   },
 });
+
+export const formStyle = css({
+  "& > div": {
+    w: "100%",
+    "& > label": {
+      display: "block",
+      fontWeight: "bold",
+      fontSize: { base: "xl", mdDown: "md" },
+    },
+    "& > input, & > textarea": {
+      w: "100%",
+      h: "12",
+      outline: "1.5px solid",
+      rounded: "md",
+      p: "2",
+      mb: "1",
+      "&:focus": {
+        outlineWidth: "2px",
+      },
+    },
+    "& > textarea": {
+      h: "40",
+      mb: "0",
+    },
+    "& > p": {
+      fontSize: "sm",
+      color: "9u-red1",
+      minH: "5",
+    },
+  },
+});
