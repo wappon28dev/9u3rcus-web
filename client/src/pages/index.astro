@@ -6,7 +6,10 @@ import { css } from "panda/css";
 import { INFO } from "@/lib/config";
 import Marker from "@/components/Marker.astro";
 import BlogsList from "@/components/list/BlogsList.astro";
-import WorksList from "@/components/list/WorksList.astro";
+import { WorksListOmitted } from "@/components/list/WorksListOmitted";
+import { getContentList } from "@/lib/services/microcms";
+
+const worksList = await getContentList("works", { fields: ["id", "title"] });
 ---
 
 <BaseLayout
@@ -60,7 +63,7 @@ import WorksList from "@/components/list/WorksList.astro";
       <Marker>
         <p.h2>Works</p.h2>
       </Marker>
-      <WorksList needOmit />
+      <WorksListOmitted client:load worksList={worksList} />
     </VStack>
     <p.div bgColor="9u-brown" color="9u-white" w="100%">
       <VStack className="content" gap="10">

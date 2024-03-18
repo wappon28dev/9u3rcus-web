@@ -1,10 +1,8 @@
 import { useEffect, useMemo, useState } from "react";
 import type { ReactElement } from "react";
-import { useStore } from "@nanostores/react";
 import { Dialog } from "../Dialog";
 import { ContactDialogContent } from "./ContactDialogContent";
 import { ContactDialogResult } from "./ContactDialogResult";
-import { $contactFormData } from "@/lib/store/ui";
 import { waitMs } from "@/lib/consts";
 
 export type SubmitState =
@@ -28,7 +26,6 @@ export function ContactDialog({
 }: {
   children: ReactElement;
 }): ReactElement {
-  const formData = useStore($contactFormData);
   const [submitState, setSubmitState] = useState<SubmitState>({
     state: "confirming",
   });

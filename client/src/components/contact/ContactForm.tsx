@@ -1,6 +1,6 @@
 import { useState, type ReactElement, type FormEvent } from "react";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { useForm, type SubmitHandler } from "react-hook-form";
+import { useForm } from "react-hook-form";
 import { VStack, styled as p } from "panda/jsx";
 import { css } from "panda/css";
 import { token } from "panda/tokens";
@@ -15,8 +15,6 @@ import {
   formSchema,
 } from "@/lib/services/contact";
 import { formStyle } from "@/lib/style";
-import { Dialog } from "../Dialog";
-import { ContactDialogContent } from "./ContactDialogContent";
 import { ContactDialog } from "./ContactDialog";
 
 export function ContactForm(): ReactElement {

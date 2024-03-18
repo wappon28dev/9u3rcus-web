@@ -6,31 +6,21 @@ import { formatDate } from "@/lib/consts";
 import { getContentList } from "@/lib/services/microcms";
 import { VideoPlayer } from "@/components/VideoPlayer.tsx";
 import { modifySrc } from "@/lib/services/media";
-import { WorksListOmitted } from "./WorksListOmitted";
 
-type Props = {
-  needOmit?: boolean;
-  omitRowLength?: number;
-};
-
-const { needOmit = false, omitRowLength } = Astro.props;
 const worksList = await getContentList("works", { fields: ["id", "title"] });
 ---
 
-{
-  needOmit ? (
-    <WorksListOmitted worksList={worksList} omitRowLength={omitRowLength} client:idle />
-  ) : (
-  <p.div
-    className="works-list"
-    display="grid"
-    gap="10"
-    gridTemplateColumns="repeat(auto-fill, minmax(300px, 1fr))"
-    textAlign="center"
-    w="100%"
-  >
-    {
-      worksList.contents.map(({ id, title, ogpImg, releaseDate, videoOnHover }) => (
+<p.div
+  className="works-list"
+  display="grid"
+  gap="10"
+  gridTemplateColumns="repeat(auto-fill, minmax(300px, 1fr))"
+  textAlign="center"
+  w="100%"
+>
+  {
+    worksList.contents.map(
+      ({ id, title, ogpImg, releaseDate, videoOnHover }) => (
         <p.a
           key={id}
           bg="9u-gray"
@@ -109,8 +99,7 @@ const worksList = await getContentList("works", { fields: ["id", "title"] });
             </p.div>
           </p.div>
         </p.a>
-      ))
-    }
-  </p.div>
-  )
-}
+      ),
+    )
+  }
+</p.div>

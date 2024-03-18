@@ -11,10 +11,10 @@ import { HStack, styled as p } from "panda/jsx";
 import type { SubmitState } from "./ContactDialog";
 
 export function ContactDialogResult({
-  submitState,
   setSubmitState,
   setHeight,
 }: {
+  // eslint-disable-next-line react/no-unused-prop-types
   submitState: SubmitState;
   setSubmitState: Dispatch<SetStateAction<SubmitState>>;
   setHeight: Dispatch<SetStateAction<number | undefined>>;
