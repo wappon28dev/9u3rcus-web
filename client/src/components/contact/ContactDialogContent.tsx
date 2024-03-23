@@ -106,7 +106,13 @@ export function ContactDialogContent({
         >
           <HStack>
             送信
-            {isSubmitting && <Icon icon="svg-spinners:ring-resize" />}
+            <Icon
+              icon={
+                isSubmitting
+                  ? "svg-spinners:ring-resize"
+                  : "mdi:invoice-text-send"
+              }
+            />
           </HStack>
         </p.button>
       </HStack>
