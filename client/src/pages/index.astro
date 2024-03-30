@@ -63,12 +63,7 @@ const worksList = await getContentList("works", { fields: ["id", "title"] });
       <Marker>
         <p.h2>Works</p.h2>
       </Marker>
-      <!--
-        なぜか `client:load` では, 少なくとも Preview 環境でエラーが発生する.  謎.
-        > [astro-island] Error hydrating /_astro/WorksListOmitted.DzUs7e82.js TypeError: Cannot read properties of undefined (reading 'call')
-        TODO: 原因を調査する
-      -->
-      <WorksListOmitted client:only="react" worksList={worksList} />
+      <WorksListOmitted client:load worksList={worksList} />
     </VStack>
     <p.div bgColor="9u-brown" color="9u-white" w="100%">
       <VStack className="content" gap="10">

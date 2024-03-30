@@ -7,10 +7,11 @@
     "prepare": "panda codegen && bun run assets:dl",
     "dev": "astro dev",
     "build": "astro check && astro build",
-    "assets:dl": "bun run ./scripts/assets-dl/index.ts",
+    "assets:dl": "cd ./scripts && bun run ./assets-dl/index.ts",
     "generate:cms": "bunx microcms-typescript schemas src/lib/types/cms-types.ts",
     "preview": "astro preview",
-    "astro": "astro"
+    "astro": "astro",
+    "clean": "bunx rimraf ./node_modules ./.astro ./dist ./panda"
   },
   "dependencies": {
     "@astrojs/check": "^0.5.6",

@@ -10,7 +10,8 @@
     "fmt": "prettier --write . --plugin=prettier-plugin-astro",
     "lint": "eslint --ext .ts,.tsx,.astro ./client/ ./api/",
     "test": "vitest --ui",
-    "coverage": "vitest run --coverage"
+    "coverage": "vitest run --coverage",
+    "clean": "bunx rimraf ./node_modules && bun run :client clean"
   },
   "overrides": {
     "sharp": "^0.33.0"

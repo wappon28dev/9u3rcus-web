@@ -11,7 +11,8 @@ import {
 } from "@/lib/middlewares/rewriters/convert2media";
 import { INFO } from "@/lib/config";
 import { VideoPlayer } from "./VideoPlayer";
-import { inferImageSize, modifySrc } from "@/lib/services/media";
+import { modifySrc } from "@/lib/services/media";
+import { inferImageSize } from "@/lib/services/image";
 
 type Props = {
   url: string;
