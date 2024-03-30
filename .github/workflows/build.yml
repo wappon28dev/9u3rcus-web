@@ -50,7 +50,7 @@ jobs:
           projectName: 9u3rcus-web-client
           directory: ./client/dist
         env:
-          NODE_VERSION: 20
+          NODE_VERSION: 21
 
       - name: 🚀 Deploy to Cloudflare Workers
         uses: cloudflare/wrangler-action@2.0.0
