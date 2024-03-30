@@ -17,11 +17,11 @@ jobs:
 
     steps:
       - name: 📥 Checkout repository
-        uses: actions/checkout@v3
+        uses: actions/checkout@v4
 
       - name: 📸 Calculate commit hash
         id: sha
-        uses: pr-mpt/actions-commit-hash@v2
+        uses: pr-mpt/actions-commit-hash@v3
 
       - name: 🔨 Prepare Bun environment
         uses: oven-sh/setup-bun@v1
