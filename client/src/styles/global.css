@@ -1,7 +1,7 @@
 :root {
   --font-line: "LINE Seed JP", sans-serif;
   --font-udev: "UDEV Gothic 35 JPDOC", monospace;
-  --scrollbar-width: 17px;
+  --scrollbar-width: 0px;
 }
 
 /* font */
