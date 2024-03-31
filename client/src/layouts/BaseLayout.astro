@@ -1,17 +1,17 @@
 ---
+import Footer from "@client/components/Footer.astro";
+import { HamburgerMenu } from "@client/components/HamburgerMenu";
+import { Header } from "@client/components/_Header.tsx"; // `_` を取ると謎のエラーが出ますw
+import { INFO } from "@client/lib/config";
+import { type PageManifest as Props } from "@client/lib/types/page";
+import { SEO } from "astro-seo";
 import { ViewTransitions } from "astro:transitions";
 import { styled as p } from "panda/jsx";
-import { SEO } from "astro-seo";
 import { token } from "panda/tokens";
-import { type PageManifest as Props } from "@/lib/types/page";
-import { INFO } from "@/lib/config";
-import Footer from "@/components/Footer.astro";
-import { HamburgerMenu } from "@/components/HamburgerMenu";
-import { Header } from "@/components/_Header.tsx"; // `_` を取ると謎のエラーが出ますw
 
-import "@/styles/global.css";
-import "@/styles/fonts.css";
-import "@/styles/transitions.css";
+import "@client/styles/global.css";
+import "@client/styles/fonts.css";
+import "@client/styles/transitions.css";
 
 const { seo, style, header } = Astro.props;
 ---

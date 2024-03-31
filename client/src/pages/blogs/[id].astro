@@ -1,12 +1,15 @@
 ---
+import { BackTo } from "@client/components/BackTo";
+import BaseLayout from "@client/layouts/BaseLayout.astro";
+import { formatDate } from "@client/lib/consts";
+import { rewriteHTML } from "@client/lib/middlewares/rewrite-html";
+import {
+  getContentDetail,
+  getContentList,
+} from "@client/lib/services/microcms";
+import { contentStyle } from "@client/lib/style";
 import type { GetStaticPaths } from "astro";
-import BaseLayout from "@layouts/BaseLayout.astro";
 import { styled as p } from "panda/jsx";
-import { getContentDetail, getContentList } from "@/lib/services/microcms";
-import { rewriteHTML } from "@/lib/middlewares/rewrite-html";
-import { BackTo } from "@/components/BackTo";
-import { formatDate } from "@/lib/consts";
-import { contentStyle } from "@/lib/style";
 
 export const getStaticPaths = (async () => {
   const blogsList = await getContentList("blogs", { fields: "id" });

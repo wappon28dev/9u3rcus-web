@@ -5,9 +5,9 @@
     "jsxImportSource": "react",
     "baseUrl": ".",
     "paths": {
-      "@layouts/*": ["./src/layouts/*"],
-      "@public/*": ["./public/*"],
-      "@/*": ["./src/*"],
+      "@client/*": ["../client/src/*"],
+      "@api/*": ["../api/src/*"],
+      "~/*": ["./public/*"],
       "panda/*": ["./panda/*"],
       "package": ["./package.json"]
     }

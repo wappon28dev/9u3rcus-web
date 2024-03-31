@@ -1,11 +1,11 @@
 ---
-import { styled as p } from "panda/jsx";
+import { VideoPlayer } from "@client/components/VideoPlayer.tsx";
+import { formatDate } from "@client/lib/consts";
+import { modifySrc } from "@client/lib/services/media";
+import { getContentList } from "@client/lib/services/microcms";
 import { Image } from "astro:assets";
 import { css } from "panda/css";
-import { formatDate } from "@/lib/consts";
-import { getContentList } from "@/lib/services/microcms";
-import { VideoPlayer } from "@/components/VideoPlayer.tsx";
-import { modifySrc } from "@/lib/services/media";
+import { styled as p } from "panda/jsx";
 
 const worksList = await getContentList("works", { fields: ["id", "title"] });
 ---

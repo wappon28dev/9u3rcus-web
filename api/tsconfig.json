@@ -9,9 +9,9 @@
     "types": ["@cloudflare/workers-types"],
     "jsx": "react-jsx",
     "jsxImportSource": "hono/jsx",
-    "baseUrl": "src",
     "paths": {
-      "@client/*": ["../../client/src/*"]
+      "@api/*": ["./src/*"],
+      "@client/*": ["../client/src/*"]
     }
   }
 }

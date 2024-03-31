@@ -1,19 +1,19 @@
 /* eslint-disable no-console */
-import { sendEmail } from "@cloudflare/pages-plugin-mailchannels/api";
-import { Hono } from "hono";
-import { HTTPException } from "hono/http-exception";
-import { getModeName, type ENV, type HonoType } from "lib/consts";
-import { type EmailAddress, getPersonalizationInfo } from "lib/sender";
+import { getModeName, type ENV, type HonoType } from "@api/lib/consts";
+import { authGuard } from "@api/lib/middlewares/contact";
+import { type EmailAddress, getPersonalizationInfo } from "@api/lib/sender";
+import { INFO } from "@client/lib/config";
+import { formatDate, getEntries } from "@client/lib/consts";
 import {
   type ContactFormData,
   formSchema,
   zContactFormData,
 } from "@client/lib/services/contact";
-import { INFO } from "@client/lib/config";
+import { sendEmail } from "@cloudflare/pages-plugin-mailchannels/api";
 import { zValidator } from "@hono/zod-validator";
-import { formatDate, getEntries } from "@client/lib/consts";
+import { Hono } from "hono";
 import { cors } from "hono/cors";
-import { authGuard } from "lib/middlewares/contact";
+import { HTTPException } from "hono/http-exception";
 
 async function sendAdminMail(
   data: ContactFormData,

@@ -1,9 +1,9 @@
+import { waitMs } from "@client/lib/consts";
 import { useEffect, useMemo, useState } from "react";
 import type { ReactElement } from "react";
 import { Dialog } from "../Dialog";
 import { ContactDialogContent } from "./ContactDialogContent";
 import { ContactDialogResult } from "./ContactDialogResult";
-import { waitMs } from "@/lib/consts";
 
 export type SubmitState =
   | {

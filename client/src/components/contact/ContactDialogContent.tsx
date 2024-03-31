@@ -1,3 +1,12 @@
+import { getEntries } from "@client/lib/consts";
+import { formSchema } from "@client/lib/services/contact";
+import { $contactFormData } from "@client/lib/store/ui";
+import { formStyle } from "@client/lib/style";
+import { Icon } from "@iconify/react";
+import { useStore } from "@nanostores/react";
+import * as AlertDialog from "@radix-ui/react-alert-dialog";
+import { css } from "panda/css";
+import { HStack, VStack, styled as p } from "panda/jsx";
 import {
   useEffect,
   useMemo,
@@ -6,15 +15,6 @@ import {
   type ReactElement,
   type SetStateAction,
 } from "react";
-import * as AlertDialog from "@radix-ui/react-alert-dialog";
-import { css } from "panda/css";
-import { HStack, VStack, styled as p } from "panda/jsx";
-import { useStore } from "@nanostores/react";
-import { Icon } from "@iconify/react";
-import { $contactFormData } from "@/lib/store/ui";
-import { getEntries } from "@/lib/consts";
-import { formSchema } from "@/lib/services/contact";
-import { formStyle } from "@/lib/style";
 import type { SubmitState } from "./ContactDialog";
 
 export function ContactDialogContent({

@@ -1,5 +1,5 @@
+import { type HonoType } from "@api/lib/consts";
 import { Hono } from "hono";
-import { type HonoType } from "lib/consts";
 
 export const assets = new Hono<HonoType>().get("/*", async (ctx) => {
   const filePath = ctx.req.path.replace("/v1/assets/", "");

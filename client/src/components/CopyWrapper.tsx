@@ -1,7 +1,7 @@
-import { useRef, useState, type ReactElement } from "react";
-import { HStack, styled as p } from "panda/jsx";
+import { waitMs } from "@client/lib/consts";
 import { Icon } from "@iconify/react";
-import { waitMs } from "@/lib/consts";
+import { HStack, styled as p } from "panda/jsx";
+import { useRef, useState, type ReactElement } from "react";
 
 export function CopyWrapper({
   copyText,

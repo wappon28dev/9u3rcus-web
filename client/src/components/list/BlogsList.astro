@@ -1,8 +1,8 @@
 ---
-import { HStack, VStack, styled as p } from "panda/jsx";
-import { Image } from "astro:assets";
+import { getContentList } from "@client/lib/services/microcms";
 import { Icon } from "astro-icon/components";
-import { getContentList } from "@/lib/services/microcms";
+import { Image } from "astro:assets";
+import { HStack, VStack, styled as p } from "panda/jsx";
 
 type Props = {
   needOmit?: boolean;

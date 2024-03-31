@@ -1,9 +1,9 @@
-import { type ReactElement, type CSSProperties } from "react";
-import { styled as p } from "panda/jsx";
-import { token } from "panda/tokens";
+import { INFO } from "@client/lib/config";
 import { Icon } from "@iconify/react";
 import { css } from "panda/css";
-import { INFO } from "@/lib/config";
+import { styled as p } from "panda/jsx";
+import { token } from "panda/tokens";
+import { type ReactElement, type CSSProperties } from "react";
 
 export function HeaderBody({
   externalStyle,

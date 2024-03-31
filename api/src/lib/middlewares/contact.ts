@@ -1,8 +1,8 @@
 /* eslint-disable no-console */
+import { type HonoType, getContactManifests } from "@api/lib/consts";
 import { type MiddlewareHandler } from "hono";
-import { HTTPException } from "hono/http-exception";
 import { bearerAuth } from "hono/bearer-auth";
-import { type HonoType, getContactManifests } from "lib/consts";
+import { HTTPException } from "hono/http-exception";
 
 export const authGuard: MiddlewareHandler<HonoType> = async (ctx, next) => {
   console.log("secure guard");

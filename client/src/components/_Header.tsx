@@ -1,3 +1,4 @@
+import { $hamburgerMenuOpened } from "@client/lib/store/ui";
 import { token, type Token } from "panda/tokens";
 import {
   useState,
@@ -6,7 +7,6 @@ import {
   type CSSProperties,
 } from "react";
 import { HeaderBody } from "./HeaderBody";
-import { $hamburgerMenuOpened } from "@/lib/store/ui";
 
 export function Header({
   hideBeforeHero = false,

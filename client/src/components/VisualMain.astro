@@ -1,18 +1,18 @@
 ---
-import { YouTube, Vimeo } from "astro-embed";
-import matcherYoutube from "@astro-community/astro-embed-youtube/matcher";
 import matcherVimeo from "@astro-community/astro-embed-vimeo/matcher";
-import { Image, getImage } from "astro:assets";
-import { styled as p } from "panda/jsx";
-import { css } from "panda/css";
+import matcherYoutube from "@astro-community/astro-embed-youtube/matcher";
+import { INFO } from "@client/lib/config";
 import {
   detectMediaKey,
   type MediaKey,
-} from "@/lib/middlewares/rewriters/convert2media";
-import { INFO } from "@/lib/config";
+} from "@client/lib/middlewares/rewriters/convert2media";
+import { inferImageSize } from "@client/lib/services/image";
+import { modifySrc } from "@client/lib/services/media";
+import { YouTube, Vimeo } from "astro-embed";
+import { Image, getImage } from "astro:assets";
+import { css } from "panda/css";
+import { styled as p } from "panda/jsx";
 import { VideoPlayer } from "./VideoPlayer";
-import { modifySrc } from "@/lib/services/media";
-import { inferImageSize } from "@/lib/services/image";
 
 type Props = {
   url: string;

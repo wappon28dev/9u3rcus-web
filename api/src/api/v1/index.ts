@@ -1,7 +1,7 @@
+import { type HonoType } from "@api/lib/consts";
 import { Hono } from "hono";
-import { type HonoType } from "lib/consts";
-import { contact } from "./contact";
 import { assets } from "./assets";
+import { contact } from "./contact";
 
 export const v1 = new Hono<HonoType>()
   .use("/*", async (ctx, next) => {

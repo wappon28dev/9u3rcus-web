@@ -1,4 +1,5 @@
 api/node_modules/
 client/node_modules/
 client/postcss.config.cjs
+client/src/env.d.ts
 vite.config.mts

@@ -1,11 +1,12 @@
+import { formatDate, waitMs, type ArrayElem } from "@client/lib/consts";
+import { modifySrc } from "@client/lib/services/media";
+import type { EndPoints } from "@client/lib/types/cms-types";
+import { Icon } from "@iconify/react";
 import { css } from "panda/css";
 import { HStack, VStack, styled as p } from "panda/jsx";
 import { useEffect, useMemo, useRef, useState, type ReactElement } from "react";
-import { Icon } from "@iconify/react";
-import { formatDate, waitMs, type ArrayElem } from "@/lib/consts";
+import { api } from "src/lib/services/api";
 import { VideoPlayer } from "../VideoPlayer";
-import { modifySrc } from "@/lib/services/media";
-import type { EndPoints } from "@/lib/types/cms-types";
 
 type WorksList = EndPoints["gets"]["works"];
 
@@ -120,6 +121,9 @@ export function WorksListOmitted({
         .getPropertyValue("grid-template-columns")
         .split(" ").length;
       setRowLength(columnCount);
+
+      const res = await api.index.$get();
+      console.log(res);
     })();
   };
 

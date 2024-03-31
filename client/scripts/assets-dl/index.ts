@@ -1,7 +1,7 @@
 /* eslint-disable no-console */
 
-import path from "path";
 import { rmdir } from "node:fs/promises";
+import path from "path";
 import { write } from "bun";
 import { out } from "scripts/shared/out";
 import { LOGO, type ChildrenFlat, PUBLIC_PATH } from "./constants";

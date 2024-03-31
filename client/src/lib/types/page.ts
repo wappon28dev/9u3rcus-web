@@ -1,6 +1,6 @@
+import type { Header } from "@client/components/_Header";
 import type { Token } from "panda/tokens";
 import type { ComponentProps } from "react";
-import type { Header } from "@/components/_Header";
 
 export type PageManifest = {
   seo?: {

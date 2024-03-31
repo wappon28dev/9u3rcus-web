@@ -16,7 +16,7 @@
     "sourceType": "module",
     "project": ["./api/tsconfig.json", "./client/tsconfig.json"]
   },
-  "plugins": ["react"],
+  "plugins": ["react", "unused-imports"],
   "overrides": [
     {
       "files": ["*.astro"],
@@ -41,7 +41,14 @@
     "react/require-default-props": "off",
     "import/prefer-default-export": "off",
     "import/extensions": "off",
-    "import/no-unresolved": "off"
+    "import/no-unresolved": "off",
+    "import/order": [
+      "error",
+      {
+        "alphabetize": { "order": "asc" }
+      }
+    ],
+    "unused-imports/no-unused-imports": "error"
   },
   "settings": {
     "@pandacss/configPath": "./client/panda.config.ts"

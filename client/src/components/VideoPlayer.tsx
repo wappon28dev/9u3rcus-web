@@ -1,5 +1,5 @@
+import { waitMs } from "@client/lib/consts";
 import type { ReactElement, VideoHTMLAttributes } from "react";
-import { waitMs } from "@/lib/consts";
 
 export function VideoPlayer({
   playOnHover = true,

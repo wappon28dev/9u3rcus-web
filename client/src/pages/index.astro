@@ -1,13 +1,13 @@
 ---
-import BaseLayout from "@layouts/BaseLayout.astro";
-import { VStack, styled as p } from "panda/jsx";
-import logoBg from "@public/assets/img/logo_bg.svg";
+import Marker from "@client/components/Marker.astro";
+import BlogsList from "@client/components/list/BlogsList.astro";
+import { WorksListOmitted } from "@client/components/list/WorksListOmitted";
+import BaseLayout from "@client/layouts/BaseLayout.astro";
+import { INFO } from "@client/lib/config";
+import { getContentList } from "@client/lib/services/microcms";
 import { css } from "panda/css";
-import { INFO } from "@/lib/config";
-import Marker from "@/components/Marker.astro";
-import BlogsList from "@/components/list/BlogsList.astro";
-import { WorksListOmitted } from "@/components/list/WorksListOmitted";
-import { getContentList } from "@/lib/services/microcms";
+import { VStack, styled as p } from "panda/jsx";
+import logoBg from "~/assets/img/logo_bg.svg";
 
 const worksList = await getContentList("works", { fields: ["id", "title"] });
 ---

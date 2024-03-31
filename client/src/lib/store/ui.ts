@@ -1,5 +1,5 @@
-import { atom } from "nanostores";
 import { persistentMap } from "@nanostores/persistent";
+import { atom } from "nanostores";
 import { getLocalStorageKey } from "../consts";
 import type { ContactFormData } from "../services/contact";
 

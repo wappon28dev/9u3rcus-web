@@ -1,10 +1,10 @@
-import { type ReactElement, type ComponentProps, useEffect } from "react";
+import { $hamburgerMenuOpened } from "@client/lib/store/ui";
+import { useStore } from "@nanostores/react";
 import { styled as p } from "panda/jsx";
 import { token } from "panda/tokens";
-import { useStore } from "@nanostores/react";
-import { $hamburgerMenuOpened } from "@/lib/store/ui";
-import { type Header } from "./_Header";
+import { type ReactElement, type ComponentProps, useEffect } from "react";
 import { HeaderBody } from "./HeaderBody";
+import { type Header } from "./_Header";
 
 export function HamburgerMenu({
   bgColor = "colors.9u-white",

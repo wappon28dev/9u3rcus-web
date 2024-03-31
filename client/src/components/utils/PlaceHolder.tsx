@@ -1,6 +1,6 @@
 import { styled as p } from "panda/jsx";
-import { useState, type ReactElement, useEffect } from "react";
 import { token } from "panda/tokens";
+import { useState, type ReactElement, useEffect } from "react";
 
 export function PlaceHolder({
   children,

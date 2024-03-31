@@ -1,6 +1,6 @@
-import { v1 } from "api/v1";
+import { v1 } from "@api/api/v1";
+import { type HonoType } from "@api/lib/consts";
 import { Hono } from "hono";
-import { type HonoType } from "lib/consts";
 
 const app = new Hono<HonoType>();
 

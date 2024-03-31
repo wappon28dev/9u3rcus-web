@@ -1,20 +1,20 @@
-import { useState, type ReactElement, type FormEvent } from "react";
-import { zodResolver } from "@hookform/resolvers/zod";
-import { useForm } from "react-hook-form";
-import { VStack, styled as p } from "panda/jsx";
-import { css } from "panda/css";
-import { token } from "panda/tokens";
-import { Turnstile } from "@marsidev/react-turnstile";
-import { useStore } from "@nanostores/react";
-import { getEntries } from "@/lib/consts";
-import { $contactFormData } from "@/lib/store/ui";
+import { getEntries } from "@client/lib/consts";
 import {
   zContactFormData,
   type ContactFormDataKey,
   type ContactFormData,
   formSchema,
-} from "@/lib/services/contact";
-import { formStyle } from "@/lib/style";
+} from "@client/lib/services/contact";
+import { $contactFormData } from "@client/lib/store/ui";
+import { formStyle } from "@client/lib/style";
+import { zodResolver } from "@hookform/resolvers/zod";
+import { Turnstile } from "@marsidev/react-turnstile";
+import { useStore } from "@nanostores/react";
+import { css } from "panda/css";
+import { VStack, styled as p } from "panda/jsx";
+import { token } from "panda/tokens";
+import { useState, type ReactElement, type FormEvent } from "react";
+import { useForm } from "react-hook-form";
 import { ContactDialog } from "./ContactDialog";
 
 export function ContactForm(): ReactElement {

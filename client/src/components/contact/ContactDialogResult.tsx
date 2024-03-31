@@ -1,3 +1,6 @@
+import * as AlertDialog from "@radix-ui/react-alert-dialog";
+import { css } from "panda/css";
+import { HStack, styled as p } from "panda/jsx";
 import {
   useEffect,
   useRef,
@@ -5,9 +8,6 @@ import {
   type ReactElement,
   type SetStateAction,
 } from "react";
-import * as AlertDialog from "@radix-ui/react-alert-dialog";
-import { css } from "panda/css";
-import { HStack, styled as p } from "panda/jsx";
 import type { SubmitState } from "./ContactDialog";
 
 export function ContactDialogResult({
