@@ -8,6 +8,7 @@
     "airbnb-typescript",
     "standard-with-typescript",
     "plugin:react/recommended",
+    "plugin:@pandacss/recommended",
     "prettier"
   ],
   "parserOptions": {
@@ -41,5 +42,8 @@
     "import/prefer-default-export": "off",
     "import/extensions": "off",
     "import/no-unresolved": "off"
+  },
+  "settings": {
+    "@pandacss/configPath": "./client/panda.config.ts"
   }
 }

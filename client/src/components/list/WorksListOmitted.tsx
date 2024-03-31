@@ -34,7 +34,7 @@ function Works({
       position="relative"
       w="100%"
     >
-      <p.img
+      <img
         alt={title}
         height={ogpImg.height}
         src={ogpImg.url}

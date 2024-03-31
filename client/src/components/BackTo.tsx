@@ -1,6 +1,6 @@
 import { Icon } from "@iconify/react";
 import { styled as p } from "panda/jsx";
-import type { Token } from "panda/tokens";
+import { token, type Token } from "panda/tokens";
 import { useEffect, useState, type ReactElement } from "react";
 
 export function BackTo({
@@ -49,12 +49,14 @@ export function BackTo({
           <Icon icon="mdi:chevron-left" />
         </p.span>
         <p.p
-          color={txtColor}
           fontSize={{
             base: "3xl",
             mdDown: "lg",
           }}
           fontWeight="bold"
+          style={{
+            color: txtColor != null ? token(txtColor) : undefined,
+          }}
         >
           {shouldReturnToHome ? "Home" : txt}
         </p.p>

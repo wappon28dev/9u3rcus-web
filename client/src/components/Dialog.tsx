@@ -26,7 +26,7 @@ export function Dialog({
       <AlertDialog.Portal>
         <AlertDialog.Overlay
           className={css({
-            bg: "rgba(0, 0, 0, 0.4)",
+            bgColor: "rgba(0, 0, 0, 0.4)",
             position: "fixed",
             inset: 0,
             zIndex: "modal",
