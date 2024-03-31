@@ -1,5 +1,4 @@
 import { addAnchorCopy } from "./rewriters/add-anchor-copy";
-import { addFigcaption } from "./rewriters/add-figcaption";
 import { convertMedia } from "./rewriters/convert2media";
 import { highlight } from "./rewriters/highlight";
 import { imageOpt } from "./rewriters/image-opt";
@@ -16,7 +15,6 @@ export async function rewriteHTML(
     convertMedia,
     imageOpt,
     highlight,
-    addFigcaption,
     addAnchorCopy,
     ...additionalRewriter,
   ];
