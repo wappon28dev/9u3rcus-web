@@ -3,6 +3,7 @@ import { getContentList } from "@client/lib/services/microcms";
 import { Icon } from "astro-icon/components";
 import { Image } from "astro:assets";
 import { HStack, VStack, styled as p } from "panda/jsx";
+import { getTextFromContent } from "src/lib/middlewares/text-from-content";
 
 type Props = {
   needOmit?: boolean;
@@ -21,7 +22,7 @@ const contents =
 const returnToHome = needOmit ? "?returnToHome" : "";
 ---
 
-<VStack gap="10" w="100%">
+<VStack alignItems="start" gap="10" w="100%">
   {
     contents.map(({ id, title, ogpImg, content }) => (
       <p.div
@@ -33,7 +34,19 @@ const returnToHome = needOmit ? "?returnToHome" : "";
           mdDown: "column",
         }}
         gap={{ base: "10", mdDown: "3" }}
+        position="relative"
+        w="100%"
       >
+        <p.a
+          bottom="0"
+          h="100%"
+          href={`/blogs/${id}${returnToHome}`}
+          left="0"
+          position="absolute"
+          right="0"
+          top="0"
+          w="100%"
+        />
         <p.a href={`/blogs/${id}${returnToHome}`} minW="300px" w="300px">
           <Image
             alt={title}
@@ -42,26 +55,32 @@ const returnToHome = needOmit ? "?returnToHome" : "";
             width={ogpImg.width}
           />
         </p.a>
-        <p.a href={`/blogs/${id}${returnToHome}`}>
+        <p.a
+          href={`/blogs/${id}${returnToHome}`}
+          w={{
+            base: "calc(100% - 300px - var(--spacing-10))",
+            mdDown: "300px",
+          }}
+        >
           <p.h2
+            boxOrient="vertical"
             fontSize="3xl"
             fontWeight="bold"
-            m={{
-              base: "0",
-              mdDown: "0 auto",
-            }}
-            w="fit-content"
+            lineClamp="1"
+            overflow="hidden"
           >
             {title}
           </p.h2>
-          <p.p>{content}</p.p>
+          <p.p boxOrient="vertical" lineClamp="3" overflow="hidden">
+            {getTextFromContent(content as string)}
+          </p.p>
         </p.a>
       </p.div>
     ))
   }
   {
     needOmit && (
-      <p.a href="/blogs">
+      <p.a href="/blogs" mx="auto">
         <HStack fontSize="xl" fontWeight="bold" gap="2">
           View More
           <Icon name="mdi:arrow-right" />
