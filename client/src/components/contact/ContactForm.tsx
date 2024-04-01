@@ -8,7 +8,6 @@ import {
 import { $contactFormData } from "@client/lib/store/ui";
 import { formStyle } from "@client/lib/style";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { Turnstile } from "@marsidev/react-turnstile";
 import { useStore } from "@nanostores/react";
 import { css } from "panda/css";
 import { VStack, styled as p } from "panda/jsx";
@@ -16,9 +15,10 @@ import { token } from "panda/tokens";
 import { useState, type ReactElement, type FormEvent } from "react";
 import { useForm } from "react-hook-form";
 import { ContactDialog } from "./ContactDialog";
+import { Captcha, type CaptchaStatus } from "../Captcha";
 
 export function ContactForm(): ReactElement {
-  const [turnstileState, setTurnstileState] = useState<"passed" | "error">();
+  const [captchaStatus, setCaptchaStatus] = useState<CaptchaStatus>();
   const formData = useStore($contactFormData);
   const {
     register,
@@ -112,24 +112,10 @@ export function ContactForm(): ReactElement {
         )}
         <p.div>
           <p.div m="0 auto" mb="1" w="fit-content">
-            <Turnstile
-              onError={() => {
-                setTurnstileState("error");
-              }}
-              onExpire={() => {
-                setTurnstileState("error");
-              }}
-              onSuccess={() => {
-                setTurnstileState("passed");
-              }}
-              options={{
-                theme: "light",
-              }}
-              siteKey={import.meta.env.PUBLIC_CLIENT_CF_TURNSTILE_SITE_KEY}
-            />
+            <Captcha setCaptchaStatus={setCaptchaStatus} />
           </p.div>
           <p.p color="9u-red1" fontSize="sm" minH="5" textAlign="center">
-            {turnstileState === "error" &&
+            {captchaStatus === "error" &&
               "CAPTCHA 認証に失敗したようです。ページを再読み込みをしてください。"}
           </p.p>
         </p.div>
@@ -153,7 +139,7 @@ export function ContactForm(): ReactElement {
                 cursor: "not-allowed",
               },
             })}
-            disabled={!isValid || turnstileState !== "passed" || isSubmitting}
+            disabled={!(isValid && captchaStatus === "passed" && !isSubmitting)}
             onPointerDown={() => {
               void trigger();
             }}
