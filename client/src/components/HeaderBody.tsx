@@ -58,7 +58,7 @@ export function HeaderBody({
             mdDown: "30px",
           }}
           loading="eager"
-          src="/assets/img/logo_icon.svg"
+          src="/assets/images/logos/icon.svg"
         />
         <p.img
           alt="logo"
@@ -70,8 +70,8 @@ export function HeaderBody({
           loading="eager"
           src={
             externalStyle?.logo?.color === token("colors.9u-white")
-              ? "/assets/img/logo_title_white.svg"
-              : "/assets/img/logo_title_brown.svg"
+              ? "/assets/images/logos/title-white.svg"
+              : "/assets/images/logos/title-brown.svg"
           }
           transform="translateY(2px)"
         />
