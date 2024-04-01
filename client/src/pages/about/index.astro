@@ -4,7 +4,8 @@ import Marker from "@client/components/Marker.astro";
 import BaseLayout from "@client/layouts/BaseLayout.astro";
 import { INFO } from "@client/lib/config";
 import { Image } from "astro:assets";
-import { styled as p } from "panda/jsx";
+import { css } from "panda/css";
+import { VStack, styled as p } from "panda/jsx";
 import iconInstagram from "~/assets/images/icons/instagram.svg";
 import iconVimeo from "~/assets/images/icons/vimeo.svg";
 import iconX from "~/assets/images/icons/x.svg";
@@ -61,56 +62,88 @@ const externalLinks = {
       mdDown: "10",
     }}
   >
-    <p.div
-      alignItems="center"
-      display="flex"
-      flexDir={{
-        base: "row",
-        mdDown: "column",
-      }}
-      gap={{
-        base: "20",
-        mdDown: "5",
-      }}
-      justifyContent="center"
-    >
-      <p.section bg="9u-white" rounded="full">
-        <Image alt="9u logo" height="200" src={logoSquare} />
-      </p.section>
-      <p.section
-        alignItems={{
-          base: "flex-start",
-          mdDown: "center",
-        }}
+    <VStack gap="10">
+      <p.div
+        alignItems="center"
         display="flex"
-        flexDir="column"
-        gap="5"
+        flexDir={{
+          base: "row",
+          mdDown: "column",
+        }}
+        gap={{
+          base: "20",
+          mdDown: "5",
+        }}
+        justifyContent="center"
       >
-        <p.p fontSize="5xl" fontWeight="bold" lineHeight="1" ml="-4px"
-          >{INFO.name.jp}</p.p
+        <p.section bg="9u-white" rounded="full">
+          <Image alt="9u logo" height="200" src={logoSquare} />
+        </p.section>
+        <p.section
+          alignItems={{
+            base: "flex-start",
+            mdDown: "center",
+          }}
+          display="flex"
+          flexDir="column"
+          gap="5"
         >
-        <CopyWrapper
-          client:visible
-          copyText={INFO.addr.email.contact}
-          titleText="メールアドレスをコピー"
-        >
-          <p.p fontSize="lg">{INFO.addr.email.contact}</p.p>
-        </CopyWrapper>
-        <p.div alignItems="center" display="flex" gap="5">
-          {
-            Object.entries(externalLinks).map(([key, { icon, href, alt }]) => (
-              <p.a
-                key={key}
-                href={href}
-                target="_blank"
-                title={`${INFO.name.short} の ${alt} へジャンプ`}
-              >
-                <Image alt={alt} height={20} src={icon} width="20" />
-              </p.a>
-            ))
-          }
-        </p.div>
-      </p.section>
-    </p.div>
+          <p.p fontSize="5xl" fontWeight="bold" lineHeight="1" ml="-4px"
+            >{INFO.name.jp}</p.p
+          >
+          <CopyWrapper
+            client:visible
+            copyText={INFO.addr.email.contact}
+            titleText="メールアドレスをコピー"
+          >
+            <p.p fontSize="lg">{INFO.addr.email.contact}</p.p>
+          </CopyWrapper>
+          <p.div alignItems="center" display="flex" gap="5">
+            {
+              Object.entries(externalLinks).map(
+                ([key, { icon, href, alt }]) => (
+                  <p.a
+                    key={key}
+                    href={href}
+                    target="_blank"
+                    title={`${INFO.name.short} の ${alt} へジャンプ`}
+                  >
+                    <Image alt={alt} height={20} src={icon} width="20" />
+                  </p.a>
+                ),
+              )
+            }
+          </p.div>
+        </p.section>
+      </p.div>
+      <VStack
+        className={css({
+          "& h2": {
+            fontSize: "md",
+          },
+          "& section": {
+            display: "flex",
+            flexDir: "column",
+            gap: "2",
+          },
+        })}
+        fontSize="lg"
+        fontWeight="bold"
+        gap="10"
+        textAlign="center"
+      >
+        <p.p>
+          お問い合わせの際は <p.a href="/contact">Contact</p.a> からお願いいたします。
+        </p.p>
+        <p.section>
+          <p.h2>分野</p.h2>
+          <p.p>{INFO.about.fields.join("/")}</p.p>
+        </p.section>
+        <p.section>
+          <p.h2>主な使用ツール</p.h2>
+          <p.p>{INFO.about.tools.join("/")}</p.p>
+        </p.section>
+      </VStack>
+    </VStack>
   </p.article>
 </BaseLayout>

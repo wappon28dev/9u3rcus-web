@@ -23,4 +23,13 @@ export const INFO = {
     url: "https://9u3rc.us",
     assets: "https://assets.9u3rc.us/web",
   },
-};
+  about: {
+    fields: [
+      "モーショングラフィックス",
+      "グラフィックデザイン",
+      "MV",
+      "ライブ演出",
+    ],
+    tools: ["Adobe After Effects", "Adobe Illustrator"],
+  },
+} as const;
