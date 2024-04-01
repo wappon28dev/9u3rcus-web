@@ -2,6 +2,7 @@
 import { type HonoType, getContactManifests } from "@api/lib/consts";
 import { type MiddlewareHandler } from "hono";
 import { bearerAuth } from "hono/bearer-auth";
+import { cors } from "hono/cors";
 import { HTTPException } from "hono/http-exception";
 
 export const authGuard: MiddlewareHandler<HonoType> = async (ctx, next) => {
@@ -25,4 +26,13 @@ export const authGuard: MiddlewareHandler<HonoType> = async (ctx, next) => {
   }
 
   return await bearerAuth({ token: accessKey })(ctx, next);
+};
+
+export const configureCors: MiddlewareHandler<HonoType> = async (ctx, next) => {
+  const { allowedHosts } = getContactManifests(ctx.env);
+
+  return await cors({
+    origin: allowedHosts,
+    exposeHeaders: ["*"],
+  })(ctx, next);
 };

@@ -37,6 +37,7 @@
     "microcms-js-sdk": "^2.7.0",
     "microcms-typescript": "^1.0.14",
     "nanostores": "^0.10.0",
+    "neverthrow": "^6.1.0",
     "react": "^18.2.0",
     "hono": "^4.1.5",
     "react-dom": "^18.2.0",

@@ -10,23 +10,13 @@ import {
 } from "react";
 import type { SubmitState } from "./ContactDialog";
 
-export function ContactDialogResult({
+function Success({
   setSubmitState,
-  setHeight,
 }: {
-  // eslint-disable-next-line react/no-unused-prop-types
-  submitState: SubmitState;
   setSubmitState: Dispatch<SetStateAction<SubmitState>>;
-  setHeight: Dispatch<SetStateAction<number | undefined>>;
 }): ReactElement {
-  const ref = useRef<HTMLDivElement>(null);
-
-  useEffect(() => {
-    setHeight(ref.current?.offsetHeight);
-  }, []);
-
   return (
-    <p.div ref={ref} h="fit-content">
+    <>
       <AlertDialog.Title
         className={css({
           fontWeight: "bold",
@@ -37,7 +27,7 @@ export function ContactDialogResult({
         送信が完了しました
         <p.hr color="9u-brown" />
       </AlertDialog.Title>
-      <AlertDialog.Description>
+      <AlertDialog.Description asChild>
         <p.div h="200px" p="3">
           <p.p textAlign="center">本文です。</p.p>
         </p.div>
@@ -70,6 +60,28 @@ export function ContactDialogResult({
           閉じる
         </p.button>
       </HStack>
+    </>
+  );
+}
+
+export function ContactDialogResult({
+  setSubmitState,
+  setHeight,
+}: {
+  // eslint-disable-next-line react/no-unused-prop-types
+  submitState: SubmitState;
+  setSubmitState: Dispatch<SetStateAction<SubmitState>>;
+  setHeight: Dispatch<SetStateAction<number | undefined>>;
+}): ReactElement {
+  const ref = useRef<HTMLDivElement>(null);
+
+  useEffect(() => {
+    setHeight(ref.current?.offsetHeight);
+  }, []);
+
+  return (
+    <p.div ref={ref} h="fit-content">
+      <Success setSubmitState={setSubmitState} />
     </p.div>
   );
 }

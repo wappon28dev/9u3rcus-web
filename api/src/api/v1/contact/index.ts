@@ -1,6 +1,6 @@
 /* eslint-disable no-console */
 import { getModeName, type ENV, type HonoType } from "@api/lib/consts";
-import { authGuard } from "@api/lib/middlewares/contact";
+import { authGuard, configureCors } from "@api/lib/middlewares/contact";
 import { type EmailAddress, getPersonalizationInfo } from "@api/lib/sender";
 import { INFO } from "@client/lib/config";
 import { formatDate, getEntries } from "@client/lib/consts";
@@ -167,7 +167,7 @@ async function sendDiscordWebhook(
 
 export const contact = new Hono<HonoType>()
   .options("*", cors())
-  .use("/*", authGuard)
+  .use("*", authGuard, configureCors)
   .post("/", zValidator("json", zContactFormData), async (ctx) => {
     const data = ctx.req.valid("json");
     const acceptDate = new Date();
@@ -198,5 +198,5 @@ export const contact = new Hono<HonoType>()
       });
     }
 
-    return ctx.text("", 204);
+    return ctx.json({ acceptDate }, 201);
   });

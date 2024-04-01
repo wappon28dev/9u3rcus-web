@@ -16,7 +16,7 @@
     "sourceType": "module",
     "project": ["./api/tsconfig.json", "./client/tsconfig.json"]
   },
-  "plugins": ["react", "unused-imports"],
+  "plugins": ["react", "unused-imports", "neverthrow"],
   "overrides": [
     {
       "files": ["*.astro"],
@@ -48,7 +48,8 @@
         "alphabetize": { "order": "asc" }
       }
     ],
-    "unused-imports/no-unused-imports": "error"
+    "unused-imports/no-unused-imports": "error",
+    "neverthrow/must-use-result": "warn"
   },
   "settings": {
     "@pandacss/configPath": "./client/panda.config.ts"

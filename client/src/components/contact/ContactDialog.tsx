@@ -1,9 +1,12 @@
-import { waitMs } from "@client/lib/consts";
 import { useEffect, useMemo, useState } from "react";
 import type { ReactElement } from "react";
 import { Dialog } from "../Dialog";
 import { ContactDialogContent } from "./ContactDialogContent";
 import { ContactDialogResult } from "./ContactDialogResult";
+import { postContactFormData } from "src/lib/services/api";
+import { $contactFormData } from "src/lib/store/ui";
+import { useStore } from "@nanostores/react";
+import type { InferAsyncErrTypes } from "src/lib/types/result";
 
 export type SubmitState =
   | {
@@ -18,7 +21,7 @@ export type SubmitState =
     }
   | {
       state: "failure";
-      error: Error;
+      error: InferAsyncErrTypes<ReturnType<typeof postContactFormData>>;
     };
 
 export function ContactDialog({
@@ -34,6 +37,7 @@ export function ContactDialog({
       submitState.state === "confirming" || submitState.state === "submitting",
     [submitState],
   );
+  const formData = useStore($contactFormData);
 
   useEffect(() => {
     setSubmitState({ state: "confirming" });
@@ -41,8 +45,22 @@ export function ContactDialog({
 
   async function handleSubmit(): Promise<void> {
     setSubmitState({ state: "submitting" });
-    await waitMs(3000);
-    setSubmitState({ state: "success", acceptDate: new Date() });
+
+    console.log("submitting...");
+    const res = await postContactFormData(formData);
+
+    if (res.isErr()) {
+      setSubmitState({ state: "failure", error: res.error });
+      console.warn(res.error);
+      return;
+    }
+
+    console.log("success!");
+    console.log(res.value);
+    setSubmitState({
+      state: "success",
+      acceptDate: new Date(res.value.acceptDate),
+    });
   }
 
   return (

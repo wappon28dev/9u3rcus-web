@@ -49,7 +49,7 @@ export function ContactDialogContent({
         送信してもよろしいですか？
         <p.hr color="9u-brown" />
       </AlertDialog.Title>
-      <AlertDialog.Description>
+      <AlertDialog.Description asChild>
         <VStack alignItems="flex-start" className={formStyle} gap="5" py="2">
           {getEntries(formSchema).map(
             ([key, { description, formType, inputType }]) => (

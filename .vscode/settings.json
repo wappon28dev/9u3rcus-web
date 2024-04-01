@@ -11,7 +11,8 @@
     "mailchannels",
     "microcms",
     "MICROCMS",
-    "nanostores"
+    "nanostores",
+    "neverthrow"
   ],
   "eslint.validate": ["astro"],
   "vitest.enable": true,
