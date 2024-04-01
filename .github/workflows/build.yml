@@ -39,6 +39,8 @@ jobs:
           CLIENT_MICROCMS_SERVICE_DOMAIN: ${{ secrets.CLIENT_MICROCMS_SERVICE_DOMAIN }}
           CLIENT_MICROCMS_API_KEY: ${{ secrets.CLIENT_MICROCMS_API_KEY }}
           PUBLIC_CLIENT_CF_TURNSTILE_SITE_KEY: ${{ secrets.PUBLIC_CLIENT_CF_TURNSTILE_SITE_KEY }}
+          PUBLIC_CLIENT_API_ENDPOINT: ${{ secrets.PUBLIC_CLIENT_API_ENDPOINT }}
+          PUBLIC_CLIENT_API_ACCESS_TOKEN: ${{ secrets.PUBLIC_CLIENT_API_ACCESS_TOKEN }}
 
       - name: 🚀 Deploy to Cloudflare Pages
         id: cloudflare_pages_deploy
