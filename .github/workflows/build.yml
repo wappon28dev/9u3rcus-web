@@ -61,16 +61,16 @@ jobs:
           apiToken: ${{ secrets.CLOUDFLARE_API_TOKEN_WORKERS }}
           command: "deploy --minify src/index.ts --env ${{ env.MODE }}"
           workingDirectory: ./api
-          # `secrets` プロパティーを指定するやり方だと, Workers はちゃんと env に従ってデプロイされるけど,
-          # Secrets はなぜか env を無視して put してしまうのでここで自前で put する.
-          postCommands: |
-            wrangler secret put MODE --env ${{ env.MODE }};
-            wrangler secret put API_MAIL_DKIM_PRIVATE_KEY --env ${{ env.MODE }};
-            wrangler secret put API_DISCORD_WEBHOOK_URL_CONTACT --env ${{ env.MODE }};
-            wrangler secret put API_DISCORD_WEBHOOK_MENTION_ID --env ${{ env.MODE }};
-            wrangler secret put API_CONTACT_MANIFEST --env ${{ env.MODE }};
-            wrangler secret put API_ASSETS_ENDPOINT --env ${{ env.MODE }};
-            wrangler secret put API_ASSETS_ACCESS_KEY --env ${{ env.MODE }};
+          # NOTE: これは secrets にしか適用されない.  command の env は引数で渡す. 🤔
+          environment: ${{ env.MODE }}
+          secrets: |
+            MODE
+            API_MAIL_DKIM_PRIVATE_KEY
+            API_DISCORD_WEBHOOK_URL_CONTACT
+            API_DISCORD_WEBHOOK_MENTION_ID
+            API_CONTACT_MANIFEST
+            API_ASSETS_ENDPOINT
+            API_ASSETS_ACCESS_KEY
         env:
           MODE: ${{ env.MODE }}
           API_MAIL_DKIM_PRIVATE_KEY: ${{ secrets.API_MAIL_DKIM_PRIVATE_KEY }}
