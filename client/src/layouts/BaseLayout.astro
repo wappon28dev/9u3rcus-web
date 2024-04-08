@@ -65,6 +65,8 @@ const { seo, style, header } = Astro.props;
   </p.body>
 
   <script>
+    import "../turbo-router.js";
+
     const elems =
       document.querySelectorAll<HTMLAnchorElement>("h2 > a, h3 > a");
     elems.forEach((elem) => {
