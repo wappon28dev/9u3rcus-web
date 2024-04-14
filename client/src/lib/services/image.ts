@@ -2,7 +2,7 @@ import imageSize from "image-size";
 
 /**
  * NOTE: This fn is only used in server-side code (in `dev`/`build`);
- *       Do not use this in client-side code. (caused by `image-size`)
+ *       Do not use this in client-side code. (due to `image-size`)
  * @param path path WITHOUT leading slash
  * @returns URL to the `/public` path
  */

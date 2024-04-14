@@ -11,7 +11,7 @@ type Props = {
 };
 
 const { needOmit = false, ommitLength = 3 } = Astro.props;
-const blogsList = await getContentList("blogs", { fields: ["id", "title"] });
+const blogsList = await getContentList("blogs");
 
 const omittable = blogsList.contents.length > ommitLength;
 const contents =

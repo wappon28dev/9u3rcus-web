@@ -33,13 +33,6 @@ export const contentStyle = css({
       m: "3",
       overflowY: "auto",
       maxHeight: "50vh",
-      "&::-webkit-scrollbar": {
-        h: "3px",
-        w: "3px",
-      },
-      "&::-webkit-scrollbar-thumb": {
-        bg: "9u-white",
-      },
     },
   },
   "& p > code": {

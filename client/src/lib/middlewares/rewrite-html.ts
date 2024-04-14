@@ -21,7 +21,7 @@ export async function rewriteHTML(
 
   // eslint-disable-next-line no-restricted-syntax
   for await (const rewriter of writers) {
-    result = await rewriter(result);
+    result = await rewriter(result ?? "");
   }
 
   return result;

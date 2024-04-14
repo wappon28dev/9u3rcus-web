@@ -47,10 +47,11 @@ export function HamburgerMenu({
       left="0"
       position="fixed"
       style={{
-        clipPath: isOpened ? "inset(0 0 0 0)" : "inset(0 0 100% 0)",
+        opacity: isOpened ? 1 : 0,
+        display: isOpened ? "block" : "none",
         backgroundColor: token(bgColor),
       }}
-      transition="clip-path .3s ease-in-out"
+      transition="opacity .3s ease-in-out"
       width="100%"
       zIndex="header"
     >

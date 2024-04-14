@@ -7,7 +7,7 @@ import { Image } from "astro:assets";
 import { css } from "panda/css";
 import { styled as p } from "panda/jsx";
 
-const worksList = await getContentList("works", { fields: ["id", "title"] });
+const worksList = await getContentList("works");
 ---
 
 <p.div
@@ -40,9 +40,9 @@ const worksList = await getContentList("works", { fields: ["id", "title"] });
         >
           <Image
             alt={title}
-            height={ogpImg.height}
-            src={ogpImg.url}
-            width={ogpImg.width}
+            height={ogpImg?.height ?? 180}
+            src={ogpImg?.url ?? "/assets/external/works/test/color_bar.png"}
+            width={ogpImg?.width ?? 320}
           />
           <p.div
             h="100%"
@@ -64,6 +64,7 @@ const worksList = await getContentList("works", { fields: ["id", "title"] });
               {videoOnHover != null && (
                 <VideoPlayer
                   client:visible
+                  loop
                   muted
                   playOnHover
                   src={modifySrc(videoOnHover)}

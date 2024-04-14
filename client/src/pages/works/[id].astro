@@ -11,7 +11,7 @@ import {
 } from "@client/lib/services/microcms";
 import { contentStyle } from "@client/lib/style";
 import type { GetStaticPaths } from "astro";
-import { styled as p } from "panda/jsx";
+import { VStack, styled as p } from "panda/jsx";
 
 export const getStaticPaths = (async () => {
   const worksList = await getContentList("works", { fields: "id" });
@@ -41,7 +41,7 @@ const modifiedContent = await rewriteHTML(content as string);
     description,
   }}
 >
-  <p.div className="slide-in" pb="20" viewTransitionName="slide-in">
+  <VStack className="slide-in" gap="5" pb="20" viewTransitionName="slide-in">
     <p.div
       className="content"
       display="flex"
@@ -85,10 +85,10 @@ const modifiedContent = await rewriteHTML(content as string);
       >
         {description}
       </p.section>
-      <p.hr w="100%" />
-      <VisualSub data={visualSub} />
-      <p.hr w="100%" />
     </p.div>
+    <p.article>
+      <VisualSub data={visualSub} />
+    </p.article>
     <p.article className={contentStyle} set:html={modifiedContent} w="100%" />
-  </p.div>
+  </VStack>
 </BaseLayout>

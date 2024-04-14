@@ -124,3 +124,22 @@ lite-youtube,
 lite-vimeo {
   max-width: unset !important;
 }
+
+:not(.code-block > pre)::-webkit-scrollbar {
+  display: none;
+}
+
+.code-block > pre {
+  &::-webkit-scrollbar {
+    height: 5px;
+    width: 5px;
+    border-radius: 10px;
+  }
+  &::-webkit-scrollbar-thumb {
+    background-color: var(--colors-9u-white);
+    border-radius: 10px;
+  }
+  &::-webkit-scrollbar-corner {
+    display: none;
+  }
+}

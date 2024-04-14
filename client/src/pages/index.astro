@@ -9,7 +9,7 @@ import { VStack, styled as p } from "panda/jsx";
 import { WorksListOmitted } from "src/components/list/WorksListOmitted";
 import logoBg from "~/assets/images/logos/bg.svg";
 
-const worksList = await getContentList("works", { fields: ["id", "title"] });
+const worksList = await getContentList("works");
 ---
 
 <BaseLayout

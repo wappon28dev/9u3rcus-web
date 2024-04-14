@@ -1,11 +1,11 @@
 /* eslint-disable import/no-unresolved */
-import { defineConfig } from "astro/config";
 import react from "@astrojs/react";
-import pandacss from "@pandacss/astro";
 import sitemap from "@astrojs/sitemap";
-import metaTags from "astro-meta-tags";
-import icon from "astro-icon";
+import pandacss from "@pandacss/astro";
+import { defineConfig } from "astro/config";
 import compress from "astro-compress";
+import icon from "astro-icon";
+import metaTags from "astro-meta-tags";
 
 // https://astro.build/config
 export default defineConfig({
@@ -30,7 +30,7 @@ export default defineConfig({
   },
   vite: {
     optimizeDeps: {
-      exclude: "mock/*.json",
+      exclude: "*.json",
     },
   },
 });

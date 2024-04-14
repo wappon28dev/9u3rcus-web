@@ -6,12 +6,12 @@ import {
   detectMediaKey,
   type MediaKey,
 } from "@client/lib/middlewares/rewriters/convert2media";
-import { inferImageSize } from "@client/lib/services/image";
 import { modifySrc } from "@client/lib/services/media";
 import { YouTube, Vimeo } from "astro-embed";
 import { Image, getImage } from "astro:assets";
 import { css } from "panda/css";
 import { styled as p } from "panda/jsx";
+import { inferImageSize } from "src/lib/services/image";
 import { VideoPlayer } from "./VideoPlayer";
 
 type Props = {
@@ -28,8 +28,10 @@ let imgSize: { width: number; height: number } = { height: 0, width: 0 };
 const media = async (): Promise<void> => {
   const ext = url.split(".").at(-1);
   if (ext == null) throw new Error(`ext is null: ${url}`);
-  imgSize = inferImageSize(modifySrc(url));
   key = detectMediaKey(ext);
+  if (key === "img") {
+    imgSize = inferImageSize(modifySrc(url));
+  }
 };
 
 const youtube = async (): Promise<void> => {
@@ -67,7 +69,7 @@ if (url.startsWith(INFO.site.assets)) {
 <p.div
   className={css({
     "& > *": {
-      maxH: "67.5vh", // タイトルが見える高さ
+      maxH: "66vh", // タイトルが見える高さ
       aspectRatio: "16 / 9",
       margin: "0 auto",
     },
@@ -89,7 +91,7 @@ if (url.startsWith(INFO.site.assets)) {
             />
           );
         case "video":
-          return <VideoPlayer autoPlay controls muted src={modifySrc(url)} />;
+          return <VideoPlayer autoPlay loop muted src={modifySrc(url)} />;
         case "youtube":
           return (
             <YouTube

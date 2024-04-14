@@ -10,14 +10,25 @@ type Img = { url: string; width: number; height: number };
 const { data } = Astro.props;
 ---
 
-<VStack gap="5">
+<VStack
+  gap={{
+    base: "5",
+    mdDown: "3",
+  }}
+>
   {
     data.map((row, rowIdx) => {
       const imgList = row.imgList as Img[];
 
       return (
         // eslint-disable-next-line react/no-array-index-key
-        <HStack key={rowIdx} gap="5">
+        <HStack
+          key={rowIdx}
+          gap={{
+            base: "5",
+            mdDown: "3",
+          }}
+        >
           {imgList.map((img, columnIdx) => (
             // eslint-disable-next-line react/no-array-index-key
             <p.div key={columnIdx}>
