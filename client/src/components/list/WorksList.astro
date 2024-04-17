@@ -20,7 +20,7 @@ const worksList = await getContentList("works");
 >
   {
     worksList.contents.map(
-      ({ id, title, ogpImg, releaseDate, videoOnHover }) => (
+      ({ id, title, ogpImg, releaseDate, previewVideo }) => (
         <p.a
           key={id}
           bg="9u-gray"
@@ -53,7 +53,7 @@ const worksList = await getContentList("works");
             }}
             position="absolute"
             style={{
-              pointerEvents: videoOnHover != null ? "none" : "auto",
+              pointerEvents: previewVideo != null ? "none" : "auto",
             }}
             top="50%"
             transform="translate(-50%, -50%)"
@@ -61,13 +61,13 @@ const worksList = await getContentList("works");
             w="100%"
           >
             <p.div h="100%" overflow="hidden" position="relative">
-              {videoOnHover != null && (
+              {previewVideo != null && (
                 <VideoPlayer
                   client:visible
                   loop
                   muted
                   playOnHover
-                  src={modifySrc(videoOnHover)}
+                  src={modifySrc(previewVideo)}
                   style={{
                     minWidth: "100%",
                     minHeight: "100%",

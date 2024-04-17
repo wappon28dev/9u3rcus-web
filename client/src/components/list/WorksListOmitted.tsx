@@ -14,7 +14,7 @@ function Works({
   title,
   ogpImg,
   releaseDate,
-  videoOnHover,
+  previewVideo,
 }: ArrayElem<WorksList["contents"]>): ReactElement {
   return (
     <p.a
@@ -49,7 +49,7 @@ function Works({
         }}
         position="absolute"
         style={{
-          pointerEvents: videoOnHover != null ? "none" : "auto",
+          pointerEvents: previewVideo != null ? "none" : "auto",
         }}
         top="50%"
         transform="translate(-50%, -50%)"
@@ -57,11 +57,11 @@ function Works({
         w="100%"
       >
         <p.div h="100%" overflow="hidden" position="relative">
-          {videoOnHover != null && (
+          {previewVideo != null && (
             <VideoPlayer
               muted
               playOnHover
-              src={modifySrc(videoOnHover)}
+              src={modifySrc(previewVideo)}
               style={{
                 minWidth: "100%",
                 minHeight: "100%",

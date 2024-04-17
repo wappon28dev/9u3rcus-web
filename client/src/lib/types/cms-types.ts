@@ -28,6 +28,10 @@ export type works<T = "get"> = Structure<
      */
     title: string;
     /**
+     * 外部リンク
+     */
+    externalLink?: string;
+    /**
      * 公開日時
      */
     releaseDate: string;
@@ -52,9 +56,13 @@ export type works<T = "get"> = Structure<
      */
     ogpImg?: { url: string; width: number; height: number };
     /**
-     * ホバー時の動画
+     * プレビュー画像
      */
-    videoOnHover?: string;
+    previewImg?: { url: string; width: number; height: number };
+    /**
+     * プレビュー動画
+     */
+    previewVideo?: string;
     /**
      * ファイルアップロード
      */
