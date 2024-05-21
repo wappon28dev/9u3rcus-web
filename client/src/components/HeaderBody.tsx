@@ -16,6 +16,8 @@ export function HeaderBody({
   onAnchorClick?: () => void;
   onNavIconClick?: () => void;
 }): ReactElement {
+  const shouldWhite = externalStyle?.logo?.color === token("colors.9u-white");
+
   return (
     <p.header
       alignItems="center"
@@ -69,7 +71,7 @@ export function HeaderBody({
           }}
           loading="eager"
           src={
-            externalStyle?.logo?.color === token("colors.9u-white")
+            shouldWhite
               ? "/assets/images/logos/title-white.svg"
               : "/assets/images/logos/title-brown.svg"
           }

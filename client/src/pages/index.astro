@@ -6,7 +6,7 @@ import { INFO } from "@client/lib/config";
 import { getContentList } from "@client/lib/services/microcms";
 import { css } from "panda/css";
 import { VStack, styled as p } from "panda/jsx";
-import { WorksListOmitted } from "src/components/list/WorksListOmitted";
+import WorksList from "src/components/list/WorksList.astro";
 import logoBg from "~/assets/images/logos/bg.svg";
 
 const worksList = await getContentList("works");
@@ -63,7 +63,7 @@ const worksList = await getContentList("works");
       <Marker>
         <p.h2>Works</p.h2>
       </Marker>
-      <WorksListOmitted client:load worksList={worksList} />
+      <WorksList worksList={worksList} />
     </VStack>
     <p.div bgColor="9u-brown" color="9u-white" w="100%">
       <VStack className="content" gap="10">

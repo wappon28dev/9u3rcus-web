@@ -18,7 +18,7 @@ export default defineConfig({
     extend: {
       tokens: {
         colors: {
-          "9u-white": { value: "#fceded" },
+          "9u-white": { value: "#fcfafa" },
           "9u-red1": { value: "#dd4343" },
           "9u-red2": { value: "#b21b1b" },
           "9u-red3": { value: "#561d1d" },

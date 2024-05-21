@@ -20,7 +20,7 @@ const worksList = await getContentList("works");
 >
   {
     worksList.contents.map(
-      ({ id, title, ogpImg, releaseDate, previewVideo }) => (
+      ({ id, title, releaseDate, previewVideo, previewImg }) => (
         <p.a
           key={id}
           bg="9u-gray"
@@ -40,9 +40,9 @@ const worksList = await getContentList("works");
         >
           <Image
             alt={title}
-            height={ogpImg?.height ?? 180}
-            src={ogpImg?.url ?? "/assets/external/works/test/color_bar.png"}
-            width={ogpImg?.width ?? 320}
+            height={previewImg?.height ?? 1080}
+            src={previewImg?.url ?? "/assets/images/sub-visual.png"}
+            width={previewImg?.width ?? 1920}
           />
           <p.div
             h="100%"
@@ -87,12 +87,18 @@ const worksList = await getContentList("works");
               <p.div
                 color="9u-white"
                 left="50%"
+                p="3"
                 position="absolute"
                 top="50%"
                 transform="translate(-50%, -50%)"
                 w="100%"
               >
-                <p.p fontSize="xl" fontWeight="bold">
+                <p.p
+                  fontSize="xl"
+                  fontWeight="bold"
+                  lineClamp="2"
+                  textOverflow="ellipsis"
+                >
                   {title}
                 </p.p>
                 <p.p>{formatDate(new Date(releaseDate), "YYYY.MM")}</p.p>
