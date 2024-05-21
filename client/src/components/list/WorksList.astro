@@ -7,7 +7,9 @@ import { Image } from "astro:assets";
 import { css } from "panda/css";
 import { styled as p } from "panda/jsx";
 
-const worksList = await getContentList("works");
+const worksList = await getContentList("works", {
+  orders: "-releaseDate",
+});
 ---
 
 <p.div
