@@ -1,4 +1,4 @@
-import { INFO } from "../config";
+import { INFO } from "@client/lib/config";
 
 export function modifySrc(src: string): string {
   let newSrc = src;

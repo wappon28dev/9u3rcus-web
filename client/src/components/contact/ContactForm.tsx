@@ -1,3 +1,4 @@
+import { Captcha, type CaptchaStatus } from "@client/components/Captcha";
 import { getEntries } from "@client/lib/consts";
 import {
   zContactFormData,
@@ -15,7 +16,6 @@ import { token } from "panda/tokens";
 import { useState, type ReactElement, type FormEvent } from "react";
 import { useForm } from "react-hook-form";
 import { ContactDialog } from "./ContactDialog";
-import { Captcha, type CaptchaStatus } from "../Captcha";
 
 export function ContactForm(): ReactElement {
   const [captchaStatus, setCaptchaStatus] = useState<CaptchaStatus>();

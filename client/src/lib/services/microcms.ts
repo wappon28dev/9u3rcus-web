@@ -1,10 +1,10 @@
+import type { EndPoints } from "@client/lib/types/cms-types";
 import type { MicroCMSQueries } from "microcms-js-sdk";
 import { createClient } from "microcms-js-sdk";
-import blogsDetail from "../../../public/assets/mock/blogs-detail.json";
-import blogsList from "../../../public/assets/mock/blogs-list.json";
-import worksDetail from "../../../public/assets/mock/works-detail.json";
-import worksList from "../../../public/assets/mock/works-list.json";
-import type { EndPoints } from "../types/cms-types";
+import blogsDetail from "~/assets/mock/blogs-detail.json";
+import blogsList from "~/assets/mock/blogs-list.json";
+import worksDetail from "~/assets/mock/works-detail.json";
+import worksList from "~/assets/mock/works-list.json";
 
 export const microcms = createClient({
   serviceDomain: import.meta.env.CLIENT_MICROCMS_SERVICE_DOMAIN,

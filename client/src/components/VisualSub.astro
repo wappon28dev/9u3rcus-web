@@ -21,9 +21,11 @@ const { data } = Astro.props;
       const imgList = row.imgList as Img[];
 
       return (
-        // eslint-disable-next-line react/no-array-index-key
         <HStack
-          key={rowIdx}
+          key={
+            // eslint-disable-next-line react/no-array-index-key
+            rowIdx
+          }
           gap={{
             base: "5",
             mdDown: "3",
