@@ -1,7 +1,7 @@
 import { waitMs } from "@client/lib/consts";
 import { Icon } from "@iconify/react";
-import { HStack, styled as p } from "panda/jsx";
-import { useRef, useState, type ReactElement } from "react";
+import { styled as p } from "panda/jsx";
+import { useRef, useState, type ReactElement, type ReactNode } from "react";
 
 export function CopyWrapper({
   copyText,
@@ -10,7 +10,7 @@ export function CopyWrapper({
 }: {
   copyText: string;
   titleText?: string;
-  children: ReactElement;
+  children: ReactNode;
 }): ReactElement {
   const [copied, setCopied] = useState(false);
   const ref = useRef<HTMLDivElement>(null);
@@ -43,8 +43,8 @@ export function CopyWrapper({
   };
 
   return (
-    <HStack gap="2">
-      <p.div ref={ref}>{children}</p.div>
+    <p.span display="inline-flex" gap="2">
+      <p.span ref={ref}>{children}</p.span>
       <p.button
         onClick={() => {
           void copyToClipboard();
@@ -56,6 +56,6 @@ export function CopyWrapper({
       >
         <Icon icon={copied ? "mdi:check" : "mdi:content-copy"} />
       </p.button>
-    </HStack>
+    </p.span>
   );
 }

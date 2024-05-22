@@ -14,28 +14,16 @@
   "parserOptions": {
     "ecmaVersion": "latest",
     "sourceType": "module",
-    "project": [
-      "./api/tsconfig.json",
-      "./client/tsconfig.json"
-    ]
+    "project": ["./api/tsconfig.json", "./client/tsconfig.json"]
   },
-  "plugins": [
-    "react",
-    "unused-imports",
-    "neverthrow",
-    "react-refresh"
-  ],
+  "plugins": ["react", "unused-imports", "neverthrow", "react-refresh"],
   "overrides": [
     {
-      "files": [
-        "*.astro"
-      ],
+      "files": ["*.astro"],
       "parser": "astro-eslint-parser",
       "parserOptions": {
         "parser": "@typescript-eslint/parser",
-        "extraFileExtensions": [
-          ".astro"
-        ]
+        "extraFileExtensions": [".astro"]
       },
       "rules": {}
     }
@@ -44,23 +32,16 @@
     "no-restricted-imports": [
       "error",
       {
-        "patterns": [
-          "../*"
-        ]
+        "patterns": ["../*"]
       }
     ],
-    "@typescript-eslint/consistent-type-definitions": [
-      "error",
-      "type"
-    ],
+    "@typescript-eslint/consistent-type-definitions": ["error", "type"],
     "react/react-in-jsx-scope": "off",
     "react/jsx-filename-extension": "off",
     "react/jsx-uses-react": "off",
     "no-underscore-dangle": "off",
     "react/jsx-props-no-spreading": "off",
-    "import/no-extraneous-dependencies": [
-      "off"
-    ],
+    "import/no-extraneous-dependencies": ["off"],
     "react/no-unstable-nested-components": "off",
     "react/jsx-sort-props": "warn",
     "react/require-default-props": "off",

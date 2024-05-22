@@ -2,8 +2,9 @@
 import Marker from "@client/components/Marker.astro";
 import { ContactForm } from "@client/components/contact/ContactForm.tsx";
 import BaseLayout from "@client/layouts/BaseLayout.astro";
-import { INFO } from "@client/lib/config";
 import { styled as p } from "panda/jsx";
+import { CopyWrapper } from "src/components/CopyWrapper";
+import { INFO } from "src/lib/config";
 ---
 
 <BaseLayout
@@ -27,7 +28,15 @@ import { styled as p } from "panda/jsx";
   <p.article py="10" w="100%">
     <p.p textAlign="center">
       お問い合わせ内容をこちらからお送りください。<br />
-      後日、こちらからご連絡さしあげますので、{INFO.addr.email.contact} からのメールを受信できるように設定をお願いいたします。
+      後日、こちらからご連絡さしあげますので、{" "}
+      <CopyWrapper
+        client:load
+        copyText={INFO.addr.email.contact}
+        titleText="メールアドレスをコピー"
+      >
+        {INFO.addr.email.contact}
+      </CopyWrapper>{" "}
+      からのメールを受信できるように設定をお願いいたします。
     </p.p><br />
     <ContactForm client:load />
   </p.article>

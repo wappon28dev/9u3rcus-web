@@ -1,19 +1,17 @@
+/* eslint-disable no-console */
+import { Dialog } from "@client/components/Dialog";
+import { useStore } from "@nanostores/react";
 import { useEffect, useMemo, useState } from "react";
 import type { ReactElement } from "react";
-import { Dialog } from "../Dialog";
-import { ContactDialogContent } from "./ContactDialogContent";
-import { ContactDialogResult } from "./ContactDialogResult";
 import { postContactFormData } from "src/lib/services/api";
 import { $contactFormData } from "src/lib/store/ui";
-import { useStore } from "@nanostores/react";
 import type { InferAsyncErrTypes } from "src/lib/types/result";
+import { ContactDialogContent } from "./ContactDialogContent";
+import { ContactDialogResult } from "./ContactDialogResult";
 
 export type SubmitState =
   | {
-      state: "confirming";
-    }
-  | {
-      state: "submitting";
+      state: "confirming" | "submitting";
     }
   | {
       state: "success";
@@ -47,20 +45,20 @@ export function ContactDialog({
     setSubmitState({ state: "submitting" });
 
     console.log("submitting...");
-    const res = await postContactFormData(formData);
-
-    if (res.isErr()) {
-      setSubmitState({ state: "failure", error: res.error });
-      console.warn(res.error);
-      return;
-    }
-
-    console.log("success!");
-    console.log(res.value);
-    setSubmitState({
-      state: "success",
-      acceptDate: new Date(res.value.acceptDate),
-    });
+    void postContactFormData(formData).match(
+      (res) => {
+        console.log("success!");
+        console.log(res);
+        setSubmitState({
+          state: "success",
+          acceptDate: new Date(res.acceptDate),
+        });
+      },
+      (err) => {
+        setSubmitState({ state: "failure", error: err });
+        console.warn(err);
+      },
+    );
   }
 
   return (

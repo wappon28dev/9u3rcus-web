@@ -84,9 +84,6 @@ export function ContactForm(): ReactElement {
               ) : (
                 <p.textarea
                   id={key}
-                  maxH="70vh"
-                  mb="0"
-                  minH="40"
                   onInput={(e) => {
                     saveFormData(e, key);
                     resizeTextarea(e);

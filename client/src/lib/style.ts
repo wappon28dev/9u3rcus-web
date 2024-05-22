@@ -74,12 +74,12 @@ export const contentStyle = css({
 export const formStyle = css({
   "& > div": {
     w: "100%",
-    "& > label": {
+    "& label": {
       display: "block",
       fontWeight: "bold",
       fontSize: { base: "xl", mdDown: "md" },
     },
-    "& > input, & > textarea": {
+    "& input, & textarea": {
       w: "100%",
       h: "12",
       outline: "1.5px solid",
@@ -90,9 +90,11 @@ export const formStyle = css({
         outlineWidth: "2px",
       },
     },
-    "& > textarea": {
+    "& textarea": {
       h: "40",
       mb: "0",
+      maxH: "70vh",
+      minH: "40",
     },
     "& > p": {
       fontSize: "sm",
