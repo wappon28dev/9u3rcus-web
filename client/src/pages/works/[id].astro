@@ -22,15 +22,10 @@ export const getStaticPaths = (async () => {
 }) satisfies GetStaticPaths;
 
 const { id } = Astro.params;
-const {
-  title,
-  visualMain,
-  releaseDate,
-  clientName,
-  description,
-  content,
-  visualSub,
-} = await getContentDetail("works", id);
+const worksDetail = await getContentDetail("works", id);
+
+const { title, description, content, releaseDate, clientName, visualSub } =
+  worksDetail;
 
 const modifiedContent = await rewriteHTML(content as string);
 ---
@@ -38,7 +33,7 @@ const modifiedContent = await rewriteHTML(content as string);
 <BaseLayout
   seo={{
     title: `${title} | Works`,
-    description,
+    description: description ?? "",
   }}
 >
   <VStack className="slide-in" gap="5" pb="20" viewTransitionName="slide-in">
@@ -54,7 +49,7 @@ const modifiedContent = await rewriteHTML(content as string);
         <BackTo client:load href="/works" txt="Works" />
       </p.nav>
       <p.div>
-        <VisualMain alt={title} url={visualMain} />
+        <VisualMain worksDetails={worksDetail} />
       </p.div>
       <p.h1
         color="9u-red1"

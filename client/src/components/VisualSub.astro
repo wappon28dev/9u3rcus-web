@@ -8,6 +8,8 @@ type Props = {
 };
 type Img = { url: string; width: number; height: number };
 const { data } = Astro.props;
+
+if (data == null) throw new Error("data is required");
 ---
 
 <VStack

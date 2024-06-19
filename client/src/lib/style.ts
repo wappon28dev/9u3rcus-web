@@ -1,4 +1,6 @@
-import { css } from "panda/css";
+import { css, cva } from "panda/css";
+
+import { styled as p } from "panda/jsx";
 
 export const contentStyle = css({
   display: "flex",
@@ -58,6 +60,7 @@ export const contentStyle = css({
     "& > *": {
       w: "fit-content",
       margin: "0 auto",
+      maxH: "100vh",
     },
     "& figcaption": {
       pt: "1",
@@ -103,3 +106,13 @@ export const formStyle = css({
     },
   },
 });
+
+export const absCenterStyle = cva({
+  base: {
+    position: "absolute",
+    top: "50%",
+    left: "50%",
+    transform: "translate(-50%, -50%)",
+  },
+});
+export const AbsCenter = p("div", absCenterStyle);

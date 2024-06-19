@@ -6,6 +6,7 @@ import { getContentList } from "@client/lib/services/microcms";
 import { Image } from "astro:assets";
 import { css } from "panda/css";
 import { styled as p } from "panda/jsx";
+import { AbsCenter } from "src/lib/style";
 
 const worksList = await getContentList("works", {
   orders: "-releaseDate",
@@ -46,19 +47,15 @@ const worksList = await getContentList("works", {
             src={previewImg?.url ?? "/assets/images/sub-visual.png"}
             width={previewImg?.width ?? 1920}
           />
-          <p.div
+          <AbsCenter
             h="100%"
-            left="50%"
             opacity={{
               base: "0",
               _hover: "1",
             }}
-            position="absolute"
             style={{
               pointerEvents: previewVideo != null ? "none" : "auto",
             }}
-            top="50%"
-            transform="translate(-50%, -50%)"
             transition="opacity 0.3s"
             w="100%"
           >
@@ -76,25 +73,14 @@ const worksList = await getContentList("works", {
                   }}
                 />
               )}
-              <p.div
+              <AbsCenter
                 bg="9u-red1"
                 h="100%"
-                left="50%"
                 opacity="0.5"
                 position="absolute"
-                top="50%"
-                transform="translate(-50%, -50%)"
                 w="100%"
               />
-              <p.div
-                color="9u-white"
-                left="50%"
-                p="3"
-                position="absolute"
-                top="50%"
-                transform="translate(-50%, -50%)"
-                w="100%"
-              >
+              <AbsCenter color="9u-white" p="3" position="absolute" w="100%">
                 <p.p
                   fontSize="xl"
                   fontWeight="bold"
@@ -104,9 +90,9 @@ const worksList = await getContentList("works", {
                   {title}
                 </p.p>
                 <p.p>{formatDate(new Date(releaseDate), "YYYY.MM")}</p.p>
-              </p.div>
+              </AbsCenter>
             </p.div>
-          </p.div>
+          </AbsCenter>
         </p.a>
       ),
     )

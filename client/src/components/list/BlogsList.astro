@@ -50,9 +50,9 @@ const returnToHome = needOmit ? "?returnToHome" : "";
         <p.a href={`/blogs/${id}${returnToHome}`} minW="300px" w="300px">
           <Image
             alt={title}
-            height={ogpImg.height}
-            src={ogpImg.url}
-            width={ogpImg.width}
+            height={ogpImg?.height ?? 1080}
+            src={ogpImg?.url ?? "/assets/images/sub-visual.png"}
+            width={ogpImg?.width ?? 1920}
           />
         </p.a>
         <p.a

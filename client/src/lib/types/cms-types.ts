@@ -11,9 +11,9 @@ type DateType = {
   revisedAt: string;
 };
 type Structure<T, P> = T extends "get"
-  ? { id: string } & DateType & Required<P>
+  ? { id: string } & DateType & P
   : T extends "gets"
-    ? GetsType<{ id: string } & DateType & Required<P>>
+    ? GetsType<{ id: string } & DateType & P>
     : Partial<DateType> & (T extends "patch" ? Partial<P> : P);
 
 export type works<T = "get"> = Structure<
@@ -22,7 +22,7 @@ export type works<T = "get"> = Structure<
     /**
      * メインビジュアル
      */
-    visualMain?: string;
+    visualMain: string;
     /**
      * タイトル
      */

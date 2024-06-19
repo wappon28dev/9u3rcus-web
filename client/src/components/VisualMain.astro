@@ -8,41 +8,49 @@ import {
 } from "@client/lib/middlewares/rewriters/convert2media";
 import { modifySrc } from "@client/lib/services/media";
 import { YouTube, Vimeo } from "astro-embed";
+import { Icon } from "astro-icon/components";
 import { Image, getImage } from "astro:assets";
 import { css } from "panda/css";
-import { styled as p } from "panda/jsx";
+import { HStack, styled as p } from "panda/jsx";
 import { inferImageSize } from "src/lib/services/image";
+import { AbsCenter } from "src/lib/style";
+import type { works } from "src/lib/types/cms-types";
+import { match } from "ts-pattern";
 import { VideoPlayer } from "./VideoPlayer";
 
+type VisualKey = MediaKey | "youtube" | "vimeo";
+
 type Props = {
-  url: string;
-  alt: string;
+  worksDetails: works;
 };
 
-const { url, alt } = Astro.props;
-let key: MediaKey | "youtube" | "vimeo" | undefined;
-let tmbUrl: string | undefined;
+const {
+  worksDetails: { visualMain: url, title, externalLink },
+} = Astro.props;
 
+let tmbUrl: string | undefined;
 let imgSize: { width: number; height: number } = { height: 0, width: 0 };
 
-const media = async (): Promise<void> => {
+const media = async (): Promise<VisualKey> => {
   const ext = url.split(".").at(-1);
   if (ext == null) throw new Error(`ext is null: ${url}`);
-  key = detectMediaKey(ext);
-  if (key === "img") {
-    imgSize = inferImageSize(modifySrc(url));
-  }
+  return match(detectMediaKey(ext))
+    .with("img", () => {
+      imgSize = inferImageSize(modifySrc(url));
+      return "img" as const;
+    })
+    .otherwise((k) => k);
 };
 
-const youtube = async (): Promise<void> => {
+const youtube = async (): Promise<VisualKey> => {
   const id = matcherYoutube(url);
   if (id == null) throw new Error(`youtube match is null: ${url}`);
   const src = `https://i.ytimg.com/vi/${id}/maxresdefault.jpg`;
-  tmbUrl = (await getImage({ src, alt, inferSize: true })).src;
-  key = "youtube";
+  tmbUrl = (await getImage({ src, title, inferSize: true })).src;
+  return "youtube";
 };
 
-const vimeo = async (): Promise<void> => {
+const vimeo = async (): Promise<VisualKey> => {
   const id = matcherVimeo(url);
   if (id == null) throw new Error(`vimeo match is null: ${url}`);
   const res = await fetch(`https://vimeo.com/api/v2/video/${id}.json`);
@@ -51,68 +59,115 @@ const vimeo = async (): Promise<void> => {
   }> = await res.json();
   const src = json[0]?.thumbnail_large;
   if (src == null) throw new Error(`vimeo thumbnail is null: ${url}`);
-  tmbUrl = (await getImage({ src, alt, inferSize: true })).src;
-  key = "vimeo";
+  tmbUrl = (await getImage({ src, title, inferSize: true })).src;
+  return "vimeo";
 };
 
-if (url.startsWith(INFO.site.assets)) {
-  await media();
-} else if (matcherYoutube(url) != null) {
-  await youtube();
-} else if (matcherVimeo(url) != null) {
-  await vimeo();
-} else {
-  throw new Error(`unknown url: ${url}`);
-}
+const key: VisualKey = await match(url)
+  .when((u) => u.startsWith(INFO.site.assets), media)
+  .when(matcherYoutube, youtube)
+  .when(matcherVimeo, vimeo)
+  .otherwise(() => {
+    throw new Error(`unknown url: ${url}`);
+  });
 ---
 
 <p.div
+  _hover={{
+    "& .external-link-card": {
+      opacity: 1,
+    },
+  }}
   className={css({
     "& > *": {
+      h: "100%",
       maxH: "66vh", // タイトルが見える高さ
       aspectRatio: "16 / 9",
       margin: "0 auto",
     },
   })}
+  position="relative"
 >
   {
-    (() => {
-      switch (key) {
-        case "img":
-          return (
-            <Image
-              alt={alt}
-              height={imgSize.height}
-              src={modifySrc(url)}
-              style={{
-                width: "auto",
-              }}
-              width={imgSize.width}
-            />
-          );
-        case "video":
-          return <VideoPlayer autoPlay loop muted src={modifySrc(url)} />;
-        case "youtube":
-          return (
-            <YouTube
-              id={url}
-              params="widget_referrer"
-              playlabel="作品を再生する"
-              poster={tmbUrl ?? ""}
-            />
-          );
-        case "vimeo":
-          return (
-            <Vimeo
-              id={url}
-              params="portrait&title"
-              playlabel="作品を再生する"
-              poster={tmbUrl ?? ""}
-            />
-          );
-        default:
-          throw new Error(`unknown key`);
-      }
-    })()
+    externalLink != null && (
+      <p.a
+        className="external-link-card"
+        cursor="pointer"
+        display="block"
+        href={externalLink}
+        opacity="0"
+        position="absolute"
+        transition="opacity 0.3s"
+      >
+        <p.div display="block" h="100%" position="relative" w="100%">
+          <AbsCenter
+            bg="9u-red1"
+            h="100%"
+            opacity="0.5"
+            position="absolute"
+            w="100%"
+          />
+          <AbsCenter
+            color="9u-white"
+            p="3"
+            pointerEvents="none"
+            position="absolute"
+            w="max-content"
+          >
+            <HStack gap="1">
+              <p.div transform="rotate(-45deg)">
+                {/* @ts-expect-error: size should be number */}
+                <Icon name="mdi:link" size="1lh" />
+              </p.div>
+              <p.p
+                fontSize="xl"
+                fontWeight="bold"
+                lineClamp="1"
+                textAlign="center"
+                textOverflow="ellipsis"
+              >
+                {new URL(externalLink).hostname} で視聴
+              </p.p>
+            </HStack>
+          </AbsCenter>
+        </p.div>
+      </p.a>
+    )
   }
+  <p.div pointerEvents="none">
+    {
+      match(key)
+        .with("img", () => (
+          <Image
+            alt={title}
+            height={imgSize.height}
+            src={modifySrc(url)}
+            style={{
+              width: "auto",
+            }}
+            width={imgSize.width}
+          />
+        ))
+        .with("video", () => (
+          <VideoPlayer autoPlay loop muted src={modifySrc(url)} />
+        ))
+        .with("youtube", () => (
+          <YouTube
+            id={url}
+            params="widget_referrer"
+            playlabel="作品を再生する"
+            poster={tmbUrl ?? ""}
+          />
+        ))
+        .with("vimeo", () => (
+          <Vimeo
+            id={url}
+            params="portrait&title"
+            playlabel="作品を再生する"
+            poster={tmbUrl ?? ""}
+          />
+        ))
+        .exhaustive()
+    }
+  </p.div>
 </p.div>
