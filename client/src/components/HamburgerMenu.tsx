@@ -48,10 +48,10 @@ export function HamburgerMenu({
       position="fixed"
       style={{
         opacity: isOpened ? 1 : 0,
-        display: isOpened ? "block" : "none",
+        visibility: isOpened ? "visible" : "hidden",
         backgroundColor: token(bgColor),
       }}
-      transition="opacity .3s ease-in-out"
+      transition="opacity .2s ease-in-out, visibility .21s ease-in-out"
       width="100%"
       zIndex="header"
     >

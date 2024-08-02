@@ -3,7 +3,7 @@ import { Icon } from "@iconify/react";
 import { css } from "panda/css";
 import { styled as p } from "panda/jsx";
 import { token } from "panda/tokens";
-import { type ReactElement, type CSSProperties } from "react";
+import { type ReactElement, type CSSProperties, useEffect } from "react";
 
 export function HeaderBody({
   externalStyle,
@@ -17,6 +17,20 @@ export function HeaderBody({
   onNavIconClick?: () => void;
 }): ReactElement {
   const shouldWhite = externalStyle?.logo?.color === token("colors.9u-white");
+
+  // リンク遷移時にハンバーガーメニューを閉じる
+  useEffect(() => {
+    const elements = document.querySelectorAll("a");
+    elements.forEach((e) => {
+      e.addEventListener("click", onAnchorClick);
+    });
+
+    return () => {
+      elements.forEach((e) => {
+        e.removeEventListener("click", onAnchorClick);
+      });
+    };
+  }, []);
 
   return (
     <p.header
@@ -48,7 +62,6 @@ export function HeaderBody({
         }}
         height="max-content"
         href="/"
-        onClick={onAnchorClick}
         style={externalStyle?.logo}
         transition="opacity 0.3s"
       >
@@ -90,18 +103,10 @@ export function HeaderBody({
           }}
           gap="5"
         >
-          <p.a href="/works" onClick={onAnchorClick}>
-            Works
-          </p.a>
-          <p.a href="/blogs" onClick={onAnchorClick}>
-            Blog
-          </p.a>
-          <p.a href="/about" onClick={onAnchorClick}>
-            About
-          </p.a>
-          <p.a href="/contact" onClick={onAnchorClick}>
-            Contact
-          </p.a>
+          <p.a href="/works">Works</p.a>
+          <p.a href="/blogs">Blog</p.a>
+          <p.a href="/about">About</p.a>
+          <p.a href="/contact">Contact</p.a>
         </p.nav>
         <p.nav
           className={css({
