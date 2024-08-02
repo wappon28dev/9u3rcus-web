@@ -24,10 +24,15 @@ jobs:
         uses: pr-mpt/actions-commit-hash@v3
 
       - name: 🔨 Prepare Bun environment
-        uses: oven-sh/setup-bun@v1
+        uses: oven-sh/setup-bun@v2
+        with:
+          bun-version: latest
 
       - name: 🎉 Install project dependencies
         run: bun i
+
+      - name: 📦 Download assets
+        run: bun :client assets:dl
         env:
           CLIENT_SCRIPT_ASSETS_API_ENDPOINT: ${{ secrets.CLIENT_SCRIPT_ASSETS_API_ENDPOINT }}
           CLIENT_SCRIPT_ASSETS_API_ACCESS_TOKEN: ${{ secrets.CLIENT_SCRIPT_ASSETS_API_ACCESS_TOKEN }}

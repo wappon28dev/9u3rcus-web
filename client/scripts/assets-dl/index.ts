@@ -41,31 +41,31 @@ assets.forEach(({ filePath, size, lastModifiedDateTime }, i) => {
 
 // remove old assets
 out.info("Removing old assets...");
-await Promise.all([
-  rmdir(path.join(PUBLIC_PATH, "assets"), { recursive: true }).catch((err) => {
+await rmdir(path.join(PUBLIC_PATH, "assets"), { recursive: true }).catch(
+  (err) => {
     out.fail(`Failed to remove old assets: ${err}`);
     throw err;
-  }),
-]);
+  },
+);
 
 // download assets
 out.info("Downloading assets...");
-await Promise.all(
-  assets.map(async ({ filePath, name, downloadUrl }) => {
-    const data = await fetch(downloadUrl);
 
-    if (!data.ok) {
-      out.fail(`Failed to fetch asset "${filePath}": ${await data.text()}`);
-      throw new Error("Failed to fetch asset");
-    }
+for await (const asset of assets) {
+  const { filePath, name, downloadUrl } = asset;
+  const data = await fetch(downloadUrl);
 
-    const decodedFilePath = decodeURIComponent(filePath);
-    const fullPathPublic = path.join(PUBLIC_PATH, decodedFilePath);
-    await write(fullPathPublic, data, {
-      createPath: true,
-    });
-    out.success(`Saved: ${name}`);
-  }),
-);
+  if (!data.ok) {
+    out.fail(`Failed to fetch asset "${filePath}": ${await data.text()}`);
+    throw new Error("Failed to fetch asset");
+  }
+
+  const decodedFilePath = decodeURIComponent(filePath);
+  const fullPathPublic = path.join(PUBLIC_PATH, decodedFilePath);
+  await write(fullPathPublic, data, {
+    createPath: true,
+  });
+  out.success(`Saved: ${name}`);
+}
 
 out.done();

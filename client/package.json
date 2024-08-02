@@ -4,7 +4,7 @@
   "private": true,
   "version": "0.0.1",
   "scripts": {
-    "prepare": "panda codegen && bun run assets:dl",
+    "prepare": "panda codegen",
     "dev": "astro dev",
     "build": "astro check && astro build",
     "assets:dl": "cd ./scripts && bun run ./assets-dl/index.ts",
