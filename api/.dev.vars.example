@@ -1,5 +1,5 @@
 MODE = "xxxxxxxxxxxxxxxxx"
-API_MAIL_DKIM_PRIVATE_KEY = "xxxxxxxxxxxxxxxxx"
+API_RESEND_API_KEY = "xxxxxxxxxxxxxxxxx"
 API_DISCORD_WEBHOOK_URL_CONTACT = "xxxxxxxxxxxxxxxxx"
 API_DISCORD_WEBHOOK_MENTION_ID = "xxxxxxxxxxxxxxxxx"
 API_CONTACT_MANIFEST = `

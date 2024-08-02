@@ -6,9 +6,11 @@
     "deploy": "wrangler deploy --minify src/index.ts"
   },
   "dependencies": {
-    "@cloudflare/pages-plugin-mailchannels": "^0.1.2",
     "@hono/zod-validator": "^0.2.0",
     "hono": "^4.0.9",
+    "neverthrow": "^7.0.0",
+    "resend": "^3.5.0",
+    "ts-pattern": "^5.2.0",
     "zod": "^3.22.4"
   },
   "devDependencies": {

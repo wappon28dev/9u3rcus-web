@@ -1,5 +1,6 @@
 /* eslint-disable no-irregular-whitespace */
 import { CopyWrapper } from "@client/components/CopyWrapper";
+import { match } from "ts-pattern";
 import { Icon } from "@iconify/react";
 import { useStore } from "@nanostores/react";
 import * as AlertDialog from "@radix-ui/react-alert-dialog";
@@ -144,15 +145,8 @@ function CopyableForm({
   );
 }
 
-function Failure({
-  submitState,
-  setSubmitState,
-}: {
-  submitState: SubmitState;
-  setSubmitState: Dispatch<SetStateAction<SubmitState>>;
-}): ReactElement {
+function Failure({ submitState }: { submitState: SubmitState }): ReactElement {
   const formData = useStore($contactFormData);
-
   if (submitState.state !== "failure") return <p.div />;
 
   return (
@@ -224,7 +218,7 @@ function Failure({
         </p.a>
         <CloseButton
           onClick={() => {
-            setSubmitState({ state: "confirming" });
+            document.location.reload();
           }}
         />
       </HStack>
@@ -232,11 +226,7 @@ function Failure({
   );
 }
 
-function Success({
-  setSubmitState,
-}: {
-  setSubmitState: Dispatch<SetStateAction<SubmitState>>;
-}): ReactElement {
+function Success(): ReactElement {
   return (
     <>
       <AlertDialog.Title className={alertDialogTitleStyle}>
@@ -258,7 +248,14 @@ function Success({
       <HStack gap="1" justifyContent="flex-end">
         <CloseButton
           onClick={() => {
-            setSubmitState({ state: "confirming" });
+            $contactFormData.set({
+              name: "",
+              company: "",
+              email: "",
+              subject: "",
+              message: "",
+            });
+            document.location.href = "/";
           }}
         />
       </HStack>
@@ -268,11 +265,9 @@ function Success({
 
 export function ContactDialogResult({
   submitState,
-  setSubmitState,
   setHeight,
 }: {
   submitState: SubmitState;
-  setSubmitState: Dispatch<SetStateAction<SubmitState>>;
   setHeight: Dispatch<SetStateAction<number | undefined>>;
 }): ReactElement {
   const ref = useRef<HTMLDivElement>(null);
@@ -283,21 +278,12 @@ export function ContactDialogResult({
 
   return (
     <p.div ref={ref} h="fit-content">
-      {(() => {
-        switch (submitState.state) {
-          case "success":
-            return <Success setSubmitState={setSubmitState} />;
-          case "failure":
-            return (
-              <Failure
-                setSubmitState={setSubmitState}
-                submitState={submitState}
-              />
-            );
-          default:
-            return <p.p>このメッセージが 見れるのは おかしいよ</p.p>;
-        }
-      })()}
+      {match(submitState.state)
+        .with("success", () => <Success />)
+        .with("failure", () => <Failure submitState={submitState} />)
+        .otherwise(() => (
+          <p.p>このメッセージが 見れるのは おかしいよ</p.p>
+        ))}
     </p.div>
   );
 }

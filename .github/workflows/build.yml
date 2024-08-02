@@ -65,7 +65,7 @@ jobs:
           environment: ${{ env.MODE }}
           secrets: |
             MODE
-            API_MAIL_DKIM_PRIVATE_KEY
+            API_RESEND_API_KEY
             API_DISCORD_WEBHOOK_URL_CONTACT
             API_DISCORD_WEBHOOK_MENTION_ID
             API_CONTACT_MANIFEST
@@ -73,7 +73,7 @@ jobs:
             API_ASSETS_ACCESS_KEY
         env:
           MODE: ${{ env.MODE }}
-          API_MAIL_DKIM_PRIVATE_KEY: ${{ secrets.API_MAIL_DKIM_PRIVATE_KEY }}
+          API_RESEND_API_KEY: ${{ secrets.API_RESEND_API_KEY }}
           API_DISCORD_WEBHOOK_URL_CONTACT: ${{ secrets.API_DISCORD_WEBHOOK_URL_CONTACT }}
           API_DISCORD_WEBHOOK_MENTION_ID: ${{ secrets.API_DISCORD_WEBHOOK_MENTION_ID }}
           API_CONTACT_MANIFEST: ${{ secrets.API_CONTACT_MANIFEST }}

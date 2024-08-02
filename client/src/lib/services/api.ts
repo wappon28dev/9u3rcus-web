@@ -11,7 +11,11 @@ if (ENDPOINT == null) {
   throw new Error("PUBLIC_CLIENT_API_ENDPOINT is not defined");
 }
 
-export const api = hc<AppType>(ENDPOINT);
+export const api = hc<AppType>(ENDPOINT, {
+  headers: {
+    Authorization: `Bearer ${ACCESS_TOKEN}`,
+  },
+});
 
 type ContactResponse = InferResponseType<
   (typeof api)["v1"]["contact"]["$post"]
@@ -24,16 +28,9 @@ export function postContactFormData(data: ContactFormData): ResultAsync<
   }
 > {
   return ResultAsync.fromPromise(
-    api.v1.contact.$post(
-      {
-        json: data,
-      },
-      {
-        headers: {
-          Authorization: `Bearer ${ACCESS_TOKEN}`,
-        },
-      },
-    ),
+    api.v1.contact.$post({
+      json: data,
+    }),
     (e) => {
       if (e instanceof Error) {
         return { code: "NETWORK_ERROR", error: e } as const;

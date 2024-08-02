@@ -51,7 +51,7 @@ export function ContactDialog({
         console.log(res);
         setSubmitState({
           state: "success",
-          acceptDate: new Date(res.acceptDate),
+          acceptDate: new Date(res.acceptedDate),
         });
       },
       (err) => {
@@ -75,7 +75,6 @@ export function ContactDialog({
         ) : (
           <ContactDialogResult
             setHeight={setContentHeight}
-            setSubmitState={setSubmitState}
             submitState={submitState}
           />
         )

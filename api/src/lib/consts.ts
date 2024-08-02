@@ -2,7 +2,7 @@ import { type ContactManifest, zContactManifest } from "./types/contact";
 
 export type ENV = {
   MODE: "local" | "preview" | "production";
-  API_MAIL_DKIM_PRIVATE_KEY: string;
+  API_RESEND_API_KEY: string;
   API_DISCORD_WEBHOOK_URL_CONTACT: string;
   API_DISCORD_WEBHOOK_MENTION_ID: string;
   API_CONTACT_MANIFEST: string;

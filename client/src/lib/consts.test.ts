@@ -14,4 +14,8 @@ describe("日付変換", () => {
   it("YYYY-MM-DD HH:mm:ss", () => {
     expect(formatDate(date, "YYYY-MM-DD HH:mm:ss")).toBe("2024-03-09 19:47:08");
   });
+
+  it("YYYY年M月d日", () => {
+    expect(formatDate(date, "YYYY年M月d日")).toBe("2024年3月9日");
+  });
 });
